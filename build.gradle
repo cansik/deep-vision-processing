@@ -1,0 +1,48 @@
+group 'ch.bildspur'
+version '1.0.0'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+def javaCvVersion = '1.5.2'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+configurations {
+    jar.archiveName = 'deep-vision.jar'
+    releaseJars
+}
+
+javadoc {
+    source = sourceSets.main.allJava
+    classpath = configurations.compile
+}
+
+dependencies {
+    // release
+    releaseJars group: 'org.bytedeco', name: 'javacv-platform', version: "$javaCvVersion"
+
+    // compile
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'org.bytedeco', name: 'javacv-platform', version: "$javaCvVersion"
+
+    // processing
+    compile group: 'org.processing', name: 'core', version: '3.3.7'
+    compile group: 'org.jogamp.jogl', name: 'jogl-all-main', version: '2.3.2'
+    compile group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version: '2.3.2'
+}
+
+task copyToLib( type: Copy ) {
+    into "$buildDir/libs/lib"
+    from configurations.releaseJars
+}
+
+task fatJar(type: Jar) {
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}

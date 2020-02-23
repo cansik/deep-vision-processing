@@ -1,0 +1,25 @@
+dist: trusty
+notifications:
+  email: false
+language: java
+jdk:
+  - oraclejdk8
+
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
+# command to build
+install:
+  - ./gradlew assemble
+  - ./gradlew build
+  - ./gradlew jar
+  - ./gradlew javadoc
+  - './release.sh nightly'
+
+# command to run tests
+script:
+  - ./gradlew check
+
+after_success:
