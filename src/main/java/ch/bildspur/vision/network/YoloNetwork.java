@@ -56,9 +56,6 @@ public class YoloNetwork extends DeepNeuralNetwork {
     public List<YoloDetection> detect(PImage image, float confThreshold, float nmsThreshold) {
         Mat frame = CvProcessingUtils.toMatRGB(image);
 
-        int width = frame.cols();
-        int height = frame.rows();
-
         // convert image into batch of images
         Mat inputBlob = blobFromImage(frame,
                 1 / 255.0,
@@ -77,19 +74,18 @@ public class YoloNetwork extends DeepNeuralNetwork {
         net.forward(outs, outNames);
 
         // evaluate result
-        System.out.println(outs);
-
-        postprocess(frame, outs, confThreshold, nmsThreshold);
-
-        return createDetections(outs, width, height);
+        return postprocess(frame, outs, confThreshold, nmsThreshold);
     }
 
     /**
      * Remove the bounding boxes with low confidence using non-maxima suppression
      * @param frame Input frame
      * @param outs Network outputs
+     * @param confThreshold Confidence threshold
+     * @param nmsThreshold Non maximum suppression threshold
+     * @return
      */
-    private void postprocess(Mat frame, MatVector outs, float confThreshold, float nmsThreshold)
+    private List<YoloDetection> postprocess(Mat frame, MatVector outs, float confThreshold, float nmsThreshold)
     {
         IntVector classIds = new IntVector();
         FloatVector confidences = new FloatVector();
@@ -112,6 +108,7 @@ public class YoloNetwork extends DeepNeuralNetwork {
                 minMaxLoc(scores, null, confidence, null, classIdPoint, null);
                 if (confidence.get() > confThreshold)
                 {
+                    // todo: maybe round instead of floor
                     int centerX = (int)(data.get(0) * frame.cols());
                     int centerY = (int)(data.get(1) * frame.rows());
                     int width = (int)(data.get(2) * frame.cols());
@@ -133,6 +130,8 @@ public class YoloNetwork extends DeepNeuralNetwork {
         confidences.put(confidences);
 
         NMSBoxes(boxes, confidencesPointer, confThreshold, nmsThreshold, indices, 1.f, 0);
+
+        List<YoloDetection> detections = new ArrayList<>();
         for (int i = 0; i < indices.limit(); ++i)
         {
             int idx = indices.get(i);
@@ -140,17 +139,10 @@ public class YoloNetwork extends DeepNeuralNetwork {
 
             System.out.println(classIds.get(idx) + ": " + confidences.get(idx));
 
-            /*
-            drawPred(classIds.get(idx), confidences.get(idx), box.x(), box.y(),
-                    box.x() + box.width(), box.y() + box.height(), frame);
-             */
+            int classId = classIds.get(idx);
+            detections.add(new YoloDetection(classId, names.get(classId), confidences.get(idx),
+                    box.x(), box.y(), box.width(), box.height()));
         }
-    }
-
-    private List<YoloDetection> createDetections(MatVector outs, int width, int height) {
-        List<YoloDetection> detections = new ArrayList<>();
-
-        // todo: use NMSBoxes to remove overlapping bounding boxes
 
         return detections;
     }
