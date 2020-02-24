@@ -28,7 +28,7 @@ public class YoloDetectionTest extends PApplet {
         yolo = new YoloNetwork();
         yolo.setup();
 
-        yolo.detect(testImage);
+        yolo.detect(testImage, 0.2f);
     }
 
     public void draw() {

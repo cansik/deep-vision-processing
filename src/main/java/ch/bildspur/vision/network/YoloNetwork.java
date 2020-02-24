@@ -1,6 +1,9 @@
 package ch.bildspur.vision.network;
 
 import ch.bildspur.vision.CvProcessingUtils;
+import org.bytedeco.javacpp.BytePointer;
+import org.bytedeco.javacpp.DoublePointer;
+import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacpp.IntPointer;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.*;
@@ -8,6 +11,8 @@ import org.bytedeco.opencv.opencv_dnn.*;
 import static org.bytedeco.opencv.global.opencv_core.*;
 import static org.bytedeco.opencv.global.opencv_dnn.*;
 
+import org.bytedeco.opencv.opencv_text.FloatVector;
+import org.bytedeco.opencv.opencv_text.IntVector;
 import processing.core.PImage;
 
 import java.io.IOException;
@@ -15,12 +20,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class YoloNetwork extends DeepNeuralNetwork {
     private String configPath = "data/darknet/yolov3-tiny.cfg";
     private String weightsPath = "data/darknet/yolov3-tiny.weights";
     private List<String> names = new ArrayList<>();
+
+    float defaultConfThreshold = 0.5f; // Confidence threshold
+    float defaultNMSThreshold = 0.4f;  // Non-maximum suppression threshold
 
     private Net net;
 
@@ -38,11 +45,26 @@ public class YoloNetwork extends DeepNeuralNetwork {
         }
     }
 
-    public void detect(PImage image) {
-        Mat cvImage = CvProcessingUtils.toMatRGB(image);
+    public List<YoloDetection> detect(PImage image) {
+        return detect(image, defaultConfThreshold, defaultNMSThreshold);
+    }
+
+    public List<YoloDetection> detect(PImage image, float confThreshold) {
+        return detect(image, confThreshold, defaultNMSThreshold);
+    }
+
+    public List<YoloDetection> detect(PImage image, float confThreshold, float nmsThreshold) {
+        Mat frame = CvProcessingUtils.toMatRGB(image);
+
+        int width = frame.cols();
+        int height = frame.rows();
 
         // convert image into batch of images
-        Mat inputBlob = blobFromImage(cvImage, 1 / 255.0, new Size(416, 416), new Scalar(0.0), true, false, CV_32F);
+        Mat inputBlob = blobFromImage(frame,
+                1 / 255.0,
+                new Size(416, 416),
+                new Scalar(0.0),
+                true, false, CV_32F);
 
         // set input
         net.setInput(inputBlob);
@@ -56,6 +78,81 @@ public class YoloNetwork extends DeepNeuralNetwork {
 
         // evaluate result
         System.out.println(outs);
+
+        postprocess(frame, outs, confThreshold, nmsThreshold);
+
+        return createDetections(outs, width, height);
+    }
+
+    /**
+     * Remove the bounding boxes with low confidence using non-maxima suppression
+     * @param frame Input frame
+     * @param outs Network outputs
+     */
+    private void postprocess(Mat frame, MatVector outs, float confThreshold, float nmsThreshold)
+    {
+        IntVector classIds = new IntVector();
+        FloatVector confidences = new FloatVector();
+        RectVector boxes = new RectVector();
+
+        for (int i = 0; i < outs.size(); ++i)
+        {
+            // Scan through all the bounding boxes output from the network and keep only the
+            // ones with high confidence scores. Assign the box's class label as the class
+            // with the highest score for the box.
+            Mat result = outs.get(i);
+            FloatPointer data = new FloatPointer(result.data());
+            for (int j = 0; j < result.rows(); j++)
+            {
+                Mat scores = result.row(j).colRange(5, result.cols());
+                Point classIdPoint = new Point(1);
+                DoublePointer confidence = new DoublePointer(1);
+
+                // Get the value and location of the maximum score
+                minMaxLoc(scores, null, confidence, null, classIdPoint, null);
+                if (confidence.get() > confThreshold)
+                {
+                    int centerX = (int)(data.get(0) * frame.cols());
+                    int centerY = (int)(data.get(1) * frame.rows());
+                    int width = (int)(data.get(2) * frame.cols());
+                    int height = (int)(data.get(3) * frame.rows());
+                    int left = centerX - width / 2;
+                    int top = centerY - height / 2;
+
+                    classIds.push_back(classIdPoint.x());
+                    confidences.push_back((float)confidence.get());
+                    boxes.push_back(new Rect(left, top, width, height));
+                }
+            }
+        }
+
+        // Perform non maximum suppression to eliminate redundant overlapping boxes with
+        // lower confidences
+        IntPointer indices = new IntPointer(confidences.size());
+        FloatPointer confidencesPointer = new FloatPointer(confidences.size());
+        confidences.put(confidences);
+
+        NMSBoxes(boxes, confidencesPointer, confThreshold, nmsThreshold, indices, 1.f, 0);
+        for (int i = 0; i < indices.limit(); ++i)
+        {
+            int idx = indices.get(i);
+            Rect box = boxes.get(idx);
+
+            System.out.println(classIds.get(idx) + ": " + confidences.get(idx));
+
+            /*
+            drawPred(classIds.get(idx), confidences.get(idx), box.x(), box.y(),
+                    box.x() + box.width(), box.y() + box.height(), frame);
+             */
+        }
+    }
+
+    private List<YoloDetection> createDetections(MatVector outs, int width, int height) {
+        List<YoloDetection> detections = new ArrayList<>();
+
+        // todo: use NMSBoxes to remove overlapping bounding boxes
+
+        return detections;
     }
 
     public List<String> getNames() {
