@@ -10,6 +10,7 @@ import org.bytedeco.opencv.opencv_dnn.*;
 
 import static org.bytedeco.opencv.global.opencv_core.*;
 import static org.bytedeco.opencv.global.opencv_dnn.*;
+import static org.bytedeco.opencv.global.opencv_imgproc.*;
 
 import org.bytedeco.opencv.opencv_text.FloatVector;
 import org.bytedeco.opencv.opencv_text.IntVector;
@@ -54,7 +55,10 @@ public class YoloNetwork extends DeepNeuralNetwork {
     }
 
     public List<YoloDetection> detect(PImage image, float confThreshold, float nmsThreshold) {
-        Mat frame = CvProcessingUtils.toMatRGB(image);
+        // read frame and prepare
+        Mat frame = new Mat(image.height, image.width, CV_8UC4);
+        CvProcessingUtils.toCv(image, frame);
+        cvtColor(frame, frame, COLOR_RGBA2RGB);
 
         // convert image into batch of images
         Mat inputBlob = blobFromImage(frame,
@@ -72,6 +76,8 @@ public class YoloNetwork extends DeepNeuralNetwork {
 
         // run detection
         net.forward(outs, outNames);
+
+        System.out.println("Outs: " + outs);
 
         // evaluate result
         return postprocess(frame, outs, confThreshold, nmsThreshold);
@@ -123,6 +129,20 @@ public class YoloNetwork extends DeepNeuralNetwork {
             }
         }
 
+        // skip nms
+        if(true) {
+            List<YoloDetection> detections = new ArrayList<>();
+            for (int i = 0; i < confidences.limit(); ++i)
+            {
+                Rect box = boxes.get(i);
+
+                int classId = classIds.get(i);
+                detections.add(new YoloDetection(classId, names.get(classId), confidences.get(i),
+                        box.x(), box.y(), box.width(), box.height()));
+            }
+            return detections;
+        }
+
         // Perform non maximum suppression to eliminate redundant overlapping boxes with
         // lower confidences
         IntPointer indices = new IntPointer(confidences.size());
@@ -136,8 +156,6 @@ public class YoloNetwork extends DeepNeuralNetwork {
         {
             int idx = indices.get(i);
             Rect box = boxes.get(idx);
-
-            System.out.println(classIds.get(idx) + ": " + confidences.get(idx));
 
             int classId = classIds.get(idx);
             detections.add(new YoloDetection(classId, names.get(classId), confidences.get(idx),
