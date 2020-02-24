@@ -49,11 +49,7 @@ public class YoloNetwork extends DeepNeuralNetwork {
 
         // create output layers
         StringVector outNames = net.getUnconnectedOutLayersNames();
-        // todo: maybe directly allocate the number wanted
-        MatVector outs = new MatVector();
-        for(int i=0;i<outNames.size();i++){
-            outs.put(new Mat());
-        }
+        MatVector outs = new MatVector(outNames.size());
 
         // run detection
         net.forward(outs, outNames);
