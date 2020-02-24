@@ -5,4 +5,4 @@ out
 hs_err_pid*.log
 frames
 release
-/proof-of-concept/
+data/darknet

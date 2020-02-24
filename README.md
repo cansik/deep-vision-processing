@@ -1,5 +1,5 @@
 # Deep Vision Processing
-Deep computer-vision algorithms for processing.
+Deep computer-vision algorithms for [Processing](https://processing.org/).
 
 ### Idea
 The idea behind this library is to provide a simple way to use neural networks for computer vision tasks inside Processing.
