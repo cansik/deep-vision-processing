@@ -27,13 +27,13 @@ public class YoloDetectionTest extends PApplet {
     List<YoloDetection> detections;
 
     public void setup() {
-        testImage = loadImage(sketchPath("data/dog.jpg"));
+        testImage = loadImage(sketchPath("data/test.jpeg"));
         prepared = new PImage(testImage.width, testImage.height, PConstants.RGB);
 
         yolo = new YoloNetwork();
         yolo.setup();
 
-        detections = yolo.detect(testImage, 0.3f);
+        detections = yolo.detect(testImage, 0.001f);
 
         for(YoloDetection detection : detections) {
             System.out.println(detection.getClassName() + "\t[" + detection.getConfidence() + "]");
@@ -46,7 +46,7 @@ public class YoloDetectionTest extends PApplet {
         image(testImage, 0, 0);
 
         noFill();
-        stroke(0, 255, 0);
+        stroke(0, 255, 100);
         strokeWeight(2f);
 
         for(YoloDetection detection : detections) {

@@ -1,18 +1,11 @@
 package ch.bildspur.vision.network;
 
 import ch.bildspur.vision.CvProcessingUtils;
-import org.bytedeco.javacpp.BytePointer;
 import org.bytedeco.javacpp.DoublePointer;
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacpp.IntPointer;
 import org.bytedeco.opencv.opencv_core.*;
-import org.bytedeco.opencv.opencv_dnn.*;
-
-import static org.bytedeco.opencv.global.opencv_core.*;
-import static org.bytedeco.opencv.global.opencv_dnn.*;
-import static org.bytedeco.opencv.global.opencv_imgcodecs.imread;
-import static org.bytedeco.opencv.global.opencv_imgproc.*;
-
+import org.bytedeco.opencv.opencv_dnn.Net;
 import org.bytedeco.opencv.opencv_text.FloatVector;
 import org.bytedeco.opencv.opencv_text.IntVector;
 import processing.core.PImage;
@@ -23,15 +16,20 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.bytedeco.opencv.global.opencv_core.*;
+import static org.bytedeco.opencv.global.opencv_dnn.*;
+import static org.bytedeco.opencv.global.opencv_imgproc.COLOR_RGBA2RGB;
+import static org.bytedeco.opencv.global.opencv_imgproc.cvtColor;
+
 public class YoloNetwork extends DeepNeuralNetwork {
-    private String configPath = "data/darknet/yolov3-tiny.cfg";
-    private String weightsPath = "data/darknet/yolov3-tiny.weights";
-    //private String configPath = "data/darknet/yolov3.cfg";
-    //private String weightsPath = "data/darknet/yolov3.weights";
+    //private final String configPath = "data/darknet/yolov3-tiny.cfg";
+    //private final String weightsPath = "data/darknet/yolov3-tiny.weights";
+    private String configPath = "data/darknet/yolov3.cfg";
+    private String weightsPath = "data/darknet/yolov3.weights";
     private List<String> names = new ArrayList<>();
 
-    float defaultConfThreshold = 0.5f; // Confidence threshold
-    float defaultNMSThreshold = 0.4f;  // Non-maximum suppression threshold
+    private final float defaultConfThreshold = 0.5f; // Confidence threshold
+    private final float defaultNMSThreshold = 0.4f;  // Non-maximum suppression threshold
 
     private Net net;
 
@@ -63,13 +61,11 @@ public class YoloNetwork extends DeepNeuralNetwork {
         CvProcessingUtils.toCv(image, frame);
         cvtColor(frame, frame, COLOR_RGBA2RGB);
 
-        //frame = imread("data/dog.jpg");
-
         // convert image into batch of images
         Mat inputBlob = blobFromImage(frame,
                 1 / 255.0,
-                new Size(416, 416),
-                //new Size(608, 608),
+                //new Size(416, 416),
+                new Size(608, 608),
                 new Scalar(0.0),
                 true, false, CV_32F);
 
@@ -137,7 +133,7 @@ public class YoloNetwork extends DeepNeuralNetwork {
         }
 
         // skip nms
-        if(true) {
+        if(false) {
             List<YoloDetection> detections = new ArrayList<>();
             for (int i = 0; i < confidences.size(); ++i)
             {
@@ -154,12 +150,12 @@ public class YoloNetwork extends DeepNeuralNetwork {
         // lower confidences
         IntPointer indices = new IntPointer(confidences.size());
         FloatPointer confidencesPointer = new FloatPointer(confidences.size());
-        confidences.put(confidences);
+        confidencesPointer.put(confidences.get());
 
         NMSBoxes(boxes, confidencesPointer, confThreshold, nmsThreshold, indices, 1.f, 0);
 
         List<YoloDetection> detections = new ArrayList<>();
-        for (int i = 0; i < indices.capacity(); ++i)
+        for (int i = 0; i < indices.limit(); ++i)
         {
             int idx = indices.get(i);
             Rect box = boxes.get(idx);
