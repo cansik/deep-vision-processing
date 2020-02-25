@@ -33,7 +33,7 @@ public class YoloDetectionTest extends PApplet {
         yolo = new YoloNetwork();
         yolo.setup();
 
-        detections = yolo.detect(testImage, 0.2f);
+        detections = yolo.detect(testImage, 0.3f);
 
         for(YoloDetection detection : detections) {
             System.out.println(detection.getClassName() + "\t[" + detection.getConfidence() + "]");
@@ -50,7 +50,7 @@ public class YoloDetectionTest extends PApplet {
         strokeWeight(2f);
 
         for(YoloDetection detection : detections) {
-            rect(detection.getX() * 2, detection.getY() * 2, detection.getWidth(), detection.getHeight());
+            rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
         }
 
         surface.setTitle("RealSense Processing - FPS: " + Math.round(frameRate));

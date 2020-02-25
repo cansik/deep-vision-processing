@@ -107,10 +107,11 @@ public class YoloNetwork extends DeepNeuralNetwork {
             // ones with high confidence scores. Assign the box's class label as the class
             // with the highest score for the box.
             Mat result = outs.get(i);
-            FloatPointer data = new FloatPointer(result.data());
+
 
             for (int j = 0; j < result.rows(); j++)
             {
+                FloatPointer data = new FloatPointer(result.row(j).data());
                 Mat scores = result.row(j).colRange(5, result.cols());
 
                 Point classIdPoint = new Point(1);
@@ -158,7 +159,7 @@ public class YoloNetwork extends DeepNeuralNetwork {
         NMSBoxes(boxes, confidencesPointer, confThreshold, nmsThreshold, indices, 1.f, 0);
 
         List<YoloDetection> detections = new ArrayList<>();
-        for (int i = 0; i < indices.limit(); ++i)
+        for (int i = 0; i < indices.capacity(); ++i)
         {
             int idx = indices.get(i);
             Rect box = boxes.get(idx);
