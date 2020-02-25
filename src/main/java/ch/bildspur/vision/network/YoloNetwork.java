@@ -48,14 +48,18 @@ public class YoloNetwork extends DeepNeuralNetwork {
     }
 
     public List<YoloDetection> detect(PImage image) {
-        return detect(image, defaultConfThreshold, defaultNMSThreshold);
+        return detect(image, defaultConfThreshold,  true, defaultNMSThreshold);
     }
 
     public List<YoloDetection> detect(PImage image, float confThreshold) {
-        return detect(image, confThreshold, defaultNMSThreshold);
+        return detect(image, confThreshold, true, defaultNMSThreshold);
     }
 
-    public List<YoloDetection> detect(PImage image, float confThreshold, float nmsThreshold) {
+    public List<YoloDetection> detect(PImage image, float confThreshold, boolean runNMS) {
+        return detect(image, confThreshold, runNMS, defaultNMSThreshold);
+    }
+
+    public List<YoloDetection> detect(PImage image, float confThreshold, boolean runNMS, float nmsThreshold) {
         // read frame and prepare
         Mat frame = new Mat(image.height, image.width, CV_8UC4);
         CvProcessingUtils.toCv(image, frame);
@@ -80,7 +84,7 @@ public class YoloNetwork extends DeepNeuralNetwork {
         net.forward(outs, outNames);
 
         // evaluate result
-        return postprocess(frame, outs, confThreshold, nmsThreshold);
+        return postprocess(frame, outs, confThreshold, nmsThreshold, runNMS);
     }
 
     /**
@@ -91,7 +95,7 @@ public class YoloNetwork extends DeepNeuralNetwork {
      * @param nmsThreshold Non maximum suppression threshold
      * @return
      */
-    private List<YoloDetection> postprocess(Mat frame, MatVector outs, float confThreshold, float nmsThreshold)
+    private List<YoloDetection> postprocess(Mat frame, MatVector outs, float confThreshold, float nmsThreshold, boolean runNMS)
     {
         IntVector classIds = new IntVector();
         FloatVector confidences = new FloatVector();
@@ -133,7 +137,7 @@ public class YoloNetwork extends DeepNeuralNetwork {
         }
 
         // skip nms
-        if(false) {
+        if(!runNMS) {
             List<YoloDetection> detections = new ArrayList<>();
             for (int i = 0; i < confidences.size(); ++i)
             {
