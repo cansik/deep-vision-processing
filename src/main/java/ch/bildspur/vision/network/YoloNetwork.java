@@ -10,6 +10,7 @@ import org.bytedeco.opencv.opencv_dnn.*;
 
 import static org.bytedeco.opencv.global.opencv_core.*;
 import static org.bytedeco.opencv.global.opencv_dnn.*;
+import static org.bytedeco.opencv.global.opencv_imgcodecs.imread;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
 
 import org.bytedeco.opencv.opencv_text.FloatVector;
@@ -25,6 +26,8 @@ import java.util.List;
 public class YoloNetwork extends DeepNeuralNetwork {
     private String configPath = "data/darknet/yolov3-tiny.cfg";
     private String weightsPath = "data/darknet/yolov3-tiny.weights";
+    //private String configPath = "data/darknet/yolov3.cfg";
+    //private String weightsPath = "data/darknet/yolov3.weights";
     private List<String> names = new ArrayList<>();
 
     float defaultConfThreshold = 0.5f; // Confidence threshold
@@ -60,10 +63,13 @@ public class YoloNetwork extends DeepNeuralNetwork {
         CvProcessingUtils.toCv(image, frame);
         cvtColor(frame, frame, COLOR_RGBA2RGB);
 
+        //frame = imread("data/dog.jpg");
+
         // convert image into batch of images
         Mat inputBlob = blobFromImage(frame,
                 1 / 255.0,
                 new Size(416, 416),
+                //new Size(608, 608),
                 new Scalar(0.0),
                 true, false, CV_32F);
 
@@ -76,8 +82,6 @@ public class YoloNetwork extends DeepNeuralNetwork {
 
         // run detection
         net.forward(outs, outNames);
-
-        System.out.println("Outs: " + outs);
 
         // evaluate result
         return postprocess(frame, outs, confThreshold, nmsThreshold);
@@ -104,9 +108,11 @@ public class YoloNetwork extends DeepNeuralNetwork {
             // with the highest score for the box.
             Mat result = outs.get(i);
             FloatPointer data = new FloatPointer(result.data());
+
             for (int j = 0; j < result.rows(); j++)
             {
                 Mat scores = result.row(j).colRange(5, result.cols());
+
                 Point classIdPoint = new Point(1);
                 DoublePointer confidence = new DoublePointer(1);
 
@@ -132,7 +138,7 @@ public class YoloNetwork extends DeepNeuralNetwork {
         // skip nms
         if(true) {
             List<YoloDetection> detections = new ArrayList<>();
-            for (int i = 0; i < confidences.limit(); ++i)
+            for (int i = 0; i < confidences.size(); ++i)
             {
                 Rect box = boxes.get(i);
 

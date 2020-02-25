@@ -36,7 +36,7 @@ public class YoloDetectionTest extends PApplet {
         detections = yolo.detect(testImage, 0.2f);
 
         for(YoloDetection detection : detections) {
-            System.out.println(detection.getClassName() + "[" + detection.getConfidence() + "]");
+            System.out.println(detection.getClassName() + "\t[" + detection.getConfidence() + "]");
         }
     }
 
