@@ -24,11 +24,17 @@ javadoc {
 
 dependencies {
     // release
-    releaseJars group: 'org.bytedeco', name: 'javacv-platform', version: "$javaCvVersion"
+    releaseJars group: 'org.bytedeco', name: 'javacv', version: "$javaCvVersion"
+    releaseJars group: 'org.bytedeco', name: 'opencv-platform', version: "4.1.2-$javaCvVersion"
+    releaseJars group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.7-$javaCvVersion"
 
     // compile
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile group: 'org.bytedeco', name: 'javacv-platform', version: "$javaCvVersion"
+
+    // opencv
+    compile group: 'org.bytedeco', name: 'javacv', version: "$javaCvVersion"
+    compile group: 'org.bytedeco', name: 'opencv-platform', version: "4.1.2-$javaCvVersion"
+    compile group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.7-$javaCvVersion"
 
     // processing
     compile group: 'org.processing', name: 'core', version: '3.3.7'
