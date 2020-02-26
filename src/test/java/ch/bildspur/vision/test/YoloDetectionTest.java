@@ -55,6 +55,6 @@ public class YoloDetectionTest extends PApplet {
             rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
         }
 
-        surface.setTitle("RealSense Processing - FPS: " + Math.round(frameRate));
+        surface.setTitle("YOLO Test - FPS: " + Math.round(frameRate));
     }
 }
