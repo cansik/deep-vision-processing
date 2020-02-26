@@ -1,9 +1,9 @@
 package ch.bildspur.vision.test;
 
 
-import ch.bildspur.vision.CvProcessingUtils;
-import ch.bildspur.vision.network.YoloDetection;
-import ch.bildspur.vision.network.YoloNetwork;
+import ch.bildspur.vision.config.YoloConfig;
+import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.YoloNetwork;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
@@ -24,7 +24,7 @@ public class YoloDetectionTest extends PApplet {
     PImage testImage;
     PImage prepared;
     YoloNetwork yolo;
-    List<YoloDetection> detections;
+    List<ObjectDetectionResult> detections;
 
     public void setup() {
         colorMode(HSB, 360, 100, 100);
@@ -32,12 +32,13 @@ public class YoloDetectionTest extends PApplet {
         testImage = loadImage(sketchPath("data/hk.jpg"));
         prepared = new PImage(testImage.width, testImage.height, PConstants.RGB);
 
-        yolo = new YoloNetwork();
+        yolo = new YoloNetwork(YoloConfig.YOLOv3_608);
         yolo.setup();
 
-        detections = yolo.detect(testImage, 0.2f);
+        yolo.setConfidenceThreshold(0.2f);
+        detections = yolo.run(testImage);
 
-        for(YoloDetection detection : detections) {
+        for(ObjectDetectionResult detection : detections) {
             System.out.println(detection.getClassName() + "\t[" + detection.getConfidence() + "]");
         }
     }
@@ -50,7 +51,7 @@ public class YoloDetectionTest extends PApplet {
         noFill();
         strokeWeight(2f);
 
-        for(YoloDetection detection : detections) {
+        for(ObjectDetectionResult detection : detections) {
             stroke((int)(360.0 / yolo.getNames().size() * detection.getClassId()), 80, 100);
             rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
         }

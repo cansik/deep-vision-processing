@@ -1,24 +1,19 @@
-package ch.bildspur.vision;
+package ch.bildspur.vision.util;
 
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.MatVector;
-import org.bytedeco.opencv.opencv_core.Point;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.MatOfPoint2f;
 import processing.core.PConstants;
 import processing.core.PImage;
-import processing.core.PVector;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
-import java.util.ArrayList;
 
-import static org.bytedeco.opencv.global.opencv_core.*;
+import static org.bytedeco.opencv.global.opencv_core.merge;
+import static org.bytedeco.opencv.global.opencv_core.split;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
-import static processing.core.PApplet.arrayCopy;
 
 /**
  * Adapted from https://github.com/atduskgreg/opencv-processing/blob/master/src/gab/opencv/OpenCV.java

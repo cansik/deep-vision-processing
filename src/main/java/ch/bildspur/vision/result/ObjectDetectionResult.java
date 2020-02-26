@@ -1,17 +1,17 @@
-package ch.bildspur.vision.network;
+package ch.bildspur.vision.result;
 
-public class YoloDetection {
+public class ObjectDetectionResult {
     private int classId;
     private String className;
     private float confidence;
 
-    // center
+    // location
     private int x;
     private int y;
     private int width;
     private int height;
 
-    public YoloDetection(int classId, String className, float confidence, int x, int y, int width, int height) {
+    public ObjectDetectionResult(int classId, String className, float confidence, int x, int y, int width, int height) {
         this.classId = classId;
         this.className = className;
         this.confidence = confidence;
