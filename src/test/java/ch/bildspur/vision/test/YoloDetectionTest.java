@@ -35,7 +35,7 @@ public class YoloDetectionTest extends PApplet {
         prepared = new PImage(testImage.width, testImage.height, PConstants.RGB);
 
         println("creating network...");
-        yolo = vision.createYOLO9K();
+        yolo = vision.createYOLOv3SPP();
 
         println("loading model...");
         yolo.setup();
@@ -60,7 +60,7 @@ public class YoloDetectionTest extends PApplet {
         strokeWeight(2f);
 
         for(ObjectDetectionResult detection : detections) {
-            stroke((int)(360.0 / yolo.getNames().size() * detection.getClassId()), 80, 100);
+            stroke(round(360.0f * (float)detection.getClassId() / yolo.getNames().size()), 75, 100);
             rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
         }
 

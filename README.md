@@ -18,7 +18,7 @@ The API should support the following (✨ == `implemented`):
     - YOLOv3-320
     - YOLOv3-416
     - YOLOv3-608 ✨
-    - YOLO 9K
+    - ~~YOLO 9K~~ ([not supported by OpenCV](https://answers.opencv.org/question/180425/opencv-darknet-error-when-initializing-darknet/?answer=180441#post-id-180441))
 - openVINO
     - Lightweight OpenPose
     - Face Detection

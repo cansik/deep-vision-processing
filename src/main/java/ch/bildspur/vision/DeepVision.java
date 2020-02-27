@@ -45,8 +45,4 @@ public class DeepVision {
     public YOLONetwork createYOLOv3SPP() {
         return createYOLONetwork(Repository.YOLOv3SPPModel, Repository.YOLOv3SPPWeight, Repository.COCONames, 608);
     }
-
-    public YOLONetwork createYOLO9K() {
-        return createYOLONetwork(Repository.YOLO9kModel, Repository.YOLO9kWeight, Repository.NineKNames, 608);
-    }
 }
