@@ -1,5 +1,5 @@
-import ch.bildspur.vision.result.ObjectDetectionResult;
-import ch.bildspur.vision.YOLONetwork;
+import ch.bildspur.vision.*;
+
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
@@ -7,21 +7,24 @@ import processing.video.Capture;
 
 import java.util.List;
 
-
 Capture cam;
-YoloNetwork yolo;
-List<YoloDetection> detections;
+
+DeepVision deepVision = new DeepVision();
+YOLONetwork yolo;
+List<ObjectDetectionResult> detections;
 
 public void setup() {
   size(640, 480, FX2D);
 
   colorMode(HSB, 360, 100, 100);
 
-  yolo = new YoloNetwork();
+  println("creating model...");
+  yolo = deepVision.createYOLOv3Tiny();
 
   println("loading yolo model...");
   yolo.setup();
 
+  println("listing cameras...");
   String[] cameras = Capture.list();
 
   if (cameras.length == 0) {
@@ -51,12 +54,13 @@ public void draw() {
 
   image(cam, 0, 0);
 
-  detections = yolo.detect(cam, 0.2f);
+  yolo.setConfidenceThreshold(0.2f);
+  detections = yolo.run(cam);
 
   noFill();
   strokeWeight(2f);
 
-  for (YoloDetection detection : detections) {
+  for (ObjectDetectionResult detection : detections) {
     stroke((int)(360.0 / yolo.getNames().size() * detection.getClassId()), 80, 100);
     rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
   }
