@@ -7,17 +7,18 @@ The idea behind this library is to provide a simple way to use (inference) neura
 First of all a simple proof of concept will be created which implements the [YOLO: Real-Time Object Detection](https://pjreddie.com/darknet/yolo/) to define where to store the weight and model data and to specify the final API.
 
 #### API Structure
-The API should support the following:
+The API should support the following (✨ == `implemented`):
 
 - Support for Model fetching
     - Local sketch installation
     - Global library installation
 - YOLO
-    - YOLOv3-tiny
-    - YOLOv3-spp
+    - YOLOv3-tiny ✨
+    - YOLOv3-spp ([spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326))
     - YOLOv3-320
     - YOLOv3-416
-    - YOLOv3-608
+    - YOLOv3-608 ✨
+    - YOLO 9K
 - openVINO
     - Lightweight OpenPose
     - Face Detection

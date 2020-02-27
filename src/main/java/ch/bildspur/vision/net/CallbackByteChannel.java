@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ReadableByteChannel;
 
-class CallbackByteChannel implements ReadableByteChannel {
-    NetworkUtility.ProgressCallBack delegate;
+public class CallbackByteChannel implements ReadableByteChannel {
+    ProgressCallBack delegate;
     long size;
     ReadableByteChannel rbc;
     long sizeRead;
 
     CallbackByteChannel(ReadableByteChannel rbc, long expectedSize,
-                        NetworkUtility.ProgressCallBack delegate) {
+                        ProgressCallBack delegate) {
         this.delegate = delegate;
         this.size = expectedSize;
         this.rbc = rbc;

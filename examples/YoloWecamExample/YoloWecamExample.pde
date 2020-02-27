@@ -1,5 +1,5 @@
 import ch.bildspur.vision.result.ObjectDetectionResult;
-import ch.bildspur.vision.YoloNetwork;
+import ch.bildspur.vision.YOLONetwork;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;

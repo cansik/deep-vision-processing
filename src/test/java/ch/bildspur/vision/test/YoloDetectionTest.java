@@ -1,9 +1,9 @@
 package ch.bildspur.vision.test;
 
 
-import ch.bildspur.vision.config.YoloConfig;
+import ch.bildspur.vision.DeepVision;
+import ch.bildspur.vision.YOLONetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
-import ch.bildspur.vision.YoloNetwork;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
@@ -23,7 +23,9 @@ public class YoloDetectionTest extends PApplet {
 
     PImage testImage;
     PImage prepared;
-    YoloNetwork yolo;
+
+    DeepVision vision = new DeepVision();
+    YOLONetwork yolo;
     List<ObjectDetectionResult> detections;
 
     public void setup() {
@@ -32,7 +34,7 @@ public class YoloDetectionTest extends PApplet {
         testImage = loadImage(sketchPath("data/hk.jpg"));
         prepared = new PImage(testImage.width, testImage.height, PConstants.RGB);
 
-        yolo = new YoloNetwork(YoloConfig.YOLOv3_608);
+        yolo = vision.createYOLOv3();
         yolo.setup();
 
         yolo.setConfidenceThreshold(0.2f);

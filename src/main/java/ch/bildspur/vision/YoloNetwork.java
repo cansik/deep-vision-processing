@@ -1,6 +1,5 @@
 package ch.bildspur.vision;
 
-import ch.bildspur.vision.config.YoloConfig;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import org.bytedeco.javacpp.DoublePointer;
 import org.bytedeco.javacpp.FloatPointer;
@@ -10,6 +9,7 @@ import org.bytedeco.opencv.opencv_dnn.Net;
 import org.bytedeco.opencv.opencv_text.FloatVector;
 import org.bytedeco.opencv.opencv_text.IntVector;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +17,10 @@ import static org.bytedeco.opencv.global.opencv_core.CV_32F;
 import static org.bytedeco.opencv.global.opencv_core.minMaxLoc;
 import static org.bytedeco.opencv.global.opencv_dnn.*;
 
-public class YoloNetwork extends ObjectDetectionNetwork {
+public class YOLONetwork extends ObjectDetectionNetwork {
 
-    private String configPath;
-    private String weightsPath;
-    private String namesPath;
+    private Path configPath;
+    private Path weightsPath;
     private int width;
     private int height;
 
@@ -31,28 +30,17 @@ public class YoloNetwork extends ObjectDetectionNetwork {
 
     private Net net;
 
-    public YoloNetwork(YoloConfig config) {
-        this.configPath = config.getConfigPath();
-        this.weightsPath = config.getWeightsPath();
-        this.namesPath = config.getNamesPath();
-        this.width = config.getWidth();
-        this.height = config.getHeight();
-    }
-
-    public YoloNetwork(String configPath, String weightsPath, String namesPath, int width, int height) {
+    public YOLONetwork(Path configPath, Path weightsPath, int width, int height) {
         this.configPath = configPath;
         this.weightsPath = weightsPath;
-        this.namesPath = namesPath;
         this.width = width;
         this.height = height;
     }
 
     public boolean setup() {
-        net = readNetFromDarknet(configPath, weightsPath);
-
-        // load names
-        // todo: do this in object detection or factory
-        loadNames(namesPath);
+        net = readNetFromDarknet(
+                configPath.toAbsolutePath().toString(),
+                weightsPath.toAbsolutePath().toString());
 
         if (net.empty()) {
             System.out.println("Can't load network!");
@@ -134,7 +122,7 @@ public class YoloNetwork extends ObjectDetectionNetwork {
                 Rect box = boxes.get(i);
 
                 int classId = classIds.get(i);
-                detections.add(new ObjectDetectionResult(classId, getNames().get(classId), confidences.get(i),
+                detections.add(new ObjectDetectionResult(classId, getNameOrId(classId), confidences.get(i),
                         box.x(), box.y(), box.width(), box.height()));
             }
             return detections;
@@ -154,7 +142,7 @@ public class YoloNetwork extends ObjectDetectionNetwork {
             Rect box = boxes.get(idx);
 
             int classId = classIds.get(idx);
-            detections.add(new ObjectDetectionResult(classId, getNames().get(classId), confidences.get(idx),
+            detections.add(new ObjectDetectionResult(classId, getNameOrId(classId), confidences.get(idx),
                     box.x(), box.y(), box.width(), box.height()));
         }
 
@@ -185,16 +173,12 @@ public class YoloNetwork extends ObjectDetectionNetwork {
         this.skipNonMaximumSuppression = skipNonMaximumSuppression;
     }
 
-    public String getConfigPath() {
+    public Path getConfigPath() {
         return configPath;
     }
 
-    public String getWeightsPath() {
+    public Path getWeightsPath() {
         return weightsPath;
-    }
-
-    public String getNamesPath() {
-        return namesPath;
     }
 
     public int getWidth() {
