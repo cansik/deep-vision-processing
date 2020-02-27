@@ -42,6 +42,9 @@ public class YOLONetwork extends ObjectDetectionNetwork {
                 configPath.toAbsolutePath().toString(),
                 weightsPath.toAbsolutePath().toString());
 
+        //net.setPreferableBackend(DNN_BACKEND_OPENCV);
+        //net.setPreferableTarget(DNN_TARGET_OPENCL);
+
         if (net.empty()) {
             System.out.println("Can't load network!");
             return false;
