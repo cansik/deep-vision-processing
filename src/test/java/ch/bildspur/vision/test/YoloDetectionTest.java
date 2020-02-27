@@ -5,7 +5,6 @@ import ch.bildspur.vision.DeepVision;
 import ch.bildspur.vision.YOLONetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import processing.core.PApplet;
-import processing.core.PConstants;
 import processing.core.PImage;
 
 import java.util.List;
@@ -22,7 +21,6 @@ public class YoloDetectionTest extends PApplet {
     }
 
     PImage testImage;
-    PImage prepared;
 
     DeepVision vision = new DeepVision();
     YOLONetwork yolo;
@@ -32,7 +30,6 @@ public class YoloDetectionTest extends PApplet {
         colorMode(HSB, 360, 100, 100);
 
         testImage = loadImage(sketchPath("data/hk.jpg"));
-        prepared = new PImage(testImage.width, testImage.height, PConstants.RGB);
 
         println("creating network...");
         yolo = vision.createYOLOv3SPP();

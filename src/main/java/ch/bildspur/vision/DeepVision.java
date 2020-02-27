@@ -8,15 +8,16 @@ import java.nio.file.Files;
 
 public class DeepVision {
 
-    private void prepareDependencies(Dependency ... dependencies) {
-        // todo: validate or download dependencies
+    private void prepareDependencies(Dependency... dependencies) {
         try {
             Files.createDirectories(Repository.localStorageDirectory);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        for(Dependency dependency : dependencies) {
+        for (Dependency dependency : dependencies) {
+            // todo: download progress is not visible
+            System.out.println("preparing " + dependency.getName() + "...");
             dependency.resolve();
         }
     }

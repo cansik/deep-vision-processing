@@ -21,7 +21,7 @@ public abstract class ObjectDetectionNetwork extends DeepNeuralNetwork<List<Obje
     }
 
     protected String getNameOrId(int classId) {
-        if(names.size() > classId) {
+        if (names.size() > classId) {
             return names.get(classId);
         }
 
