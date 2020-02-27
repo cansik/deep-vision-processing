@@ -14,6 +14,8 @@ public class Repository {
     public static final Dependency NineKNames = new Dependency("9k.names");
 
     // networks
+
+    // object detection
     public static final Dependency YOLOv3Model = new Dependency("yolov3.cfg");
     public static final Dependency YOLOv3Weight = new Dependency("yolov3.weights");
 
@@ -25,4 +27,7 @@ public class Repository {
 
     public static final Dependency YOLO9kModel = new Dependency("yolo9000.cfg");
     public static final Dependency YOLO9kWeight = new Dependency("yolo9000.weights");
+
+    // pose estimation
+    public static final Dependency SingleHumanPoseEstimationModel = new Dependency("single-human-pose-estimation.onnx");
 }
