@@ -14,10 +14,8 @@ The API should support the following (✨ == `implemented`):
     - Global library installation
 - YOLO
     - YOLOv3-tiny ✨
-    - YOLOv3-spp ([spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326))
-    - YOLOv3-320
-    - YOLOv3-416
-    - YOLOv3-608 ✨
+    - YOLOv3-spp ([spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326)) ✨
+    - YOLOv3 (608) ✨
     - ~~YOLO 9K~~ ([not supported by OpenCV](https://answers.opencv.org/question/180425/opencv-darknet-error-when-initializing-darknet/?answer=180441#post-id-180441))
 - openVINO
     - Lightweight OpenPose
