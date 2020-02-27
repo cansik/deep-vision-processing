@@ -13,43 +13,43 @@ public class HumanPoseResult {
         return keyPoints;
     }
 
-    public KeyPointResult getRightAnkle() {
+    public KeyPointResult getNose() {
         return keyPoints.get(0);
     }
 
-    public KeyPointResult getRightKnee() {
+    public KeyPointResult getLeftEye() {
         return keyPoints.get(1);
     }
 
-    public KeyPointResult getRightHip() {
+    public KeyPointResult getRightEye() {
         return keyPoints.get(2);
     }
 
-    public KeyPointResult getLeftHip() {
+    public KeyPointResult getLeftEar() {
         return keyPoints.get(3);
     }
 
-    public KeyPointResult getLeftKnee() {
+    public KeyPointResult getRightEar() {
         return keyPoints.get(4);
     }
 
-    public KeyPointResult getLeftAnkle() {
+    public KeyPointResult getLeftShoulder() {
         return keyPoints.get(5);
     }
 
-    public KeyPointResult getPel() {
+    public KeyPointResult getRightShoulder() {
         return keyPoints.get(6);
     }
 
-    public KeyPointResult getSpi() {
+    public KeyPointResult getLeftElbow() {
         return keyPoints.get(7);
     }
 
-    public KeyPointResult getNeck() {
+    public KeyPointResult getRightElbow() {
         return keyPoints.get(8);
     }
 
-    public KeyPointResult getHead() {
+    public KeyPointResult getLeftWrist() {
         return keyPoints.get(9);
     }
 
@@ -57,23 +57,27 @@ public class HumanPoseResult {
         return keyPoints.get(10);
     }
 
-    public KeyPointResult getRightElbow() {
+    public KeyPointResult getLeftHip() {
         return keyPoints.get(11);
     }
 
-    public KeyPointResult getRightShoulder() {
+    public KeyPointResult getRightHip() {
         return keyPoints.get(12);
     }
 
-    public KeyPointResult getLeftShoulder() {
+    public KeyPointResult getLeftKnee() {
         return keyPoints.get(13);
     }
 
-    public KeyPointResult getLeftElbow() {
+    public KeyPointResult getRightKnee() {
         return keyPoints.get(14);
     }
 
-    public KeyPointResult getLeftWrist() {
+    public KeyPointResult getLeftAnkle() {
         return keyPoints.get(15);
+    }
+
+    public KeyPointResult getRightAnkle() {
+        return keyPoints.get(16);
     }
 }
