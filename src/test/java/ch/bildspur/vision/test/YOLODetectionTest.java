@@ -22,7 +22,7 @@ public class YOLODetectionTest extends PApplet {
 
     PImage testImage;
 
-    DeepVision vision = new DeepVision();
+    DeepVision vision = new DeepVision(this);
     YOLONetwork yolo;
     List<ObjectDetectionResult> detections;
 

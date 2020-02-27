@@ -1,47 +1,34 @@
 import ch.bildspur.vision.*;
 import ch.bildspur.vision.result.*;
-
-import processing.core.PApplet;
-import processing.core.PConstants;
-import processing.core.PImage;
-import processing.video.Capture;
-
 import java.util.List;
-
-Capture cam;
 
 DeepVision deepVision = new DeepVision(this);
 YOLONetwork yolo;
 List<ObjectDetectionResult> detections;
 
+PImage image;
+
 public void setup() {
   size(640, 480, FX2D);
 
   colorMode(HSB, 360, 100, 100);
+  
+  image = loadImage("hk.jpg");
 
   println("creating model...");
   yolo = deepVision.createYOLOv3Tiny();
 
   println("loading yolo model...");
   yolo.setup();
-
-  cam = new Capture(this);
-  cam.start();
 }
 
 public void draw() {
   background(55);
 
-  if (cam.available()) {
-    cam.read();
-  } else {
-    return;
-  }
-
-  image(cam, 0, 0);
+  image(image, 0, 0);
 
   yolo.setConfidenceThreshold(0.2f);
-  detections = yolo.run(cam);
+  detections = yolo.run(image);
 
   noFill();
   strokeWeight(2f);
@@ -51,5 +38,5 @@ public void draw() {
     rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
   }
 
-  surface.setTitle("Webcam YOLO Test - FPS: " + Math.round(frameRate));
+  surface.setTitle("YOLO Test - FPS: " + Math.round(frameRate));
 }
