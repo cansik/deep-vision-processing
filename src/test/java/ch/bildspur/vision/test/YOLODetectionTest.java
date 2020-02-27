@@ -9,10 +9,10 @@ import processing.core.PImage;
 
 import java.util.List;
 
-public class YoloDetectionTest extends PApplet {
+public class YOLODetectionTest extends PApplet {
 
     public static void main(String... args) {
-        YoloDetectionTest sketch = new YoloDetectionTest();
+        YOLODetectionTest sketch = new YOLODetectionTest();
         sketch.runSketch();
     }
 
@@ -43,7 +43,7 @@ public class YoloDetectionTest extends PApplet {
         detections = yolo.run(testImage);
         println("done!");
 
-        for(ObjectDetectionResult detection : detections) {
+        for (ObjectDetectionResult detection : detections) {
             System.out.println(detection.getClassName() + "\t[" + detection.getConfidence() + "]");
         }
     }
@@ -56,8 +56,8 @@ public class YoloDetectionTest extends PApplet {
         noFill();
         strokeWeight(2f);
 
-        for(ObjectDetectionResult detection : detections) {
-            stroke(round(360.0f * (float)detection.getClassId() / yolo.getNames().size()), 75, 100);
+        for (ObjectDetectionResult detection : detections) {
+            stroke(round(360.0f * (float) detection.getClassId() / yolo.getNames().size()), 75, 100);
             rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
         }
 
