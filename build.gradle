@@ -1,5 +1,5 @@
 group 'ch.bildspur'
-version '1.0.0'
+version '0.1.0'
 
 apply plugin: 'java'
 
@@ -42,7 +42,7 @@ dependencies {
     compile group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version: '2.3.2'
 }
 
-task copyToLib( type: Copy ) {
+task copyToLib(type: Copy) {
     into "$buildDir/libs/lib"
     from configurations.releaseJars
 }

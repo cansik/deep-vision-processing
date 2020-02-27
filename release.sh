@@ -22,13 +22,13 @@ if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ];then
     echo running gradle commands on windows
     gradlew.bat build
     gradlew.bat copyToLib
-    gradlew.bat jar
+    gradlew.bat fatjar
     gradlew.bat javadoc
 else
     echo running gradle commands on unix
     gradle build
     gradle copyToLib
-    gradle jar
+    gradle fatjar
     gradle javadoc
 fi
 
