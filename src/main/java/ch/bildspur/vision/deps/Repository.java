@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 
 public class Repository {
     public static String repositoryRootUrl = "https://github.com/cansik/deep-vision-processing/releases/download/repository/";
-    public static Path localStorageDirectory = Paths.get("data/networks");
+    public static Path localStorageDirectory = Paths.get("networks");
 
     // names
     public static final Dependency COCONames = new Dependency("coco.names");

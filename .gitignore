@@ -5,7 +5,6 @@ out
 hs_err_pid*.log
 frames
 release
-data/networks
+networks
 *.jar
 maps
-data/christy.jpg
