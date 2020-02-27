@@ -13,21 +13,18 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.bytedeco.opencv.global.opencv_core.*;
+import static org.bytedeco.opencv.global.opencv_core.CV_32F;
+import static org.bytedeco.opencv.global.opencv_core.minMaxLoc;
 import static org.bytedeco.opencv.global.opencv_dnn.blobFromImage;
 import static org.bytedeco.opencv.global.opencv_dnn.readNetFromONNX;
-import static org.bytedeco.opencv.global.opencv_imgcodecs.imwrite;
-import static org.bytedeco.opencv.global.opencv_imgproc.*;
+import static org.bytedeco.opencv.global.opencv_imgproc.resize;
 
 public class SingleHumanPoseEstimationNetwork extends DeepNeuralNetwork<HumanPoseResult> {
     private Path modelPath;
     private Net net;
 
-    private int inputHeight = 384;
-    private int inputWidth = 288;
-    private int scaleFactor = 8;
-
-    private float threshold = 0.1f;
+    private final int inputHeight = 384;
+    private final int inputWidth = 288;
 
     public SingleHumanPoseEstimationNetwork(Path modelPath) {
         this.modelPath = modelPath;
@@ -60,22 +57,13 @@ public class SingleHumanPoseEstimationNetwork extends DeepNeuralNetwork<HumanPos
         // read maximum keypoint
         List<KeyPointResult> keyPoints = new ArrayList<>();
         for (int i = 0; i < heatMaps.length; i++) {
-            keyPoints.add(extractKeyPoint(heatMaps[i], threshold, i));
+            keyPoints.add(extractKeyPoint(i, heatMaps[i]));
         }
 
         return new HumanPoseResult(keyPoints);
     }
 
-    private KeyPointResult extractKeyPoint(Mat probMap, float threshold, int index) {
-        // smooth prob map and threshold
-        Mat smoothProbMap = new Mat();
-        GaussianBlur(probMap, smoothProbMap, new Size(3, 3), 0.0, 0.0, 0);
-
-        threshold(smoothProbMap, smoothProbMap, threshold, 255.0, THRESH_BINARY);
-        smoothProbMap.convertTo(smoothProbMap, CV_8U);
-
-        imwrite("maps/k_" + index + ".bmp", smoothProbMap);
-
+    private KeyPointResult extractKeyPoint(int index, Mat probMap) {
         // get maximum point
         Point maxPoint = new Point(1);
         DoublePointer probability = new DoublePointer(1);
