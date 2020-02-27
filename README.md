@@ -10,7 +10,7 @@ First of all a simple proof of concept will be created which implements the [YOL
 The API should support the following (✨ == `implemented`):
 
 - Support for Model fetching
-    - Local sketch installation
+    - Local sketch installation ✨
     - Global library installation
 - YOLO
     - YOLOv3-tiny ✨

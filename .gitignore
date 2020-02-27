@@ -5,4 +5,4 @@ out
 hs_err_pid*.log
 frames
 release
-data/darknet
+data/networks

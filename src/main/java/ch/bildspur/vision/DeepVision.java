@@ -3,10 +3,19 @@ package ch.bildspur.vision;
 import ch.bildspur.vision.deps.Dependency;
 import ch.bildspur.vision.deps.Repository;
 
+import java.io.IOException;
+import java.nio.file.Files;
+
 public class DeepVision {
 
     private void prepareDependencies(Dependency ... dependencies) {
         // todo: validate or download dependencies
+        try {
+            Files.createDirectories(Repository.localStorageDirectory);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         for(Dependency dependency : dependencies) {
             dependency.resolve();
         }

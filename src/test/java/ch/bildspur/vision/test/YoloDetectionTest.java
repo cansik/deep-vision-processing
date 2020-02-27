@@ -34,11 +34,17 @@ public class YoloDetectionTest extends PApplet {
         testImage = loadImage(sketchPath("data/hk.jpg"));
         prepared = new PImage(testImage.width, testImage.height, PConstants.RGB);
 
-        yolo = vision.createYOLOv3();
+        println("creating network...");
+        yolo = vision.createYOLO9K();
+
+        println("loading model...");
         yolo.setup();
 
         yolo.setConfidenceThreshold(0.2f);
+
+        println("inferencing...");
         detections = yolo.run(testImage);
+        println("done!");
 
         for(ObjectDetectionResult detection : detections) {
             System.out.println(detection.getClassName() + "\t[" + detection.getConfidence() + "]");
