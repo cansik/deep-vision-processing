@@ -6,6 +6,7 @@ apply plugin: 'java'
 sourceCompatibility = 1.8
 
 def javaCvVersion = '1.5.2'
+def outputName = 'deepvision'
 
 repositories {
     mavenCentral()
@@ -13,21 +14,18 @@ repositories {
 }
 
 configurations {
-    jar.archiveName = 'deep-vision.jar'
-    releaseJars
+    jar.archiveName = outputName + '.jar'
+
+    processing
+    compile.extendsFrom processing
 }
 
 javadoc {
     source = sourceSets.main.allJava
-    classpath = configurations.compile
+    classpath = configurations.runtime
 }
 
 dependencies {
-    // release
-    releaseJars group: 'org.bytedeco', name: 'javacv', version: "$javaCvVersion"
-    releaseJars group: 'org.bytedeco', name: 'opencv-platform', version: "4.1.2-$javaCvVersion"
-    releaseJars group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.7-$javaCvVersion"
-
     // compile
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
@@ -37,18 +35,18 @@ dependencies {
     compile group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.7-$javaCvVersion"
 
     // processing
-    compile group: 'org.processing', name: 'core', version: '3.3.7'
-    compile group: 'org.jogamp.jogl', name: 'jogl-all-main', version: '2.3.2'
-    compile group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version: '2.3.2'
-}
-
-task copyToLib(type: Copy) {
-    into "$buildDir/libs/lib"
-    from configurations.releaseJars
+    processing group: 'org.processing', name: 'core', version: '3.3.7'
+    processing group: 'org.jogamp.jogl', name: 'jogl-all-main', version: '2.3.2'
+    processing group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version: '2.3.2'
 }
 
 task fatJar(type: Jar) {
-    baseName = project.name + '-all'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    archiveName = "$outputName-complete.jar"
+    dependsOn configurations.runtime
+    from {
+        (configurations.runtime - configurations.processing).collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
     with jar
 }

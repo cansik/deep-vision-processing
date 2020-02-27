@@ -9,7 +9,7 @@ fi
 
 # parameter
 VERSION=$1
-ARCHIVE_NAME="deep-vision"
+ARCHIVE_NAME="deepvision"
 
 echo $PWD
 
@@ -21,15 +21,13 @@ echo compiling...
 if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ];then
     echo running gradle commands on windows
     gradlew.bat build
-    gradlew.bat copyToLib
     gradlew.bat fatjar
     gradlew.bat javadoc
 else
     echo running gradle commands on unix
-    gradle build
-    gradle copyToLib
-    gradle fatjar
-    gradle javadoc
+    ./gradlew build
+    ./gradlew fatjar
+    ./gradlew javadoc
 fi
 
 echo "copy files..."
@@ -42,8 +40,8 @@ mkdir -p "$OUTPUT/library"
 
 # copy files
 cp -f library.properties "release/$ARCHIVE_NAME.txt"
-cp -a "build/libs/lib/." "$OUTPUT/library/"
-cp "build/libs/$ARCHIVE_NAME.jar" "$OUTPUT/library/"
+# cp -a "build/libs/lib/." "$OUTPUT/library/"
+cp "build/libs/$ARCHIVE_NAME-complete.jar" "$OUTPUT/library/$ARCHIVE_NAME.jar"
 # cp -r native "$OUTPUT/library/"
 cp -r "build/docs/javadoc" "$OUTPUT/reference"
 
