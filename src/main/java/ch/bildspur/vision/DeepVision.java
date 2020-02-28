@@ -51,8 +51,8 @@ public class DeepVision {
         return createYOLONetwork(Repository.YOLOv3SPPModel, Repository.YOLOv3SPPWeight, Repository.COCONames, 608);
     }
 
-    public SingleHumanPoseEstimationNetwork createSingleHumanPoseEstimation() {
+    public SingleHumanPoseNetwork createSingleHumanPoseEstimation() {
         prepareDependencies(Repository.SingleHumanPoseEstimationModel);
-        return new SingleHumanPoseEstimationNetwork(Repository.SingleHumanPoseEstimationModel.getPath());
+        return new SingleHumanPoseNetwork(Repository.SingleHumanPoseEstimationModel.getPath(), 288, 384);
     }
 }

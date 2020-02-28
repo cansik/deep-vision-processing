@@ -2,7 +2,7 @@ package ch.bildspur.vision.test;
 
 
 import ch.bildspur.vision.DeepVision;
-import ch.bildspur.vision.SingleHumanPoseEstimationNetwork;
+import ch.bildspur.vision.SingleHumanPoseNetwork;
 import ch.bildspur.vision.result.HumanPoseResult;
 import ch.bildspur.vision.result.KeyPointResult;
 import processing.core.PApplet;
@@ -23,7 +23,7 @@ public class PoseEstimationTest extends PApplet {
 
     DeepVision vision = new DeepVision(this);
 
-    SingleHumanPoseEstimationNetwork pose;
+    SingleHumanPoseNetwork pose;
     HumanPoseResult result;
 
     public void setup() {
