@@ -18,10 +18,7 @@ public class MultiHumanPoseNetwork extends PoseNetwork<List<HumanPoseResult>> {
     private double threshold = 0.1f;
 
     public MultiHumanPoseNetwork(Path modelPath) {
-        super(modelPath,
-                256, 256,
-                256.0,
-                128.0);
+        super(modelPath, 456, 256, 256.0, 128.0);
     }
 
     @Override

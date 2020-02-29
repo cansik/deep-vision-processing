@@ -52,8 +52,8 @@ public class DeepVision {
     }
 
     public SingleHumanPoseNetwork createSingleHumanPoseEstimation() {
-        prepareDependencies(Repository.LIPSingleHumanPoseEstimationModel);
-        return new SingleHumanPoseNetwork(Repository.LIPSingleHumanPoseEstimationModel.getPath());
+        prepareDependencies(Repository.SingleHumanPoseEstimationModel);
+        return new SingleHumanPoseNetwork(Repository.SingleHumanPoseEstimationModel.getPath());
     }
 
     public MultiHumanPoseNetwork createMultiHumanPoseEstimation() {
