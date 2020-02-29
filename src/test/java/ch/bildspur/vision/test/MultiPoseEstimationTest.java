@@ -2,39 +2,39 @@ package ch.bildspur.vision.test;
 
 
 import ch.bildspur.vision.DeepVision;
-import ch.bildspur.vision.SingleHumanPoseNetwork;
+import ch.bildspur.vision.MultiHumanPoseNetwork;
 import ch.bildspur.vision.result.HumanPoseResult;
 import ch.bildspur.vision.result.KeyPointResult;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class PoseEstimationTest extends PApplet {
+import java.util.List;
+
+public class MultiPoseEstimationTest extends PApplet {
 
     public static void main(String... args) {
-        PoseEstimationTest sketch = new PoseEstimationTest();
+        MultiPoseEstimationTest sketch = new MultiPoseEstimationTest();
         sketch.runSketch();
     }
 
     public void settings() {
-        size(480, 640, FX2D);
+        size(806, 605, FX2D);
     }
 
     PImage testImage;
 
     DeepVision vision = new DeepVision(this);
 
-    SingleHumanPoseNetwork pose;
-    HumanPoseResult result;
-
-    float scale = 2.0f;
+    MultiHumanPoseNetwork pose;
+    List<HumanPoseResult> result;
 
     public void setup() {
         colorMode(HSB, 360, 100, 100);
 
-        testImage = loadImage(sketchPath("data/florian.jpg"));
+        testImage = loadImage(sketchPath("data/pose.jpg"));
 
         println("creating network...");
-        pose = vision.createSingleHumanPoseEstimation();
+        pose = vision.createMultiHumanPoseEstimation();
 
         println("loading model...");
         pose.setup();
@@ -47,13 +47,14 @@ public class PoseEstimationTest extends PApplet {
     public void draw() {
         background(55);
 
-        image(testImage, 0, 0, width, height);
+        image(testImage, 0, 0);
 
         // draw result
-        scale(1f / scale);
         stroke(180, 80, 100);
         noFill();
-        drawHuman(result);
+
+        for (HumanPoseResult human : result)
+            drawHuman(human);
 
         noFill();
         strokeWeight(2f);
@@ -86,12 +87,10 @@ public class PoseEstimationTest extends PApplet {
 
         // draw points
         int i = 0;
+        fill(0);
         for (KeyPointResult point : human.getKeyPoints()) {
-            fill(0);
             ellipse(point.getX(), point.getY(), 10, 10);
-            stroke(255, 0, 255);
-            textSize(20);
-            text(i + " (" + nf(point.getProbability(), 0, 2) + ")", point.getX() + 5, point.getY());
+            text(i, point.getX() + 5, point.getY());
             i++;
         }
     }

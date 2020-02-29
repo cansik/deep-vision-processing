@@ -16,8 +16,8 @@ import static org.bytedeco.opencv.global.opencv_dnn.readNetFromONNX;
 
 public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> {
 
-    public SingleHumanPoseNetwork(Path modelPath, int inputWidth, int inputHeight) {
-        super(modelPath, inputWidth, inputHeight);
+    public SingleHumanPoseNetwork(Path modelPath) {
+        super(modelPath, 288, 384, 256.0, 128.0);
     }
 
     @Override
@@ -27,7 +27,15 @@ public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> {
 
     @Override
     HumanPoseResult run(Mat frame) {
-        Mat[] heatMaps = extractHeatMaps(frame);
+        // prepare
+        Mat inputBlob = createInputBlob(frame);
+
+        // inference
+        getNet().setInput(inputBlob);
+        Mat output = net.forward("stage_1_output_1_heatmaps");
+
+        // post-process
+        Mat[] heatMaps = splitNetOutputBlobToParts(output, frame.size(), true);
 
         // read maximum keypoint per heatmap
         List<KeyPointResult> keyPoints = new ArrayList<>();
@@ -39,6 +47,8 @@ public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> {
     }
 
     private KeyPointResult extractKeyPoint(int index, Mat probMap) {
+        storeHeatMap("maps/c_" + index + ".bmp", probMap);
+
         // get maximum point
         Point maxPoint = new Point(1);
         DoublePointer probability = new DoublePointer(1);
@@ -46,6 +56,6 @@ public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> {
         // Get the value and location of the maximum score
         minMaxLoc(probMap, null, probability, null, maxPoint, null);
 
-        return new KeyPointResult(index, maxPoint.x(), maxPoint.y(), (float) probability.get());
+        return new KeyPointResult(index, maxPoint.x(), maxPoint.y(), (float) (probability.get() - (mean / scale)));
     }
 }
