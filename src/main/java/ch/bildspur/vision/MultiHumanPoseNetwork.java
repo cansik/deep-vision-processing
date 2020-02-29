@@ -46,7 +46,12 @@ public class MultiHumanPoseNetwork extends PoseNetwork<List<HumanPoseResult>> {
         Mat heatMapOutput = outs.get(1);
 
         // post-process
+        Mat[] affinityFields = splitNetOutputBlobToParts(poseAffinityFieldOutput, frame.size(), true);
         Mat[] heatMaps = splitNetOutputBlobToParts(heatMapOutput, frame.size(), true);
+
+        for (int i = 0; i < affinityFields.length; i++) {
+            storeHeatMap("maps/a_" + i + ".bmp", affinityFields[i]);
+        }
 
         // save global heat map
         storeHeatMap("maps/global.bmp", heatMaps[heatMaps.length - 1]);

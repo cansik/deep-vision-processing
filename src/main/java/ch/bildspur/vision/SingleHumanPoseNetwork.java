@@ -18,6 +18,7 @@ public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> {
     private final int pointCount = 17;
 
     public SingleHumanPoseNetwork(Path modelPath) {
+        // todo: check if this is really LIP or COCO dataset
         super(modelPath, 288, 384, 256.0, 128.0);
     }
 
