@@ -15,6 +15,7 @@ import static org.bytedeco.opencv.global.opencv_core.minMaxLoc;
 import static org.bytedeco.opencv.global.opencv_dnn.readNetFromONNX;
 
 public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> {
+    private final int pointCount = 17;
 
     public SingleHumanPoseNetwork(Path modelPath) {
         super(modelPath, 288, 384, 256.0, 128.0);
@@ -39,7 +40,7 @@ public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> {
 
         // read maximum keypoint per heatmap
         List<KeyPointResult> keyPoints = new ArrayList<>();
-        for (int i = 0; i < heatMaps.length; i++) {
+        for (int i = 0; i < pointCount; i++) {
             keyPoints.add(extractKeyPoint(i, heatMaps[i]));
         }
 

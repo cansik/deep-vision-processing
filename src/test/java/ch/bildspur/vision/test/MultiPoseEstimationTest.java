@@ -18,7 +18,7 @@ public class MultiPoseEstimationTest extends PApplet {
     }
 
     public void settings() {
-        size(806, 605, FX2D);
+        size(640, 427, FX2D);
     }
 
     PImage testImage;
@@ -31,7 +31,7 @@ public class MultiPoseEstimationTest extends PApplet {
     public void setup() {
         colorMode(HSB, 360, 100, 100);
 
-        testImage = loadImage(sketchPath("data/multi-pose.jpg"));
+        testImage = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
         pose = vision.createMultiHumanPoseEstimation();

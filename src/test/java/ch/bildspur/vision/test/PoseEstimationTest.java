@@ -16,7 +16,7 @@ public class PoseEstimationTest extends PApplet {
     }
 
     public void settings() {
-        size(480, 640, FX2D);
+        size(427, 640, FX2D);
     }
 
     PImage testImage;
@@ -26,12 +26,12 @@ public class PoseEstimationTest extends PApplet {
     SingleHumanPoseNetwork pose;
     HumanPoseResult result;
 
-    float scale = 2.0f;
+    float scale = 1.0f;
 
     public void setup() {
         colorMode(HSB, 360, 100, 100);
 
-        testImage = loadImage(sketchPath("data/florian.jpg"));
+        testImage = loadImage(sketchPath("data/yoga.jpg"));
 
         println("creating network...");
         pose = vision.createSingleHumanPoseEstimation();
@@ -47,7 +47,7 @@ public class PoseEstimationTest extends PApplet {
     public void draw() {
         background(55);
 
-        image(testImage, 0, 0, width, height);
+        image(testImage, 0, 0);
 
         // draw result
         scale(1f / scale);
@@ -86,11 +86,13 @@ public class PoseEstimationTest extends PApplet {
 
         // draw points
         int i = 0;
+        stroke(0, 50, 100);
         for (KeyPointResult point : human.getKeyPoints()) {
-            fill(0);
+            fill(0, 0, 0);
             ellipse(point.getX(), point.getY(), 10, 10);
-            stroke(255, 0, 255);
-            textSize(20);
+
+            fill(0, 50, 100);
+            textSize(12);
             text(i + " (" + nf(point.getProbability(), 0, 2) + ")", point.getX() + 5, point.getY());
             i++;
         }
