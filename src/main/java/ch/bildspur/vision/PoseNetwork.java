@@ -21,20 +21,18 @@ public abstract class PoseNetwork<R> extends DeepNeuralNetwork<R> {
     private final int inputHeight;
     private final int inputWidth;
 
-    protected double mean;
     protected Scalar meanScalar;
     protected double scale;
 
     public PoseNetwork(Path modelPath, int inputWidth, int inputHeight, double scale, double mean) {
-        this(modelPath, inputWidth, inputHeight, scale, mean, new Scalar(mean, mean, mean, 0.0));
+        this(modelPath, inputWidth, inputHeight, scale, new Scalar(mean, mean, mean, 0.0));
     }
 
-    public PoseNetwork(Path modelPath, int inputWidth, int inputHeight, double scale, double mean, Scalar meanScalar) {
+    public PoseNetwork(Path modelPath, int inputWidth, int inputHeight, double scale, Scalar meanScalar) {
         this.modelPath = modelPath;
         this.inputWidth = inputWidth;
         this.inputHeight = inputHeight;
         this.scale = scale;
-        this.mean = mean;
         this.meanScalar = meanScalar;
     }
 
@@ -83,9 +81,13 @@ public abstract class PoseNetwork<R> extends DeepNeuralNetwork<R> {
 
     protected void storeHeatMap(String path, Mat image) {
         Mat colorMap = new Mat();
-        image.convertTo(colorMap, CV_8U, scale, -mean);
+        image.convertTo(colorMap, CV_8U, 256.0, -128);
         applyColorMap(colorMap, colorMap, COLORMAP_JET);
         imwrite(path, colorMap);
+    }
+
+    protected float getProbability(double probability) {
+        return (float) (probability);
     }
 
     public Path getModelPath() {
@@ -96,8 +98,8 @@ public abstract class PoseNetwork<R> extends DeepNeuralNetwork<R> {
         return net;
     }
 
-    public double getMean() {
-        return mean;
+    public Scalar getMean() {
+        return meanScalar;
     }
 
     public double getScale() {

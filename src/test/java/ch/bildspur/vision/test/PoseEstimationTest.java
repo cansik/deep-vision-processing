@@ -42,11 +42,19 @@ public class PoseEstimationTest extends PApplet {
         println("inferencing...");
         result = pose.run(testImage);
         println("done!");
+
+        // print probability average
+        double sumProb = 0.0;
+        for (KeyPointResult p : result.getKeyPoints()) {
+            sumProb += p.getProbability();
+        }
+        println("AVG Probability: " + (sumProb / result.getKeyPoints().size()));
     }
 
     public void draw() {
         background(55);
 
+        testImage.resize(0, height);
         image(testImage, 0, 0);
 
         // draw result

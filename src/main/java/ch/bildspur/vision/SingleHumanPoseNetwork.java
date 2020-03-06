@@ -5,6 +5,7 @@ import ch.bildspur.vision.result.KeyPointResult;
 import org.bytedeco.javacpp.DoublePointer;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Point;
+import org.bytedeco.opencv.opencv_core.Scalar;
 import org.bytedeco.opencv.opencv_dnn.Net;
 
 import java.nio.file.Path;
@@ -19,7 +20,7 @@ public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> {
 
     public SingleHumanPoseNetwork(Path modelPath) {
         // todo: check if this is really LIP or COCO dataset
-        super(modelPath, 288, 384, 256.0, 128.0);
+        super(modelPath, 288, 384, 58.0, new Scalar(123.675, 116.28, 103.53, 0.0));
     }
 
     @Override
@@ -58,6 +59,6 @@ public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> {
         // Get the value and location of the maximum score
         minMaxLoc(probMap, null, probability, null, maxPoint, null);
 
-        return new KeyPointResult(index, maxPoint.x(), maxPoint.y(), (float) (probability.get() - (mean / scale)));
+        return new KeyPointResult(index, maxPoint.x(), maxPoint.y(), getProbability(probability.get()));
     }
 }
