@@ -20,7 +20,6 @@ public class DeepVision {
         }
 
         for (Dependency dependency : dependencies) {
-            // todo: download progress is not visible
             System.out.println("preparing " + dependency.getName() + "...");
             dependency.resolve();
         }
@@ -74,5 +73,10 @@ public class DeepVision {
     public ULFGFaceDetectionNetwork createULFGFaceDetectorSlim320() {
         prepareDependencies(Repository.ULFGFaceDetectorSlim320Simplified);
         return new ULFGFaceDetectionNetwork(Repository.ULFGFaceDetectorSlim320Simplified.getPath(), 320, 240);
+    }
+
+    public ULFGFaceDetectionNetwork createULFGFaceDetectorRFB640() {
+        prepareDependencies(Repository.ULFGFaceDetectorRFB640);
+        return new ULFGFaceDetectionNetwork(Repository.ULFGFaceDetectorRFB640.getPath(), 640, 480);
     }
 }

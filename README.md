@@ -17,8 +17,11 @@ The API should support the following (✨ = `implemented`):
     - YOLOv3-spp ([spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326)) ✨
     - YOLOv3 (608) ✨
     - ~~YOLO 9K~~ ([not supported by OpenCV](https://answers.opencv.org/question/180425/opencv-darknet-error-when-initializing-darknet/?answer=180441#post-id-180441))
+- face detection
+    - Ultra-Light-Fast-Generic-Face-Detector-1MB (~40 FPS on CPU)
 - openPose
     - Single Human Pose Detection based on lightweight openpose ✨
+    - Multi Human Pose Detection
 - openVINO
     - Lightweight OpenPose (Multi-Person)
     - Face Detection
