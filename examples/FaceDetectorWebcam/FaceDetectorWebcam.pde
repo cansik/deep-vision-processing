@@ -11,7 +11,7 @@ ULFGFaceDetectionNetwork network;
 List<ObjectDetectionResult> detections;
 
 public void setup() {
-  size(640, 480);
+  size(640, 480, FX2D);
   colorMode(HSB, 360, 100, 100);
 
   println("creating network...");

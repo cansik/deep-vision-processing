@@ -186,4 +186,19 @@ public class ULFGFaceDetectionNetwork extends DeepNeuralNetwork<List<ObjectDetec
         }
     }
 
+    public float getConfidenceThreshold() {
+        return confidenceThreshold;
+    }
+
+    public void setConfidenceThreshold(float confidenceThreshold) {
+        this.confidenceThreshold = confidenceThreshold;
+    }
+
+    public float getIouThreshold() {
+        return iouThreshold;
+    }
+
+    public void setIouThreshold(float iouThreshold) {
+        this.iouThreshold = iouThreshold;
+    }
 }
