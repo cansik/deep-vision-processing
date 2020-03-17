@@ -84,10 +84,10 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
         Mat confidencesOut = outs.get(1);
 
         // boxes
-        Mat boxes = boxesOut.reshape(1, 4);
+        Mat boxes = boxesOut.reshape(0, boxesOut.size(1));
 
         // class confidences (BACKGROUND, face)
-        Mat confidences = confidencesOut.reshape(1, 2);
+        Mat confidences = confidencesOut.reshape(0, confidencesOut.size(1));
 
         return predict(frame.size().width(), frame.size().height(), confidences, boxes);
     }
@@ -97,23 +97,25 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
         RectVector relevantBoxes = new RectVector();
 
         // extract only relevant prob
-        for (int i = 0; i < boxes.cols(); i++) {
-            FloatPointer confidencesPtr = new FloatPointer(confidences.col(i).data());
-            float probability = confidencesPtr.get(1); // read second row (face)
+        for (int i = 0; i < boxes.rows(); i++) {
+            FloatPointer confidencesPtr = new FloatPointer(confidences.row(i).data());
+            float probability = confidencesPtr.get(1); // read second column (face)
 
-            if (probability > confidenceThreshold) continue;
+            if (probability < confidenceThreshold) continue;
 
             // add probability
             relevantConfidences.push_back(probability);
 
             // add box data
-            FloatPointer boxesPtr = new FloatPointer(boxes.col(i).data());
+            FloatPointer boxesPtr = new FloatPointer(boxes.row(i).data());
             int left = (int) (boxesPtr.get(0) * frameWidth);
             int top = (int) (boxesPtr.get(1) * frameHeight);
             int width = (int) (boxesPtr.get(2) * frameHeight);
             int height = (int) (boxesPtr.get(3) * frameHeight);
             relevantBoxes.push_back(new Rect(left, top, width, height));
         }
+
+        System.out.println("relevant: " + relevantConfidences.size());
 
         // run nms
         IntPointer indices = new IntPointer(confidences.size());
@@ -133,6 +135,10 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
         }
 
         return detections;
+    }
+
+    private void convertLocationsToBoxes(Mat locations) {
+
     }
 
     private void defineImageSize(Size imageSize) {
