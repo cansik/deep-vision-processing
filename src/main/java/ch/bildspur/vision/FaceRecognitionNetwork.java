@@ -29,7 +29,8 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
     private float iouThreshold = 0.3f;
     private int topK = -1;
 
-    private Scalar imageMean = new Scalar(127);
+    // todo: maybe switch to Scalar.all(127);
+    private Scalar imageMean = Scalar.all(127);
     private float imageStd = 128.0f;
 
     private float centerVariance = 0.1f;
@@ -106,13 +107,18 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
             // add probability
             relevantConfidences.push_back(probability);
 
-            // add box data
+            // add box data and convert locations to positions
+            float[] prior = priors.get(i);
             FloatPointer boxesPtr = new FloatPointer(boxes.row(i).data());
-            int left = (int) (boxesPtr.get(0) * frameWidth);
-            int top = (int) (boxesPtr.get(1) * frameHeight);
-            int width = (int) (boxesPtr.get(2) * frameHeight);
-            int height = (int) (boxesPtr.get(3) * frameHeight);
-            relevantBoxes.push_back(new Rect(left, top, width, height));
+            float centerX = ((boxesPtr.get(0) * centerVariance * prior[2] + prior[0]) * frameWidth);
+            float centerY = ((boxesPtr.get(1) * centerVariance * prior[3] + prior[1]) * frameHeight);
+            float width = (float) ((Math.exp(boxesPtr.get(2) * sizeVariance) * prior[2]) * frameHeight);
+            float height = (float) ((Math.exp(boxesPtr.get(3) * sizeVariance) * prior[3]) * frameHeight);
+
+            int left = Math.round(centerX - width / 2.0f);
+            int top = Math.round(centerY - height / 2.0f);
+
+            relevantBoxes.push_back(new Rect(left, top, Math.round(width), Math.round(height)));
         }
 
         System.out.println("relevant: " + relevantConfidences.size());
@@ -135,10 +141,6 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
         }
 
         return detections;
-    }
-
-    private void convertLocationsToBoxes(Mat locations) {
-
     }
 
     private void defineImageSize(Size imageSize) {
