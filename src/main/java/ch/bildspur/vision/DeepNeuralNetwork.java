@@ -10,7 +10,7 @@ import static org.bytedeco.opencv.global.opencv_imgproc.cvtColor;
 
 public abstract class DeepNeuralNetwork<R> {
 
-    abstract boolean setup();
+    public abstract boolean setup();
 
     public R run(PImage image) {
         // prepare frame
@@ -22,5 +22,5 @@ public abstract class DeepNeuralNetwork<R> {
         return run(frame);
     }
 
-    abstract R run(Mat frame);
+    public abstract R run(Mat frame);
 }
