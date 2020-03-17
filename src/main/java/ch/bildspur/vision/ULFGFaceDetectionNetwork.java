@@ -17,8 +17,9 @@ import static org.bytedeco.opencv.global.opencv_dnn.*;
 
 /**
  * Based on https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB/blob/master/caffe/ultra_face_opencvdnn_inference.py
+ * Adapted and improved a lot.
  */
-public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetectionResult>> {
+public class ULFGFaceDetectionNetwork extends DeepNeuralNetwork<List<ObjectDetectionResult>> {
     private Path modelPath;
     protected Net net;
 
@@ -29,7 +30,6 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
     private float iouThreshold = 0.3f;
     private int topK = -1;
 
-    // todo: maybe switch to Scalar.all(127);
     private Scalar imageMean = Scalar.all(127);
     private float imageStd = 128.0f;
 
@@ -40,7 +40,7 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
 
     private List<float[]> priors = new ArrayList<>();
 
-    public FaceRecognitionNetwork(Path modelPath, int width, int height) {
+    public ULFGFaceDetectionNetwork(Path modelPath, int width, int height) {
         this.modelPath = modelPath;
         this.width = width;
         this.height = height;
@@ -120,8 +120,6 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
 
             relevantBoxes.push_back(new Rect(left, top, Math.round(width), Math.round(height)));
         }
-
-        System.out.println("relevant: " + relevantConfidences.size());
 
         // run nms
         IntPointer indices = new IntPointer(confidences.size());

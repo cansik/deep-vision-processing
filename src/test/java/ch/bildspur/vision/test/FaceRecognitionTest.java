@@ -2,7 +2,7 @@ package ch.bildspur.vision.test;
 
 
 import ch.bildspur.vision.DeepVision;
-import ch.bildspur.vision.FaceRecognitionNetwork;
+import ch.bildspur.vision.ULFGFaceDetectionNetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -23,7 +23,7 @@ public class FaceRecognitionTest extends PApplet {
     PImage testImage;
 
     DeepVision vision = new DeepVision(this);
-    FaceRecognitionNetwork network;
+    ULFGFaceDetectionNetwork network;
     List<ObjectDetectionResult> detections;
 
     public void setup() {
@@ -32,7 +32,7 @@ public class FaceRecognitionTest extends PApplet {
         testImage = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
-        network = vision.createULFGFaceDetectorRFB320();
+        network = vision.createULFGFaceDetectorRFB640();
 
         println("loading model...");
         network.setup();
@@ -53,11 +53,13 @@ public class FaceRecognitionTest extends PApplet {
     public void draw() {
         background(55);
 
+        detections = network.run(testImage);
         image(testImage, 0, 0);
 
         noFill();
         strokeWeight(2f);
 
+        stroke(200, 80, 100);
         for (ObjectDetectionResult detection : detections) {
             rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
         }

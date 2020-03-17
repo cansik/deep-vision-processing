@@ -66,8 +66,13 @@ public class DeepVision {
     }
 
     // face recognition
-    public FaceRecognitionNetwork createULFGFaceDetectorRFB320() {
+    public ULFGFaceDetectionNetwork createULFGFaceDetectorRFB320() {
         prepareDependencies(Repository.ULFGFaceDetectorRFB320Simplified);
-        return new FaceRecognitionNetwork(Repository.ULFGFaceDetectorRFB320Simplified.getPath(), 320, 240);
+        return new ULFGFaceDetectionNetwork(Repository.ULFGFaceDetectorRFB320Simplified.getPath(), 320, 240);
+    }
+
+    public ULFGFaceDetectionNetwork createULFGFaceDetectorSlim320() {
+        prepareDependencies(Repository.ULFGFaceDetectorSlim320Simplified);
+        return new ULFGFaceDetectionNetwork(Repository.ULFGFaceDetectorSlim320Simplified.getPath(), 320, 240);
     }
 }
