@@ -6,7 +6,7 @@ import processing.video.Capture;
 
 Capture cam;
 
-DeepVision vision = new DeepVision(this);
+DeepVision vision;
 ULFGFaceDetectionNetwork network;
 List<ObjectDetectionResult> detections;
 
@@ -15,6 +15,7 @@ public void setup() {
   colorMode(HSB, 360, 100, 100);
 
   println("creating network...");
+  vision = new DeepVision(this);
   network = vision.createULFGFaceDetectorRFB320();
 
   println("loading model...");
