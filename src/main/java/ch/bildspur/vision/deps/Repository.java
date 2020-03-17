@@ -34,7 +34,4 @@ public class Repository {
 
     // face recognition
     public static final Dependency ULFGFaceDetectorRFB320Simplified = new Dependency("version-RFB-320_simplified.onnx");
-
-    public static final Dependency ULFGFaceDetectorRFB320Model = new Dependency("RFB-320.caffemodel");
-    public static final Dependency ULFGFaceDetectorRFB320Weight = new Dependency("RFB-320.prototxt");
 }

@@ -26,15 +26,18 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
     private int height;
 
     private float confidenceThreshold = 0.7f;
-
     private float iouThreshold = 0.3f;
     private int topK = -1;
+
+    private Scalar imageMean = new Scalar(127);
+    private float imageStd = 128.0f;
 
     private float centerVariance = 0.1f;
     private float sizeVariance = 0.2f;
     private float[][] minBoxes = {{10.0f, 16.0f, 24.0f}, {32.0f, 48.0f}, {64.0f, 96.0f}, {128.0f, 192.0f, 256.0f}};
     private float[] strides = {8.0f, 16.0f, 32.0f, 64.0f};
 
+    private List<float[]> priors = new ArrayList<>();
 
     public FaceRecognitionNetwork(Path modelPath, int width, int height) {
         this.modelPath = modelPath;
@@ -51,6 +54,9 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
             return false;
         }
 
+        // setup image size
+        defineImageSize(new Size(width, height));
+
         return true;
     }
 
@@ -58,9 +64,9 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
     public List<ObjectDetectionResult> run(Mat frame) {
         // convert image into batch of images
         Mat inputBlob = blobFromImage(frame,
-                1 / 128.0,
+                1 / imageStd,
                 new Size(width, height),
-                new Scalar(127, 127, 127, 255),
+                imageMean,
                 false, false, CV_32F);
 
         // set input
@@ -134,5 +140,46 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
         return detections;
     }
 
+    private void defineImageSize(Size imageSize) {
+        // shrinkageList is always the same
+        int[][] featureMapList = new int[2][strides.length];
+
+        // create feature maps
+        for (int d = 0; d < featureMapList.length; d++) {
+            int size = imageSize.get(d);
+
+            for (int i = 0; i < strides.length; i++) {
+                featureMapList[d][i] = (int) (Math.ceil(size / strides[i]));
+            }
+        }
+
+        generatePriors(featureMapList, imageSize);
+    }
+
+    private void generatePriors(int[][] featureMapList, Size imageSize) {
+        priors.clear();
+
+        for (int index = 0; index < featureMapList.length; index++) {
+            float scaleW = imageSize.get(0) / strides[index];
+            float scaleH = imageSize.get(1) / strides[index];
+
+            for (int j = 0; j < featureMapList[1][index]; j++) {
+                for (int i = 0; i < featureMapList[0][index]; i++) {
+                    float xCenter = (i + 0.5f) / scaleW;
+                    float yCenter = (j + 0.5f) / scaleH;
+
+                    for (float minBox : minBoxes[index]) {
+                        float w = minBox / imageSize.get(0);
+                        float h = minBox / imageSize.get(1);
+
+                        // todo: clip values
+                        priors.add(new float[]{xCenter, yCenter, w, h});
+                    }
+                }
+            }
+        }
+
+        System.out.println("Priors: " + priors.size());
+    }
 
 }
