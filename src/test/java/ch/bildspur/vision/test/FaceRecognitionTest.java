@@ -46,6 +46,8 @@ public class FaceRecognitionTest extends PApplet {
         for (ObjectDetectionResult detection : detections) {
             System.out.println(detection.getClassName() + "\t[" + detection.getConfidence() + "]");
         }
+
+        println("found " + detections.size() + " faces!");
     }
 
     public void draw() {

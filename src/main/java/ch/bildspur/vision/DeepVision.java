@@ -67,7 +67,7 @@ public class DeepVision {
 
     // face recognition
     public FaceRecognitionNetwork createULFGFaceDetectorRFB320() {
-        prepareDependencies(Repository.ULFGFaceDetectorRFB320);
-        return new FaceRecognitionNetwork(Repository.ULFGFaceDetectorRFB320.getPath(), 320, 240);
+        prepareDependencies(Repository.ULFGFaceDetectorRFB320Simplified);
+        return new FaceRecognitionNetwork(Repository.ULFGFaceDetectorRFB320Simplified.getPath(), 320, 240);
     }
 }

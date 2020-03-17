@@ -15,6 +15,9 @@ import static org.bytedeco.opencv.global.opencv_core.CV_32F;
 import static org.bytedeco.opencv.global.opencv_core.transpose;
 import static org.bytedeco.opencv.global.opencv_dnn.*;
 
+/**
+ * Based on https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB/blob/master/caffe/ultra_face_opencvdnn_inference.py
+ */
 public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetectionResult>> {
     private Path modelPath;
     protected Net net;
@@ -24,8 +27,14 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
 
     private float confidenceThreshold = 0.7f;
 
-    private float nmsThreshold = 0.3f; // iou_threshold
+    private float iouThreshold = 0.3f;
     private int topK = -1;
+
+    private float centerVariance = 0.1f;
+    private float sizeVariance = 0.2f;
+    private float[][] minBoxes = {{10.0f, 16.0f, 24.0f}, {32.0f, 48.0f}, {64.0f, 96.0f}, {128.0f, 192.0f, 256.0f}};
+    private float[] strides = {8.0f, 16.0f, 32.0f, 64.0f};
+
 
     public FaceRecognitionNetwork(Path modelPath, int width, int height) {
         this.modelPath = modelPath;
@@ -49,9 +58,9 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
     public List<ObjectDetectionResult> run(Mat frame) {
         // convert image into batch of images
         Mat inputBlob = blobFromImage(frame,
-                1 / 127.0,
+                1 / 128.0,
                 new Size(width, height),
-                new Scalar(127),
+                new Scalar(127, 127, 127, 255),
                 false, false, CV_32F);
 
         // set input
@@ -110,7 +119,7 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
         FloatPointer confidencesPointer = new FloatPointer(relevantConfidences.size());
         confidencesPointer.put(relevantConfidences.get());
 
-        NMSBoxes(relevantBoxes, confidencesPointer, confidenceThreshold, nmsThreshold, indices, 1.0f, topK);
+        NMSBoxes(relevantBoxes, confidencesPointer, confidenceThreshold, iouThreshold, indices, 1.0f, topK);
 
         // extract nms result
         List<ObjectDetectionResult> detections = new ArrayList<>();
