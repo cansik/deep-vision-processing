@@ -31,12 +31,9 @@ public void draw() {
 
   if (cam.available()) {
     cam.read();
-  } else {
-    return;
   }
 
   image(cam, 0, 0);
-  
   detections = network.run(cam);
 
   noFill();
