@@ -32,7 +32,7 @@ public class MultiHumanPoseNetwork extends PoseNetwork<List<HumanPoseResult>> {
     }
 
     @Override
-    List<HumanPoseResult> run(Mat frame) {
+    public List<HumanPoseResult> run(Mat frame) {
         // prepare
         Mat inputBlob = createInputBlob(frame);
 

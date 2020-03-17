@@ -29,7 +29,7 @@ public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> {
     }
 
     @Override
-    HumanPoseResult run(Mat frame) {
+    public HumanPoseResult run(Mat frame) {
         // prepare
         Mat inputBlob = createInputBlob(frame);
 
