@@ -35,7 +35,7 @@ public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> {
 
         // inference
         getNet().setInput(inputBlob);
-        Mat output = net.forward("stage_1_output_1_heatmaps");
+        Mat output = net.forward("stage_4_output_1_heatmaps");
 
         // post-process
         Mat[] heatMaps = splitNetOutputBlobToParts(output, frame.size(), true);
