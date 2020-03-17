@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.bytedeco.opencv.global.opencv_core.CV_32F;
-import static org.bytedeco.opencv.global.opencv_core.transpose;
 import static org.bytedeco.opencv.global.opencv_dnn.*;
 
 /**
@@ -84,36 +83,31 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
         Mat boxesOut = outs.get(0);
         Mat confidencesOut = outs.get(1);
 
-        Mat boxes = new Mat();
-        Mat confidences = new Mat();
-
         // boxes
-        transpose(boxesOut.reshape(1, 4), boxes);
+        Mat boxes = boxesOut.reshape(1, 4);
 
         // class confidences (BACKGROUND, face)
-        transpose(confidencesOut.reshape(1, 2), confidences);
+        Mat confidences = confidencesOut.reshape(1, 2);
 
-        return predict(frame.rows(), frame.cols(), confidences, boxes);
+        return predict(frame.size().width(), frame.size().height(), confidences, boxes);
     }
 
     private List<ObjectDetectionResult> predict(int frameWidth, int frameHeight, Mat confidences, Mat boxes) {
         FloatVector relevantConfidences = new FloatVector();
         RectVector relevantBoxes = new RectVector();
 
-        // todo: implement predict for multi class predictions
-
         // extract only relevant prob
-        for (int i = 0; i < boxes.rows(); i++) {
-            FloatPointer confidencesPtr = new FloatPointer(confidences.row(i).data());
-            float probability = confidencesPtr.get(1); // read first column (face)
+        for (int i = 0; i < boxes.cols(); i++) {
+            FloatPointer confidencesPtr = new FloatPointer(confidences.col(i).data());
+            float probability = confidencesPtr.get(1); // read second row (face)
 
-            if (probability < confidenceThreshold) continue;
+            if (probability > confidenceThreshold) continue;
 
             // add probability
             relevantConfidences.push_back(probability);
 
             // add box data
-            FloatPointer boxesPtr = new FloatPointer(boxes.row(i).data());
+            FloatPointer boxesPtr = new FloatPointer(boxes.col(i).data());
             int left = (int) (boxesPtr.get(0) * frameWidth);
             int top = (int) (boxesPtr.get(1) * frameHeight);
             int width = (int) (boxesPtr.get(2) * frameHeight);
