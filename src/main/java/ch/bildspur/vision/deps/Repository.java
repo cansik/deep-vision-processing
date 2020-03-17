@@ -29,7 +29,7 @@ public class Repository {
     public static final Dependency YOLO9kWeight = new Dependency("yolo9000.weights");
 
     // pose estimation
-    public static final Dependency SingleHumanPoseEstimationModel = new Dependency("single-human-pose-estimation.onnx");
+    public static final Dependency SingleHumanPoseEstimationModel = new Dependency("single-human-pose-estimation-l4.onnx");
     public static final Dependency MultiHumanPoseEstimationModel = new Dependency("multi-human-pose-estimation.onnx");
 
     // face recognition

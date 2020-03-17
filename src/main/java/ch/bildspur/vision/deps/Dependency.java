@@ -5,6 +5,7 @@ import ch.bildspur.vision.net.NetworkUtility;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Dependency {
     private String name;
@@ -18,19 +19,32 @@ public class Dependency {
     public Dependency(String name, String url) {
         this.name = name;
         this.url = url;
-        this.path = Paths.get(Repository.localStorageDirectory.toString(), this.name);
     }
 
     public boolean resolve() {
+        // lazy create path
+        this.path = Paths.get(Repository.localStorageDirectory.toString(), this.name);
+
         // check if is already there
         if (Files.exists(path)) {
             return true;
         }
 
         // try to download
+        System.out.print("downloading: ");
+
+        AtomicReference<Integer> lastProgress = new AtomicReference<>(0);
         NetworkUtility.downloadFile(url, path, (source, progress) -> {
-            System.out.println("Progress: " + String.format("%.2f", progress) + "%");
+            double p = progress * 100.0;
+            int current = lastProgress.get();
+
+            if (p - current > 10) {
+                System.out.print(".");
+                System.out.flush();
+                lastProgress.set(current + 10);
+            }
         });
+        System.out.println("done!");
 
         // second check after download
         if (Files.exists(path)) {

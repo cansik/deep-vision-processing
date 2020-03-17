@@ -6,10 +6,12 @@ import processing.core.PApplet;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class DeepVision {
 
     public DeepVision(PApplet sketch) {
+        Repository.localStorageDirectory = Paths.get(sketch.sketchPath("networks"));
     }
 
     private void prepareDependencies(Dependency... dependencies) {

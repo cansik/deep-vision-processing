@@ -1,14 +1,12 @@
 import ch.bildspur.vision.DeepVision;
-import ch.bildspur.vision.SingleHumanPoseEstimationNetwork;
+import ch.bildspur.vision.SingleHumanPoseNetwork;
 import ch.bildspur.vision.result.HumanPoseResult;
 import ch.bildspur.vision.result.KeyPointResult;
 import processing.video.Capture;
 
-PImage testImage;
+DeepVision vision;
 
-DeepVision vision = new DeepVision(this);
-
-SingleHumanPoseEstimationNetwork pose;
+SingleHumanPoseNetwork pose;
 HumanPoseResult result;
 
 Capture cam;
@@ -17,6 +15,8 @@ void setup() {
   size(640, 480, FX2D);
 
   colorMode(HSB, 360, 100, 100);
+  
+  vision = new DeepVision(this);
 
   println("creating network...");
   pose = vision.createSingleHumanPoseEstimation();
@@ -24,9 +24,9 @@ void setup() {
   println("loading model...");
   pose.setup();
   
+  println("setup camera...");
   String[] cams = Capture.list();
-
-  cam = new Capture(this, cams[1]);
+  cam = new Capture(this, cams[0]);
   cam.start();
 }
 
