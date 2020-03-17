@@ -26,6 +26,8 @@ public class DeepVision {
         }
     }
 
+    // yolo
+
     private YOLONetwork createYOLONetwork(Dependency model, Dependency weights, Dependency names, int size) {
         prepareDependencies(model, weights, names);
 
@@ -51,6 +53,8 @@ public class DeepVision {
         return createYOLONetwork(Repository.YOLOv3SPPModel, Repository.YOLOv3SPPWeight, Repository.COCONames, 608);
     }
 
+    // pose
+
     public SingleHumanPoseNetwork createSingleHumanPoseEstimation() {
         prepareDependencies(Repository.SingleHumanPoseEstimationModel);
         return new SingleHumanPoseNetwork(Repository.SingleHumanPoseEstimationModel.getPath());
@@ -59,5 +63,11 @@ public class DeepVision {
     public MultiHumanPoseNetwork createMultiHumanPoseEstimation() {
         prepareDependencies(Repository.MultiHumanPoseEstimationModel);
         return new MultiHumanPoseNetwork(Repository.MultiHumanPoseEstimationModel.getPath());
+    }
+
+    // face recognition
+    public FaceRecognitionNetwork createULFGFaceDetectorRFB320() {
+        prepareDependencies(Repository.ULFGFaceDetectorRFB320);
+        return new FaceRecognitionNetwork(Repository.ULFGFaceDetectorRFB320.getPath(), 320, 240);
     }
 }

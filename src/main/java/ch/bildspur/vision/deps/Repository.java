@@ -31,4 +31,7 @@ public class Repository {
     // pose estimation
     public static final Dependency SingleHumanPoseEstimationModel = new Dependency("single-human-pose-estimation.onnx");
     public static final Dependency MultiHumanPoseEstimationModel = new Dependency("multi-human-pose-estimation.onnx");
+
+    // face recognition
+    public static final Dependency ULFGFaceDetectorRFB320 = new Dependency("version-RFB-320_simplified.onnx");
 }
