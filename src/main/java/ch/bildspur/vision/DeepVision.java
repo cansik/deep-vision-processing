@@ -74,9 +74,4 @@ public class DeepVision {
         prepareDependencies(Repository.ULFGFaceDetectorSlim320Simplified);
         return new ULFGFaceDetectionNetwork(Repository.ULFGFaceDetectorSlim320Simplified.getPath(), 320, 240);
     }
-
-    public ULFGFaceDetectionNetwork createULFGFaceDetectorRFB640() {
-        prepareDependencies(Repository.ULFGFaceDetectorRFB640);
-        return new ULFGFaceDetectionNetwork(Repository.ULFGFaceDetectorRFB640.getPath(), 640, 480);
-    }
 }
