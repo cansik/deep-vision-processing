@@ -1,6 +1,7 @@
 package ch.bildspur.vision;
 
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.util.MathUtils;
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacpp.IntPointer;
 import org.bytedeco.opencv.opencv_core.*;
@@ -159,7 +160,7 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
     private void generatePriors(int[][] featureMapList, Size imageSize) {
         priors.clear();
 
-        for (int index = 0; index < featureMapList.length; index++) {
+        for (int index = 0; index < featureMapList[0].length; index++) {
             float scaleW = imageSize.get(0) / strides[index];
             float scaleH = imageSize.get(1) / strides[index];
 
@@ -172,14 +173,17 @@ public class FaceRecognitionNetwork extends DeepNeuralNetwork<List<ObjectDetecti
                         float w = minBox / imageSize.get(0);
                         float h = minBox / imageSize.get(1);
 
-                        // todo: clip values
-                        priors.add(new float[]{xCenter, yCenter, w, h});
+                        priors.add(new float[]{
+                                        MathUtils.clamp(xCenter, 0.0f, 1.0f),
+                                        MathUtils.clamp(yCenter, 0.0f, 1.0f),
+                                        MathUtils.clamp(w, 0.0f, 1.0f),
+                                        MathUtils.clamp(h, 0.0f, 1.0f)
+                                }
+                        );
                     }
                 }
             }
         }
-
-        System.out.println("Priors: " + priors.size());
     }
 
 }
