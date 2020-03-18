@@ -13,7 +13,6 @@ float factor = 560 / 28;
 
 public void setup() {
   size(560, 560, FX2D);
-  colorMode(HSB, 360, 100, 100);
 
   vision = new DeepVision(this);
 
@@ -38,6 +37,10 @@ public void draw() {
     canvas.updatePixels();
   }
 
+  int start = millis();
+  result = network.run(canvas);
+  inferenceTime = millis() - start;
+
   //image(canvas, 0, 0, width, height);
   for (int y = 0; y < canvas.width; y++) {
     for (int x = 0; x < canvas.width; x++) {
@@ -49,12 +52,12 @@ public void draw() {
   }
 
   // display info
-  fill(140, 80, 100);
+  fill(140, 220, 100);
   textSize(16);
-  text("space: run inference / c: clear canvas", 10, 20);
+  text("Draw Number (press c to clear canvas)", 10, 20);
 
   if (result != null) {
-    text("Detected '" + result.getClassName() + "' with " + result.getConfidence() + "%", 10, 50);
+    text("Detected '" + result.getClassName() + "' with " + round(100 * result.getConfidence()) + "% in " + inferenceTime + " ms", 10, 50);
   }
 
   surface.setTitle("MNIST Detector");
@@ -69,13 +72,6 @@ void mouseReleased() {
 }
 
 void keyPressed() {
-  if (key == ' ') {
-    println("inferencing...");
-    int start = millis();
-    result = network.run(canvas);
-    inferenceTime = millis() - start;
-  }
-
   if (key == 'c' || key == 'C') {
     println("clearing canvas...");
     clearCanvas();
