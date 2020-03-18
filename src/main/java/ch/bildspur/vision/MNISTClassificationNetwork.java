@@ -46,9 +46,9 @@ public class MNISTClassificationNetwork extends ClassificationNetwork<Classifica
 
         // convert image into batch of images
         Mat inputBlob = blobFromImage(frame,
-                1,
+                1 / 255.0,
                 new Size(width, height),
-                new Scalar(0.0),
+                Scalar.all(0.0),
                 false, true, CV_32F);
 
         // set input
@@ -65,7 +65,7 @@ public class MNISTClassificationNetwork extends ClassificationNetwork<Classifica
         float maxProbability = -1.0f;
 
         for (int i = 0; i < out.cols(); i++) {
-            float probability = data.get(i);
+            float probability = data.get(i) / 100f;
 
             // todo: fix probability issue
             // System.out.println("# " + i + ": " + probability + "%");
