@@ -16,10 +16,14 @@ public void setup() {
   image = loadImage("hk.jpg");
 
   println("creating model...");
-  yolo = deepVision.createYOLOv3Tiny();
+  yolo = deepVision.createYOLOv3();
 
   println("loading yolo model...");
   yolo.setup();
+  
+  println("inferencing...");
+  yolo.setConfidenceThreshold(0.3f);
+  detections = yolo.run(image);
 }
 
 public void draw() {
@@ -27,14 +31,11 @@ public void draw() {
 
   image(image, 0, 0);
 
-  yolo.setConfidenceThreshold(0.2f);
-  detections = yolo.run(image);
-
   noFill();
   strokeWeight(2f);
 
   for (ObjectDetectionResult detection : detections) {
-    stroke((int)(360.0 / yolo.getNames().size() * detection.getClassId()), 80, 100);
+    stroke((int)(360.0 / yolo.getClassNames().size() * detection.getClassId()), 80, 100);
     rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
   }
 

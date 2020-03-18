@@ -1,5 +1,5 @@
 import ch.bildspur.vision.DeepVision;
-import ch.bildspur.vision.SingleHumanPoseEstimationNetwork;
+import ch.bildspur.vision.SingleHumanPoseNetwork;
 import ch.bildspur.vision.result.HumanPoseResult;
 import ch.bildspur.vision.result.KeyPointResult;
 
@@ -9,7 +9,7 @@ RealSenseCamera camera = new RealSenseCamera(this);
 
 DeepVision vision = new DeepVision(this);
 
-SingleHumanPoseEstimationNetwork pose;
+SingleHumanPoseNetwork pose;
 HumanPoseResult result;
 
 void setup()

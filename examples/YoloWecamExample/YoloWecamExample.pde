@@ -25,7 +25,8 @@ public void setup() {
   println("loading yolo model...");
   yolo.setup();
 
-  cam = new Capture(this);
+  String[] cams = Capture.list();
+  cam = new Capture(this, cams[0]);
   cam.start();
 }
 
@@ -47,7 +48,7 @@ public void draw() {
   strokeWeight(2f);
 
   for (ObjectDetectionResult detection : detections) {
-    stroke((int)(360.0 / yolo.getNames().size() * detection.getClassId()), 80, 100);
+    stroke((int)(360.0 / yolo.getClassNames().size() * detection.getClassId()), 80, 100);
     rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
   }
 

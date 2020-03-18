@@ -45,6 +45,11 @@ cp "build/libs/$ARCHIVE_NAME-complete.jar" "$OUTPUT/library/$ARCHIVE_NAME.jar"
 # cp -r native "$OUTPUT/library/"
 cp -r "build/docs/javadoc" "$OUTPUT/reference"
 
+# clean networks from examples
+cd "examples"
+rm -rf **/networks
+cd ..
+
 cp -r "examples" "$OUTPUT/"
 cp library.properties "$OUTPUT/"
 cp -r readme "$OUTPUT/"

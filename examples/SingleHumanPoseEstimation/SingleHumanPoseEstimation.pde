@@ -5,9 +5,9 @@ import ch.bildspur.vision.result.KeyPointResult;
 
 PImage testImage;
 
-DeepVision vision = new DeepVision(this);
+DeepVision vision;
 
-SingleHumanPoseEstimationNetwork pose;
+SingleHumanPoseNetwork pose;
 HumanPoseResult result;
 
 PImage image;
@@ -16,10 +16,10 @@ void setup() {
   size(480, 640, FX2D);
 
   colorMode(HSB, 360, 100, 100);
-
   testImage = loadImage(sketchPath("data/pose.jpg"));
 
   println("creating network...");
+  vision = new DeepVision(this);
   pose = vision.createSingleHumanPoseEstimation();
 
   println("loading model...");

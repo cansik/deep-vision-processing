@@ -11,6 +11,8 @@ HumanPoseResult result;
 
 Capture cam;
 
+float threshold = 0.5;
+
 void setup() {
   size(640, 480, FX2D);
 
@@ -81,6 +83,9 @@ private void drawHuman(HumanPoseResult human) {
   int i = 0;
   fill(0);
   for (KeyPointResult point : human.getKeyPoints()) {
+    if(point.getProbability() < threshold)
+      continue;
+    
     ellipse(point.getX(), point.getY(), 10, 10);
     text(i, point.getX() + 5, point.getY());
     i++;
@@ -92,6 +97,9 @@ private void connect(KeyPointResult... keyPoints) {
     KeyPointResult a = keyPoints[i];
     KeyPointResult b = keyPoints[i + 1];
 
+    if(a.getProbability() < threshold || b.getProbability() < threshold)
+      continue;
+      
     line(a.getX(), a.getY(), b.getX(), b.getY());
   }
 }

@@ -67,7 +67,8 @@ public class MNISTClassificationNetwork extends ClassificationNetwork<Classifica
         for (int i = 0; i < out.cols(); i++) {
             float probability = data.get(i);
 
-            System.out.println("# " + i + ": " + probability + "%");
+            // todo: fix probability issue
+            // System.out.println("# " + i + ": " + probability + "%");
 
             if (probability > maxProbability) {
                 maxProbability = probability;

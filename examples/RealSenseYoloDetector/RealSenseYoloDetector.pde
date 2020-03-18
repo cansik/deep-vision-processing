@@ -53,7 +53,7 @@ void draw()
   strokeWeight(2f);
 
   for (ObjectDetectionResult detection : result) {
-    stroke(round(360.0f * (float) detection.getClassId() / net.getNames().size()), 75, 100);
+    stroke(round(360.0f * (float) detection.getClassId() / net.getClassNames().size()), 75, 100);
     rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
 
     textSize(15);
