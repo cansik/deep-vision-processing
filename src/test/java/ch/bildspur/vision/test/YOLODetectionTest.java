@@ -57,7 +57,7 @@ public class YOLODetectionTest extends PApplet {
         strokeWeight(2f);
 
         for (ObjectDetectionResult detection : detections) {
-            stroke(round(360.0f * (float) detection.getClassId() / yolo.getNames().size()), 75, 100);
+            stroke(round(360.0f * (float) detection.getClassId() / yolo.getClassNames().size()), 75, 100);
             rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
 
             textSize(15);

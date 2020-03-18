@@ -125,7 +125,7 @@ public class YOLONetwork extends ObjectDetectionNetwork {
                 Rect box = boxes.get(i);
 
                 int classId = classIds.get(i);
-                detections.add(new ObjectDetectionResult(classId, getNameOrId(classId), confidences.get(i),
+                detections.add(new ObjectDetectionResult(classId, getClassNameOrId(classId), confidences.get(i),
                         box.x(), box.y(), box.width(), box.height()));
             }
             return detections;
@@ -145,7 +145,7 @@ public class YOLONetwork extends ObjectDetectionNetwork {
             Rect box = boxes.get(idx);
 
             int classId = classIds.get(idx);
-            detections.add(new ObjectDetectionResult(classId, getNameOrId(classId), confidences.get(idx),
+            detections.add(new ObjectDetectionResult(classId, getClassNameOrId(classId), confidences.get(idx),
                     box.x(), box.y(), box.width(), box.height()));
         }
 

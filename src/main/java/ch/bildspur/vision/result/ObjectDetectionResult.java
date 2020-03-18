@@ -1,10 +1,6 @@
 package ch.bildspur.vision.result;
 
-public class ObjectDetectionResult {
-    private int classId;
-    private String className;
-    private float confidence;
-
+public class ObjectDetectionResult extends ClassificationResult {
     // location
     private int x;
     private int y;
@@ -12,25 +8,12 @@ public class ObjectDetectionResult {
     private int height;
 
     public ObjectDetectionResult(int classId, String className, float confidence, int x, int y, int width, int height) {
-        this.classId = classId;
-        this.className = className;
-        this.confidence = confidence;
+        super(classId, className, confidence);
+        
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-    }
-
-    public int getClassId() {
-        return classId;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public float getConfidence() {
-        return confidence;
     }
 
     public int getX() {

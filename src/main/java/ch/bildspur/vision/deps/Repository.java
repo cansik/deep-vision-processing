@@ -36,4 +36,7 @@ public class Repository {
     public static final Dependency ULFGFaceDetectorRFB320Simplified = new Dependency("version-RFB-320_simplified.onnx");
     public static final Dependency ULFGFaceDetectorSlim320Simplified = new Dependency("version-slim-320_simplified.onnx");
     public static final Dependency ULFGFaceDetectorRFB640 = new Dependency("version-RFB-640.onnx");
+
+    // classification
+    public static final Dependency MNISTModel = new Dependency("mnist.onnx");
 }

@@ -20,7 +20,7 @@ public void setup() {
   movie.speed(2.0);
 
   println("creating network...");
-  network = vision.createULFGFaceDetectorSlim320();
+  network = vision.createULFGFaceDetectorRFB320();
 
   println("loading model...");
   network.setup();

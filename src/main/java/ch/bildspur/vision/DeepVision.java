@@ -38,7 +38,7 @@ public class DeepVision {
                 size, size
         );
 
-        network.loadNames(names.getPath());
+        network.loadClassNames(names.getPath());
         return network;
     }
 
@@ -75,5 +75,11 @@ public class DeepVision {
     public ULFGFaceDetectionNetwork createULFGFaceDetectorSlim320() {
         prepareDependencies(Repository.ULFGFaceDetectorSlim320Simplified);
         return new ULFGFaceDetectionNetwork(Repository.ULFGFaceDetectorSlim320Simplified.getPath(), 320, 240);
+    }
+
+    // classification
+    public MNISTClassificationNetwork createMNISTClassifier() {
+        prepareDependencies(Repository.MNISTModel);
+        return new MNISTClassificationNetwork(Repository.MNISTModel.getPath());
     }
 }
