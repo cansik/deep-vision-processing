@@ -32,7 +32,7 @@ public class FaceRecognitionTest extends PApplet {
         testImage = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
-        network = vision.createULFGFaceDetectorRFB320();
+        network = vision.createULFGFaceDetectorSlim640();
 
         println("loading model...");
         network.setup();

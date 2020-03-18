@@ -23,6 +23,8 @@ The API should support the following (✨ = `implemented`):
 - openPose
     - Single Human Pose Detection based on lightweight openpose ✨
     - Multi Human Pose Detection
+  classification
+    - 
 - openVINO
     - Lightweight OpenPose (Multi-Person)
     - Face Detection

@@ -77,6 +77,16 @@ public class DeepVision {
         return new ULFGFaceDetectionNetwork(Repository.ULFGFaceDetectorSlim320Simplified.getPath(), 320, 240);
     }
 
+    public ULFGFaceDetectionNetwork createULFGFaceDetectorRFB640() {
+        prepareDependencies(Repository.ULFGFaceDetectorRFB640Simplified);
+        return new ULFGFaceDetectionNetwork(Repository.ULFGFaceDetectorRFB640Simplified.getPath(), 640, 480);
+    }
+
+    public ULFGFaceDetectionNetwork createULFGFaceDetectorSlim640() {
+        prepareDependencies(Repository.ULFGFaceDetectorSlim640Simplified);
+        return new ULFGFaceDetectionNetwork(Repository.ULFGFaceDetectorSlim640Simplified.getPath(), 640, 480);
+    }
+
     // classification
     public MNISTClassificationNetwork createMNISTClassifier() {
         prepareDependencies(Repository.MNISTModel);
