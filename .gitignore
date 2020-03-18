@@ -9,3 +9,4 @@ networks
 *.jar
 maps
 data/florian.jpg
+examples/FaceDetectorSpeedTest/data/shibuya-long.mp4
