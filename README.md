@@ -2,7 +2,7 @@
 Deep computer-vision algorithms for [Processing](https://processing.org/).
 
 ### Idea
-The idea behind this library is to provide a simple way to use (inference) neural networks for computer vision tasks inside Processing. Mainly portability and easy-to-use are the primary goals of this library. Because of that (and javacv), no GPU support at the moment. 
+The idea behind this library is to provide a simple way to use (inference) neural networks for computer vision tasks inside Processing. Mainly portability and easy-to-use are the primary goals of this library. Because of that (and [javacv](https://github.com/bytedeco/javacpp-presets/pull/832)), no GPU support at the moment. 
 
 First of all a simple proof of concept will be created which implements the [YOLO: Real-Time Object Detection](https://pjreddie.com/darknet/yolo/) to define where to store the weight and model data and to specify the final API. (*This has already been done!*)
 
