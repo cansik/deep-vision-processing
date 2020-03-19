@@ -42,4 +42,10 @@ public class Repository {
     public static final Dependency MNISTModel = new Dependency("mnist.onnx");
 
     public static final Dependency FERPlusEmotionModel = new Dependency("emotion-ferplus-8.onnx");
+
+    public static final Dependency AgeNetProtoText = new Dependency("deploy_age.prototxt");
+    public static final Dependency AgeNetModel = new Dependency("age_net.caffemodel");
+
+    public static final Dependency GenderNetProtoText = new Dependency("deploy_gender.prototxt");
+    public static final Dependency GenderNetModel = new Dependency("gender_net.caffemodel");
 }

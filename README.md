@@ -26,6 +26,8 @@ The API should support the following (✨ = `implemented`):
  - classification
     - MNIST CNN ✨
     - FER+ Emotion ✨
+    - Age Net ✨
+    - Gender Net ✨
 - openVINO
     - Lightweight OpenPose (Multi-Person)
     - Face Detection

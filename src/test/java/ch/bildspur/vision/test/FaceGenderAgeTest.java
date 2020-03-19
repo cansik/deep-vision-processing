@@ -1,8 +1,9 @@
 package ch.bildspur.vision.test;
 
 
+import ch.bildspur.vision.AgeNetwork;
 import ch.bildspur.vision.DeepVision;
-import ch.bildspur.vision.FERPlusEmotionNetwork;
+import ch.bildspur.vision.GenderNetwork;
 import ch.bildspur.vision.ULFGFaceDetectionNetwork;
 import ch.bildspur.vision.result.ClassificationResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
@@ -11,10 +12,10 @@ import processing.core.PImage;
 
 import java.util.List;
 
-public class FaceAndEmotionTest extends PApplet {
+public class FaceGenderAgeTest extends PApplet {
 
     public static void main(String... args) {
-        FaceAndEmotionTest sketch = new FaceAndEmotionTest();
+        FaceGenderAgeTest sketch = new FaceGenderAgeTest();
         sketch.runSketch();
     }
 
@@ -26,10 +27,12 @@ public class FaceAndEmotionTest extends PApplet {
 
     DeepVision vision = new DeepVision(this);
     ULFGFaceDetectionNetwork faceNetwork;
-    FERPlusEmotionNetwork emotionNetwork;
+    GenderNetwork genderNetwork;
+    AgeNetwork ageNetwork;
 
     List<ObjectDetectionResult> detections;
-    List<ClassificationResult> emotions;
+    List<ClassificationResult> genders;
+    List<ClassificationResult> ages;
 
     public void setup() {
         colorMode(HSB, 360, 100, 100);
@@ -38,11 +41,13 @@ public class FaceAndEmotionTest extends PApplet {
 
         println("creating network...");
         faceNetwork = vision.createULFGFaceDetectorRFB640();
-        emotionNetwork = vision.createFERPlusEmotionClassifier();
+        genderNetwork = vision.createGenderClassifier();
+        ageNetwork = vision.createAgeClassifier();
 
         println("loading model...");
         faceNetwork.setup();
-        emotionNetwork.setup();
+        genderNetwork.setup();
+        ageNetwork.setup();
 
         print("detect faces...");
         detections = faceNetwork.run(testImage);
@@ -53,16 +58,19 @@ public class FaceAndEmotionTest extends PApplet {
             face.scale(1.4f, 1.0f);
         }
 
-        print("estimate emotions...");
-        emotions = emotionNetwork.runByDetections(testImage, detections);
+        print("estimate age and gender...");
+        genders = genderNetwork.runByDetections(testImage, detections);
+        ages = ageNetwork.runByDetections(testImage, detections);
         println("done!");
 
         for (int i = 0; i < detections.size(); i++) {
             ObjectDetectionResult face = detections.get(i);
-            ClassificationResult emotion = emotions.get(i);
+            ClassificationResult gender = genders.get(i);
+            ClassificationResult age = ages.get(i);
 
             System.out.println(face.getClassName() + "\t[" + face.getConfidence() + "] is "
-                    + emotion.getClassName() + "\t[" + emotion.getConfidence() + "]");
+                    + gender.getClassName() + "\t[" + gender.getConfidence() + "] and "
+                    + age.getClassName() + "\t[" + age.getConfidence() + "]");
         }
 
         println("found " + detections.size() + " faces!");
@@ -79,10 +87,11 @@ public class FaceAndEmotionTest extends PApplet {
         stroke(200, 80, 100);
         for (int i = 0; i < detections.size(); i++) {
             ObjectDetectionResult face = detections.get(i);
-            ClassificationResult emotion = emotions.get(i);
+            ClassificationResult gender = genders.get(i);
+            ClassificationResult age = ages.get(i);
 
             rect(face.getX(), face.getY(), face.getWidth(), face.getHeight());
-            text(emotion.getClassName(), face.getX(), face.getY());
+            text(gender.getClassName() + ", " + age.getClassName(), face.getX(), face.getY());
         }
 
         surface.setTitle("Face / Emotion - FPS: " + Math.round(frameRate));

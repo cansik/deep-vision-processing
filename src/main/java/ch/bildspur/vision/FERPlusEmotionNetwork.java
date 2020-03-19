@@ -12,7 +12,7 @@ public class FERPlusEmotionNetwork extends ClassificationNetwork {
     private Path modelPath;
 
     public FERPlusEmotionNetwork(Path modelPath) {
-        super(64, 64, true, 1, Scalar.all(0.0), false, true,
+        super(64, 64, true, 1, Scalar.all(0.0), false, true, 100.0f,
                 "neutral", "happiness", "surprise", "sadness", "anger", "disgust", "fear", "contempt");
         this.modelPath = modelPath;
     }

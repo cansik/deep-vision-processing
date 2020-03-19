@@ -93,8 +93,18 @@ public class DeepVision {
         return new MNISTNetwork(Repository.MNISTModel.getPath());
     }
 
-    public FERPlusEmotionNetwork createFERPlusEmotionNetwork() {
+    public FERPlusEmotionNetwork createFERPlusEmotionClassifier() {
         prepareDependencies(Repository.FERPlusEmotionModel);
         return new FERPlusEmotionNetwork(Repository.FERPlusEmotionModel.getPath());
+    }
+
+    public AgeNetwork createAgeClassifier() {
+        prepareDependencies(Repository.AgeNetProtoText, Repository.AgeNetModel);
+        return new AgeNetwork(Repository.AgeNetProtoText.getPath(), Repository.AgeNetModel.getPath());
+    }
+
+    public GenderNetwork createGenderClassifier() {
+        prepareDependencies(Repository.GenderNetProtoText, Repository.GenderNetModel);
+        return new GenderNetwork(Repository.GenderNetProtoText.getPath(), Repository.GenderNetModel.getPath());
     }
 }

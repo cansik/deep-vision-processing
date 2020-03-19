@@ -30,7 +30,7 @@ public class FERPlusEmotionTest extends PApplet {
         testImage = loadImage(sketchPath("data/happy.png"));
 
         println("creating network...");
-        network = vision.createFERPlusEmotionNetwork();
+        network = vision.createFERPlusEmotionClassifier();
 
         println("loading model...");
         network.setup();

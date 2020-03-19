@@ -29,7 +29,9 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
     private boolean swapRB;
     private boolean crop;
 
-    public ClassificationNetwork(int width, int height, boolean convertToGrayScale, float scaleFactor, Scalar mean, boolean swapRB, boolean crop, String... labels) {
+    private float confidenceScale;
+
+    public ClassificationNetwork(int width, int height, boolean convertToGrayScale, float scaleFactor, Scalar mean, boolean swapRB, boolean crop, float confidenceScale, String... labels) {
         this.width = width;
         this.height = height;
         this.convertToGrayScale = convertToGrayScale;
@@ -37,6 +39,7 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
         this.mean = mean;
         this.swapRB = swapRB;
         this.crop = crop;
+        this.confidenceScale = confidenceScale;
 
         this.setLabels(labels);
     }
@@ -75,7 +78,7 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
         minMaxLoc(out, null, probabilityPtr, null, maxIndexPtr, null);
 
         int index = maxIndexPtr.x();
-        float probability = (float) (probabilityPtr.get() / 100.0);
+        float probability = (float) (probabilityPtr.get() / confidenceScale);
 
         return new ClassificationResult(index, getLabelOrId(index), probability);
     }

@@ -12,7 +12,7 @@ public class MNISTNetwork extends ClassificationNetwork {
     private Path modelPath;
 
     public MNISTNetwork(Path modelPath) {
-        super(28, 28, true, 1 / 255.0f, Scalar.all(0.0), false, true,
+        super(28, 28, true, 1 / 255.0f, Scalar.all(0.0), false, true, 100.0f,
                 "0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
         this.modelPath = modelPath;
     }
