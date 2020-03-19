@@ -14,13 +14,18 @@ public abstract class DeepNeuralNetwork<R> {
 
     public R run(PImage image) {
         // prepare frame
-        Mat frame = new Mat(image.height, image.width, CV_8UC4);
-        CvProcessingUtils.toCv(image, frame);
-        cvtColor(frame, frame, COLOR_RGBA2RGB);
+        Mat frame = convertToMat(image);
 
         // inference
         return run(frame);
     }
 
     public abstract R run(Mat frame);
+
+    protected Mat convertToMat(PImage image) {
+        Mat frame = new Mat(image.height, image.width, CV_8UC4);
+        CvProcessingUtils.toCv(image, frame);
+        cvtColor(frame, frame, COLOR_RGBA2RGB);
+        return frame;
+    }
 }
