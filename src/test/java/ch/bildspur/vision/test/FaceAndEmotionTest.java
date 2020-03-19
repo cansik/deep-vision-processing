@@ -48,15 +48,17 @@ public class FaceAndEmotionTest extends PApplet {
         detections = faceNetwork.run(testImage);
         println("done!");
 
+        // scale width of face detection (better for emotions);
+        for (ObjectDetectionResult face : detections) {
+            face.scale(1.4f, 1.0f);
+        }
+
         print("estimate emotions...");
         emotions = emotionNetwork.runByDetections(testImage, detections);
         println("done!");
 
         for (int i = 0; i < detections.size(); i++) {
             ObjectDetectionResult face = detections.get(i);
-            // scale width of face detection (better for emotions);
-            face.scale(1.5f, 1.0f);
-
             ClassificationResult emotion = emotions.get(i);
 
             System.out.println(face.getClassName() + "\t[" + face.getConfidence() + "] is "
