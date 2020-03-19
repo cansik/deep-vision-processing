@@ -40,4 +40,5 @@ Maintained by [cansik](https://github.com/cansik) with the help of the following
 Stock images from the following peoples have been used:
 
 - yoga.jpg by Yogendra Singh from Pexels
-- office.jpg by fauxels from Pexels
+- office.jpg by [fauxels](https://www.pexels.com/@fauxels) from Pexels
+- faces.png by [shvetsa](https://www.pexels.com/@shvetsa) from Pexels

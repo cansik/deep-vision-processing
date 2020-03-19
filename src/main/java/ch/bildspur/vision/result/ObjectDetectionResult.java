@@ -9,7 +9,7 @@ public class ObjectDetectionResult extends ClassificationResult {
 
     public ObjectDetectionResult(int classId, String className, float confidence, int x, int y, int width, int height) {
         super(classId, className, confidence);
-        
+
         this.x = x;
         this.y = y;
         this.width = width;
@@ -30,5 +30,16 @@ public class ObjectDetectionResult extends ClassificationResult {
 
     public int getHeight() {
         return height;
+    }
+
+    public void scale(float xScale, float yScale) {
+        int dx = Math.round(width * xScale) - width;
+        int dy = Math.round(height * yScale) - height;
+
+        this.x -= dx;
+        this.y -= dy;
+
+        this.width += dx * 2;
+        this.height += dy * 2;
     }
 }

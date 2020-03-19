@@ -9,10 +9,10 @@ import processing.core.PImage;
 
 import java.util.List;
 
-public class FaceRecognitionTest extends PApplet {
+public class FaceDetectionTest extends PApplet {
 
     public static void main(String... args) {
-        FaceRecognitionTest sketch = new FaceRecognitionTest();
+        FaceDetectionTest sketch = new FaceDetectionTest();
         sketch.runSketch();
     }
 
