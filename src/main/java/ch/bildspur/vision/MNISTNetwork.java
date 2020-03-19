@@ -7,12 +7,12 @@ import java.nio.file.Path;
 
 import static org.bytedeco.opencv.global.opencv_dnn.readNetFromONNX;
 
-public class FERPlusEmotionNetwork extends ClassificationNetwork {
+public class MNISTNetwork extends ClassificationNetwork {
     private Path modelPath;
 
-    public FERPlusEmotionNetwork(Path modelPath) {
-        super(64, 64, true, 1, Scalar.all(0.0), false, true,
-                "neutral", "happiness", "surprise", "sadness", "anger", "disgust", "fear", "contempt");
+    public MNISTNetwork(Path modelPath) {
+        super(28, 28, true, 1 / 255.0f, Scalar.all(0.0), false, true,
+                "0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
         this.modelPath = modelPath;
     }
 

@@ -1,5 +1,6 @@
 package ch.bildspur.vision;
 
+import ch.bildspur.vision.network.NetworkFactory;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Scalar;
 import org.bytedeco.opencv.opencv_core.Size;
@@ -14,7 +15,7 @@ import static org.bytedeco.opencv.global.opencv_dnn.blobFromImage;
 import static org.bytedeco.opencv.global.opencv_imgcodecs.imwrite;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
 
-public abstract class PoseNetwork<R> extends DeepNeuralNetwork<R> {
+public abstract class PoseNetwork<R> extends DeepNeuralNetwork<R> implements NetworkFactory {
     private Path modelPath;
     protected Net net;
 
@@ -47,8 +48,6 @@ public abstract class PoseNetwork<R> extends DeepNeuralNetwork<R> {
 
         return true;
     }
-
-    public abstract Net createNetwork();
 
     protected Mat createInputBlob(Mat frame) {
         Size inputSize = new Size(inputWidth, inputHeight);

@@ -38,7 +38,7 @@ public class DeepVision {
                 size, size
         );
 
-        network.loadClassNames(names.getPath());
+        network.loadLabels(names.getPath());
         return network;
     }
 
@@ -88,9 +88,9 @@ public class DeepVision {
     }
 
     // classification
-    public MNISTClassificationNetwork createMNISTClassifier() {
+    public MNISTNetwork createMNISTClassifier() {
         prepareDependencies(Repository.MNISTModel);
-        return new MNISTClassificationNetwork(Repository.MNISTModel.getPath());
+        return new MNISTNetwork(Repository.MNISTModel.getPath());
     }
 
     public FERPlusEmotionNetwork createFERPlusEmotionNetwork() {

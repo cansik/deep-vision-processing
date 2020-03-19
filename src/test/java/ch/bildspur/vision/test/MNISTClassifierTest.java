@@ -2,7 +2,7 @@ package ch.bildspur.vision.test;
 
 
 import ch.bildspur.vision.DeepVision;
-import ch.bildspur.vision.MNISTClassificationNetwork;
+import ch.bildspur.vision.MNISTNetwork;
 import ch.bildspur.vision.result.ClassificationResult;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -21,7 +21,7 @@ public class MNISTClassifierTest extends PApplet {
     PImage testImage;
 
     DeepVision vision = new DeepVision(this);
-    MNISTClassificationNetwork network;
+    MNISTNetwork network;
     ClassificationResult result;
 
     public void setup() {
