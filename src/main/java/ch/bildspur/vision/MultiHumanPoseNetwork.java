@@ -1,5 +1,6 @@
 package ch.bildspur.vision;
 
+import ch.bildspur.vision.network.PoseNetwork;
 import ch.bildspur.vision.result.HumanPoseResult;
 import ch.bildspur.vision.result.KeyPointResult;
 import org.bytedeco.opencv.opencv_core.Mat;

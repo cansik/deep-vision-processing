@@ -1,4 +1,4 @@
-package ch.bildspur.vision;
+package ch.bildspur.vision.network;
 
 import ch.bildspur.vision.util.CvProcessingUtils;
 import org.bytedeco.opencv.opencv_core.Mat;

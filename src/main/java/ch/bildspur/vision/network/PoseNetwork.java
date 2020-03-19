@@ -1,6 +1,5 @@
-package ch.bildspur.vision;
+package ch.bildspur.vision.network;
 
-import ch.bildspur.vision.network.NetworkFactory;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Scalar;
 import org.bytedeco.opencv.opencv_core.Size;

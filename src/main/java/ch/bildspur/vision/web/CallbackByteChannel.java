@@ -1,4 +1,4 @@
-package ch.bildspur.vision.net;
+package ch.bildspur.vision.web;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

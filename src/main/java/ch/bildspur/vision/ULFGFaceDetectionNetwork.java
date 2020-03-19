@@ -1,5 +1,6 @@
 package ch.bildspur.vision;
 
+import ch.bildspur.vision.network.DeepNeuralNetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.util.MathUtils;
 import org.bytedeco.javacpp.FloatPointer;

@@ -1,4 +1,4 @@
-package ch.bildspur.vision;
+package ch.bildspur.vision.network;
 
 import ch.bildspur.vision.result.ObjectDetectionResult;
 

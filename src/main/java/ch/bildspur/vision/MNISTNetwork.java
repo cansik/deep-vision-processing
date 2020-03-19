@@ -1,5 +1,6 @@
 package ch.bildspur.vision;
 
+import ch.bildspur.vision.network.ClassificationNetwork;
 import org.bytedeco.opencv.opencv_core.Scalar;
 import org.bytedeco.opencv.opencv_dnn.Net;
 

@@ -1,6 +1,5 @@
-package ch.bildspur.vision;
+package ch.bildspur.vision.network;
 
-import ch.bildspur.vision.network.NetworkFactory;
 import ch.bildspur.vision.result.ClassificationResult;
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.opencv.opencv_core.Mat;

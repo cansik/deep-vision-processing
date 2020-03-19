@@ -1,4 +1,4 @@
-package ch.bildspur.vision;
+package ch.bildspur.vision.network;
 
 import java.io.IOException;
 import java.nio.file.Files;

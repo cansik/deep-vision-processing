@@ -1,6 +1,6 @@
 package ch.bildspur.vision.deps;
 
-import ch.bildspur.vision.net.NetworkUtility;
+import ch.bildspur.vision.web.NetworkUtility;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
