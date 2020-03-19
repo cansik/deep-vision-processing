@@ -2,11 +2,8 @@ package ch.bildspur.vision.network;
 
 import ch.bildspur.vision.result.ClassificationResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
-import org.bytedeco.javacpp.FloatPointer;
-import org.bytedeco.opencv.opencv_core.Mat;
-import org.bytedeco.opencv.opencv_core.Rect;
-import org.bytedeco.opencv.opencv_core.Scalar;
-import org.bytedeco.opencv.opencv_core.Size;
+import org.bytedeco.javacpp.DoublePointer;
+import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.Net;
 import processing.core.PImage;
 
@@ -14,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.bytedeco.opencv.global.opencv_core.CV_32F;
+import static org.bytedeco.opencv.global.opencv_core.minMaxLoc;
 import static org.bytedeco.opencv.global.opencv_dnn.blobFromImage;
 import static org.bytedeco.opencv.global.opencv_imgproc.COLOR_RGB2GRAY;
 import static org.bytedeco.opencv.global.opencv_imgproc.cvtColor;
@@ -71,22 +69,15 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
         Mat out = net.forward();
 
         // extract result
-        FloatPointer data = new FloatPointer(out.row(0).data());
+        Point maxIndexPtr = new Point(1);
+        DoublePointer probabilityPtr = new DoublePointer(1);
 
-        // todo: use minmaxidx
-        int maxIndex = -1;
-        float maxProbability = -1.0f;
+        minMaxLoc(out, null, probabilityPtr, null, maxIndexPtr, null);
 
-        for (int i = 0; i < out.cols(); i++) {
-            float probability = data.get(i) / 100f;
+        int index = maxIndexPtr.x();
+        float probability = (float) (probabilityPtr.get() / 100.0);
 
-            if (probability > maxProbability) {
-                maxProbability = probability;
-                maxIndex = i;
-            }
-        }
-
-        return new ClassificationResult(maxIndex, getLabelOrId(maxIndex), maxProbability);
+        return new ClassificationResult(index, getLabelOrId(index), probability);
     }
 
     public List<ClassificationResult> runByDetections(PImage image, List<ObjectDetectionResult> detections) {

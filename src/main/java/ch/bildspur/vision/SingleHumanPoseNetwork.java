@@ -51,7 +51,7 @@ public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> {
     }
 
     private KeyPointResult extractKeyPoint(int index, Mat probMap) {
-        storeHeatMap("maps/c_" + index + ".bmp", probMap);
+        // storeHeatMap("maps/c_" + index + ".bmp", probMap);
 
         // get maximum point
         Point maxPoint = new Point(1);
