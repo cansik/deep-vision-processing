@@ -92,4 +92,9 @@ public class DeepVision {
         prepareDependencies(Repository.MNISTModel);
         return new MNISTClassificationNetwork(Repository.MNISTModel.getPath());
     }
+
+    public FERPlusEmotionNetwork createFERPlusEmotionNetwork() {
+        prepareDependencies(Repository.FERPlusEmotionModel);
+        return new FERPlusEmotionNetwork(Repository.FERPlusEmotionModel.getPath());
+    }
 }

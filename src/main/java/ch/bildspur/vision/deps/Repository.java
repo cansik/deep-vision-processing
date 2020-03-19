@@ -40,4 +40,6 @@ public class Repository {
 
     // classification
     public static final Dependency MNISTModel = new Dependency("mnist.onnx");
+
+    public static final Dependency FERPlusEmotionModel = new Dependency("emotion-ferplus-8.onnx");
 }
