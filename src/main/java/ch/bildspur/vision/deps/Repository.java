@@ -38,6 +38,9 @@ public class Repository {
     public static final Dependency ULFGFaceDetectorRFB640Simplified = new Dependency("version-RFB-640_simplified.onnx");
     public static final Dependency ULFGFaceDetectorSlim640Simplified = new Dependency("version-slim-640_simplified.onnx");
 
+    // facial landmark
+    public static final Dependency FaceMarkLBFModel = new Dependency("lbfmodel.yaml");
+
     // classification
     public static final Dependency MNISTModel = new Dependency("mnist.onnx");
 

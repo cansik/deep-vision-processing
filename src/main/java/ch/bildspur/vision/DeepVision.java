@@ -87,6 +87,12 @@ public class DeepVision {
         return new ULFGFaceDetectionNetwork(Repository.ULFGFaceDetectorSlim640Simplified.getPath(), 640, 480);
     }
 
+    // facial landmark
+    public FacemarkLBFNetwork createFacemarkLBF() {
+        prepareDependencies(Repository.FaceMarkLBFModel);
+        return new FacemarkLBFNetwork(Repository.FaceMarkLBFModel.getPath());
+    }
+
     // classification
     public MNISTNetwork createMNISTClassifier() {
         prepareDependencies(Repository.MNISTModel);
