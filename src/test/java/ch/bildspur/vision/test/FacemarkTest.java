@@ -20,7 +20,7 @@ public class FacemarkTest extends PApplet {
     }
 
     public void settings() {
-        size(1280, 720, FX2D);
+        size(480, 720, FX2D);
     }
 
     PImage testImage;
@@ -35,7 +35,7 @@ public class FacemarkTest extends PApplet {
     public void setup() {
         colorMode(HSB, 360, 100, 100);
 
-        testImage = loadImage(sketchPath("data/faces.png"));
+        testImage = loadImage(sketchPath("data/pexels-photo-3852038.jpeg"));
 
         println("creating network...");
         faceNetwork = vision.createULFGFaceDetectorRFB640();
@@ -51,7 +51,7 @@ public class FacemarkTest extends PApplet {
 
         // scale width of face detection (better for emotions);
         for (ObjectDetectionResult face : detections) {
-            face.scale(1.4f, 1.0f);
+            face.scale(1.0f, 1.0f);
         }
 
         print("detect landmarks...");
