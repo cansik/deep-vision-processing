@@ -34,7 +34,7 @@ public class MultiPoseEstimationTest extends PApplet {
         testImage = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
-        pose = vision.createMultiHumanPoseEstimation();
+        pose = vision._createMultiHumanPoseEstimation();
 
         println("loading model...");
         pose.setup();

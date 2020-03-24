@@ -2,6 +2,7 @@ package ch.bildspur.vision;
 
 import ch.bildspur.vision.deps.Dependency;
 import ch.bildspur.vision.deps.Repository;
+import ch.bildspur.vision.util.ProcessingUtils;
 import processing.core.PApplet;
 
 import java.io.IOException;
@@ -9,12 +10,30 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class DeepVision {
+    private PApplet sketch;
+    private boolean storeNetworksInSketch = true;
 
     public DeepVision(PApplet sketch) {
-        Repository.localStorageDirectory = Paths.get(sketch.sketchPath("networks"));
+        this.sketch = sketch;
+    }
+
+    public void storeNetworksGlobal() {
+        storeNetworksInSketch = false;
+    }
+
+    public void storeNetworksInSketch() {
+        storeNetworksInSketch = true;
     }
 
     private void prepareDependencies(Dependency... dependencies) {
+        // decide where to store
+        if (storeNetworksInSketch) {
+            Repository.localStorageDirectory = Paths.get(sketch.sketchPath("networks"));
+        } else {
+            Repository.localStorageDirectory = Paths.get(ProcessingUtils.getLibPath(this));
+        }
+
+        // download
         try {
             Files.createDirectories(Repository.localStorageDirectory);
         } catch (IOException e) {
@@ -61,7 +80,7 @@ public class DeepVision {
         return new SingleHumanPoseNetwork(Repository.SingleHumanPoseEstimationModel.getPath());
     }
 
-    public MultiHumanPoseNetwork createMultiHumanPoseEstimation() {
+    public MultiHumanPoseNetwork _createMultiHumanPoseEstimation() {
         prepareDependencies(Repository.MultiHumanPoseEstimationModel);
         return new MultiHumanPoseNetwork(Repository.MultiHumanPoseEstimationModel.getPath());
     }
@@ -112,5 +131,12 @@ public class DeepVision {
     public GenderNetwork createGenderClassifier() {
         prepareDependencies(Repository.GenderNetProtoText, Repository.GenderNetModel);
         return new GenderNetwork(Repository.GenderNetProtoText.getPath(), Repository.GenderNetModel.getPath());
+    }
+
+    // hand recognition
+
+    public HandDetectionNetwork _createHandDetector() {
+        prepareDependencies(Repository.HandTrackJSWeight, Repository.HandTrackJSConfig);
+        return new HandDetectionNetwork(Repository.HandTrackJSWeight.getPath(), Repository.HandTrackJSConfig.getPath());
     }
 }

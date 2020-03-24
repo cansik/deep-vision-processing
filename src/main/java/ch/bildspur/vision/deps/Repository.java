@@ -28,6 +28,13 @@ public class Repository {
     public static final Dependency YOLO9kModel = new Dependency("yolo9000.cfg");
     public static final Dependency YOLO9kWeight = new Dependency("yolo9000.weights");
 
+    public static final Dependency SSDMobileNetV3COCOConfig = new Dependency("ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt");
+    public static final Dependency SSDMobileNetV3COCOWeight = new Dependency("ssd_mobilenet_v3_large_coco_2020_01_14.pb");
+
+    // hand tracking
+    public static final Dependency HandTrackJSWeight = new Dependency("handtrackingjs.pb");
+    public static final Dependency HandTrackJSConfig = new Dependency("handtrackingjs.config");
+
     // pose estimation
     public static final Dependency SingleHumanPoseEstimationModel = new Dependency("single-human-pose-estimation-l4.onnx");
     public static final Dependency MultiHumanPoseEstimationModel = new Dependency("multi-human-pose-estimation.onnx");
