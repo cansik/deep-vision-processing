@@ -4,7 +4,7 @@ import ch.bildspur.vision.result.HumanPoseResult;
 import ch.bildspur.vision.result.KeyPointResult;
 import processing.video.Capture;
 
-DeepVision vision;
+DeepVision vision = new DeepVision(this);
 
 SingleHumanPoseNetwork pose;
 HumanPoseResult result;
@@ -17,33 +17,31 @@ void setup() {
   size(640, 480, FX2D);
 
   colorMode(HSB, 360, 100, 100);
-  
-  vision = new DeepVision(this);
 
   println("creating network...");
   pose = vision.createSingleHumanPoseEstimation();
 
   println("loading model...");
   pose.setup();
-  
+
   println("setup camera...");
   String[] cams = Capture.list();
-  cam = new Capture(this, cams[0]);
+  cam = new Capture(this, cams[1]);
   cam.start();
 }
 
 void draw() {
   background(55);
-  
+
   if (cam.available()) {
     cam.read();
   } else {
     return;
   }
 
-  image(cam, 0, 0);
-  
   result = pose.run(cam);
+  
+  image(cam, 0, 0);
 
   // draw result
   stroke(180, 80, 100);
@@ -83,9 +81,9 @@ private void drawHuman(HumanPoseResult human) {
   int i = 0;
   fill(0);
   for (KeyPointResult point : human.getKeyPoints()) {
-    if(point.getProbability() < threshold)
+    if (point.getProbability() < threshold)
       continue;
-    
+
     ellipse(point.getX(), point.getY(), 10, 10);
     text(i, point.getX() + 5, point.getY());
     i++;
@@ -97,9 +95,9 @@ private void connect(KeyPointResult... keyPoints) {
     KeyPointResult a = keyPoints[i];
     KeyPointResult b = keyPoints[i + 1];
 
-    if(a.getProbability() < threshold || b.getProbability() < threshold)
+    if (a.getProbability() < threshold || b.getProbability() < threshold)
       continue;
-      
+
     line(a.getX(), a.getY(), b.getX(), b.getY());
   }
 }

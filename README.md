@@ -11,7 +11,7 @@ The API should support the following (✨ = `implemented`):
 
 - Support for model & weights fetching
     - Local sketch installation ✨
-    - Global library installation (not yet supported)
+    - Global library installation ✨
 - YOLO
     - YOLOv3-tiny ✨
     - YOLOv3-spp ([spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326)) ✨
@@ -20,6 +20,8 @@ The API should support the following (✨ = `implemented`):
 - face detection
     - Ultra-Light-Fast-Generic-Face-Detector-1MB RFB (~30 FPS on CPU) ✨
     - Ultra-Light-Fast-Generic-Face-Detector-1MB Slim (~40 FPS on CPU) ✨
+- hand detection
+    - Handtracker.js (not yet working)
 - openPose
     - Single Human Pose Detection based on lightweight openpose ✨
     - Multi Human Pose Detection (currently struggling with the partial affinity fields 🤷🏻‍♂️ help?)
