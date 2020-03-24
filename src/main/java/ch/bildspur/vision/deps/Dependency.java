@@ -38,7 +38,7 @@ public class Dependency {
             double p = progress * 100.0;
             int current = lastProgress.get();
 
-            if (p - current > 10) {
+            if (p - current > 30) {
                 System.out.print(".");
                 System.out.flush();
                 lastProgress.set(current + 10);

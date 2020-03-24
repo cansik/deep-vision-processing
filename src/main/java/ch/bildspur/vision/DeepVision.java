@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 
 public class DeepVision {
     private PApplet sketch;
-    private boolean storeNetworksInSketch = true;
+    private boolean storeNetworksInSketch = false;
 
     public DeepVision(PApplet sketch) {
         this.sketch = sketch;
@@ -30,8 +30,10 @@ public class DeepVision {
         if (storeNetworksInSketch) {
             Repository.localStorageDirectory = Paths.get(sketch.sketchPath("networks"));
         } else {
-            Repository.localStorageDirectory = Paths.get(ProcessingUtils.getLibPath(this));
+            Repository.localStorageDirectory = Paths.get(ProcessingUtils.getLibPath(this), "networks");
         }
+
+        System.out.println("Storing networks to: " + Repository.localStorageDirectory.toAbsolutePath().toString());
 
         // download
         try {
