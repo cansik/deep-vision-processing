@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static ch.bildspur.vision.util.CvProcessingUtils.createValidROI;
+
 public class FacemarkLBFNetwork extends DeepNeuralNetwork<FacialLandmarkResult> {
     private Path model;
     private FacemarkLBF net;
@@ -47,7 +49,7 @@ public class FacemarkLBFNetwork extends DeepNeuralNetwork<FacialLandmarkResult> 
         Point2fVectorVector extractedFaces = new Point2fVectorVector();
 
         for (ObjectDetectionResult detection : detections) {
-            rois.push_back(new Rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight()));
+            rois.push_back(createValidROI(frame.size(), detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight()));
         }
 
         net.fit(frame, rois, extractedFaces);

@@ -3,13 +3,17 @@ package ch.bildspur.vision.network;
 import ch.bildspur.vision.result.ClassificationResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import org.bytedeco.javacpp.DoublePointer;
-import org.bytedeco.opencv.opencv_core.*;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_core.Point;
+import org.bytedeco.opencv.opencv_core.Scalar;
+import org.bytedeco.opencv.opencv_core.Size;
 import org.bytedeco.opencv.opencv_dnn.Net;
 import processing.core.PImage;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static ch.bildspur.vision.util.CvProcessingUtils.createValidROI;
 import static org.bytedeco.opencv.global.opencv_core.CV_32F;
 import static org.bytedeco.opencv.global.opencv_core.minMaxLoc;
 import static org.bytedeco.opencv.global.opencv_dnn.blobFromImage;
@@ -92,7 +96,7 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
         List<ClassificationResult> results = new ArrayList<>();
 
         for (ObjectDetectionResult detection : detections) {
-            Mat roi = new Mat(frame, new Rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight()));
+            Mat roi = new Mat(frame, createValidROI(frame.size(), detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight()));
             ClassificationResult result = run(roi);
             results.add(result);
             roi.release();
