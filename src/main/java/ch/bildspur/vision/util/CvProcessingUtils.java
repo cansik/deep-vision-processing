@@ -13,6 +13,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
+import static ch.bildspur.vision.util.MathUtils.clamp;
+import static ch.bildspur.vision.util.MathUtils.clampByValue;
 import static org.bytedeco.opencv.global.opencv_core.merge;
 import static org.bytedeco.opencv.global.opencv_core.split;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
@@ -113,6 +115,11 @@ public final class CvProcessingUtils implements PConstants {
     }
 
     public static Rect createValidROI(Size imageSize, int x, int y, int width, int height) {
-        return new Rect(Math.max(x, 0), Math.max(y, 0), Math.min(width, imageSize.width()), Math.min(height, imageSize.height()));
+        return new Rect(
+                clamp(x, 0, imageSize.width()),
+                clamp(y, 0, imageSize.height()),
+                clampByValue(width, x + width, 0, imageSize.width()),
+                clampByValue(height, y + height, 0, imageSize.height())
+        );
     }
 }
