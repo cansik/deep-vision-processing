@@ -7,7 +7,7 @@ import processing.video.Capture;
 Capture cam;
 
 DeepVision vision;
-ULFGFaceDetectionNetwork faceNetwork;
+CascadeClassifierNetwork faceNetwork;
 FERPlusEmotionNetwork emotionNetwork;
 
 List<ObjectDetectionResult> detections;
@@ -19,7 +19,7 @@ public void setup() {
 
   println("creating network...");
   vision = new DeepVision(this);
-  faceNetwork = vision.createULFGFaceDetectorRFB320();
+  faceNetwork = vision.createCascadeFrontalFace();
   emotionNetwork = vision.createFERPlusEmotionClassifier();
 
   println("loading model...");
@@ -41,11 +41,6 @@ public void draw() {
 
   image(cam, 0, 0);
   detections = faceNetwork.run(cam);
-
-  // scale width of face detection (better for emotions);
-  for (ObjectDetectionResult face : detections) {
-    face.scale(1.4f, 1.0f);
-  }
 
   emotions = emotionNetwork.runByDetections(cam, detections);
 

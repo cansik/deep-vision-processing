@@ -7,7 +7,7 @@ import processing.video.Capture;
 Capture cam;
 
 DeepVision vision = new DeepVision(this);
-ULFGFaceDetectionNetwork faceNetwork;
+CascadeClassifierNetwork faceNetwork;
 FacemarkLBFNetwork facemark;
 
 List<ObjectDetectionResult> detections;
@@ -18,7 +18,7 @@ public void setup() {
   colorMode(HSB, 360, 100, 100);
 
   println("creating network...");
-  faceNetwork = vision.createULFGFaceDetectorRFB640();
+  faceNetwork = vision.createCascadeFrontalFace();
   facemark = vision.createFacemarkLBF();
 
 
@@ -41,11 +41,6 @@ public void draw() {
 
   image(cam, 0, 0);
   detections = faceNetwork.run(cam);
-
-  // scale width of face detection (better for emotions);
-  for (ObjectDetectionResult face : detections) {
-    face.scale(1.4f, 1.0f);
-  }
 
   markedFaces = facemark.runByDetections(cam, detections);
 
