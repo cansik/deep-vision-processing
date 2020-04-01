@@ -1,18 +1,18 @@
 package ch.bildspur.vision.test;
 
 
+import ch.bildspur.vision.CascadeClassifierNetwork;
 import ch.bildspur.vision.DeepVision;
-import ch.bildspur.vision.ULFGFaceDetectionNetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import processing.core.PApplet;
 import processing.core.PImage;
 
 import java.util.List;
 
-public class FaceDetectionTest extends PApplet {
+public class HaarFaceDetectionTest extends PApplet {
 
     public static void main(String... args) {
-        FaceDetectionTest sketch = new FaceDetectionTest();
+        HaarFaceDetectionTest sketch = new HaarFaceDetectionTest();
         sketch.runSketch();
     }
 
@@ -23,7 +23,7 @@ public class FaceDetectionTest extends PApplet {
     PImage testImage;
 
     DeepVision vision = new DeepVision(this);
-    ULFGFaceDetectionNetwork network;
+    CascadeClassifierNetwork network;
     List<ObjectDetectionResult> detections;
 
     public void setup() {
@@ -32,12 +32,13 @@ public class FaceDetectionTest extends PApplet {
         testImage = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
-        network = vision.createULFGFaceDetectorRFB640();
+        network = vision.createCascadeFrontalFace();
 
         println("loading model...");
         network.setup();
 
-        //network.setConfidenceThreshold(0.2f);
+        // apply settings
+
 
         println("inferencing...");
         detections = network.run(testImage);

@@ -58,4 +58,7 @@ public class Repository {
 
     public static final Dependency GenderNetProtoText = new Dependency("deploy_gender.prototxt");
     public static final Dependency GenderNetModel = new Dependency("gender_net.caffemodel");
+
+    // haar cascade
+    public static final Dependency HaarCascadeFrontalFaceAlt = new Dependency("haarcascade_frontalface_alt.xml");
 }

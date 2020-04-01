@@ -1,0 +1,53 @@
+package ch.bildspur.vision;
+
+import ch.bildspur.vision.network.DeepNeuralNetwork;
+import ch.bildspur.vision.result.ObjectDetectionResult;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_core.Rect;
+import org.bytedeco.opencv.opencv_core.RectVector;
+import org.bytedeco.opencv.opencv_objdetect.CascadeClassifier;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+
+public class CascadeClassifierNetwork extends DeepNeuralNetwork<List<ObjectDetectionResult>> {
+    private Path model;
+    private String className;
+    private CascadeClassifier net;
+
+    public CascadeClassifierNetwork(Path model) {
+        this(model, "object");
+    }
+
+    public CascadeClassifierNetwork(Path model, String className) {
+        this.model = model;
+        this.className = className;
+    }
+
+    @Override
+    public boolean setup() {
+        if (!Files.exists(model))
+            return false;
+
+        net = new CascadeClassifier(model.toAbsolutePath().toString());
+        return true;
+    }
+
+    @Override
+    public List<ObjectDetectionResult> run(Mat frame) {
+        List<ObjectDetectionResult> detections = new ArrayList<>();
+        RectVector detectObjects = new RectVector();
+
+        net.detectMultiScale(frame, detectObjects);
+
+        for (int i = 0; i < detectObjects.size(); i++) {
+            Rect detection = detectObjects.get(i);
+            detections.add(new ObjectDetectionResult(0, className, 1,
+                    detection.x(), detection.y(), detection.width(), detection.height()));
+        }
+
+        return detections;
+    }
+}

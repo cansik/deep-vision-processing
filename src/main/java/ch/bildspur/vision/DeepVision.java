@@ -48,6 +48,14 @@ public class DeepVision {
         }
     }
 
+    // cascade
+
+    public CascadeClassifierNetwork createCascadeFrontalFace() {
+        prepareDependencies(Repository.HaarCascadeFrontalFaceAlt);
+
+        return new CascadeClassifierNetwork(Repository.HaarCascadeFrontalFaceAlt.getPath(), "face");
+    }
+
     // yolo
 
     private YOLONetwork createYOLONetwork(Dependency model, Dependency weights, Dependency names, int size) {
