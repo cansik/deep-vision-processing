@@ -38,7 +38,8 @@ public class HaarFaceDetectionTest extends PApplet {
         network.setup();
 
         // apply settings
-
+        network.setScaleFactor(1.01);
+        network.setMinNeighbors(3);
 
         println("inferencing...");
         detections = network.run(testImage);
@@ -54,7 +55,6 @@ public class HaarFaceDetectionTest extends PApplet {
     public void draw() {
         background(55);
 
-        detections = network.run(testImage);
         image(testImage, 0, 0);
 
         noFill();

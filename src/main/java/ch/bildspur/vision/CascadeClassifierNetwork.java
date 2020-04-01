@@ -17,6 +17,10 @@ public class CascadeClassifierNetwork extends DeepNeuralNetwork<List<ObjectDetec
     private String className;
     private CascadeClassifier net;
 
+    private double scaleFactor = 1.1;
+    private int minNeighbors = 3;
+    int flags = 0;
+
     public CascadeClassifierNetwork(Path model) {
         this(model, "object");
     }
@@ -40,7 +44,7 @@ public class CascadeClassifierNetwork extends DeepNeuralNetwork<List<ObjectDetec
         List<ObjectDetectionResult> detections = new ArrayList<>();
         RectVector detectObjects = new RectVector();
 
-        net.detectMultiScale(frame, detectObjects);
+        net.detectMultiScale(frame, detectObjects, scaleFactor, minNeighbors, flags, null, null);
 
         for (int i = 0; i < detectObjects.size(); i++) {
             Rect detection = detectObjects.get(i);
@@ -49,5 +53,29 @@ public class CascadeClassifierNetwork extends DeepNeuralNetwork<List<ObjectDetec
         }
 
         return detections;
+    }
+
+    public double getScaleFactor() {
+        return scaleFactor;
+    }
+
+    public void setScaleFactor(double scaleFactor) {
+        this.scaleFactor = scaleFactor;
+    }
+
+    public int getMinNeighbors() {
+        return minNeighbors;
+    }
+
+    public void setMinNeighbors(int minNeighbors) {
+        this.minNeighbors = minNeighbors;
+    }
+
+    public int getFlags() {
+        return flags;
+    }
+
+    public void setFlags(int flags) {
+        this.flags = flags;
     }
 }
