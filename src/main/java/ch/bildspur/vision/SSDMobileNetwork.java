@@ -87,7 +87,7 @@ public class SSDMobileNetwork extends ObjectDetectionNetwork {
 
             int x = Math.round(xLeftBottom);
             int y = Math.round(yLeftBottom);
-            int width = Math.round(xRightTop - yLeftBottom);
+            int width = Math.round(xRightTop - xLeftBottom);
             int height = Math.round(yRightTop - yLeftBottom);
 
             detections.add(new ObjectDetectionResult(label, getLabelOrId(label), confidence,

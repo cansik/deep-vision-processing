@@ -148,6 +148,6 @@ public class DeepVision {
     public SSDMobileNetwork createHandDetector() {
         prepareDependencies(Repository.HandTrackJSWeight, Repository.HandTrackJSConfig);
         return new SSDMobileNetwork(Repository.HandTrackJSWeight.getPath(), Repository.HandTrackJSConfig.getPath(),
-                300, 300, 0.1f, "background", "hand");
+                300, 300, 0.5f, "background", "hand");
     }
 }

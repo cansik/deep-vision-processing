@@ -36,6 +36,7 @@ public class HandDetectionTest extends PApplet {
 
         println("loading model...");
         network.setup();
+        network.setConfidenceThreshold(0.1f);
 
         println("inferencing...");
         detections = network.run(testImage);
