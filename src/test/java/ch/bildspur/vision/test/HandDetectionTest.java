@@ -2,7 +2,7 @@ package ch.bildspur.vision.test;
 
 
 import ch.bildspur.vision.DeepVision;
-import ch.bildspur.vision.HandDetectionNetwork;
+import ch.bildspur.vision.SSDMobileNetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -23,16 +23,16 @@ public class HandDetectionTest extends PApplet {
     PImage testImage;
 
     DeepVision vision = new DeepVision(this);
-    HandDetectionNetwork network;
+    SSDMobileNetwork network;
     List<ObjectDetectionResult> detections;
 
     public void setup() {
         colorMode(HSB, 360, 100, 100);
 
-        testImage = loadImage(sketchPath("data/office.jpg"));
+        testImage = loadImage(sketchPath("data/hand.jpg"));
 
         println("creating network...");
-        network = vision._createHandDetector();
+        network = vision.createHandDetector();
 
         println("loading model...");
         network.setup();

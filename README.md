@@ -21,7 +21,7 @@ The API should support the following (✨ = `implemented`):
     - Ultra-Light-Fast-Generic-Face-Detector-1MB RFB (~30 FPS on CPU) ✨
     - Ultra-Light-Fast-Generic-Face-Detector-1MB Slim (~40 FPS on CPU) ✨
 - hand detection
-    - Handtracker.js (not yet working)
+    - Handtracker.js ✨
 - openPose
     - Single Human Pose Detection based on lightweight openpose ✨
     - Multi Human Pose Detection (currently struggling with the partial affinity fields 🤷🏻‍♂️ help?)
@@ -46,3 +46,4 @@ Stock images from the following peoples have been used:
 - yoga.jpg by Yogendra Singh from Pexels
 - office.jpg by [fauxels](https://www.pexels.com/@fauxels) from Pexels
 - faces.png by [shvetsa](https://www.pexels.com/@shvetsa) from Pexels
+- hand.jpg by by Thought Catalog on Unsplash

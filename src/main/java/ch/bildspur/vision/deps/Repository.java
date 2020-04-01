@@ -33,7 +33,7 @@ public class Repository {
 
     // hand tracking
     public static final Dependency HandTrackJSWeight = new Dependency("handtrackingjs.pb");
-    public static final Dependency HandTrackJSConfig = new Dependency("handtrackingjs.config");
+    public static final Dependency HandTrackJSConfig = new Dependency("handtrackingjs.pbtxt");
 
     // pose estimation
     public static final Dependency SingleHumanPoseEstimationModel = new Dependency("single-human-pose-estimation-l4.onnx");

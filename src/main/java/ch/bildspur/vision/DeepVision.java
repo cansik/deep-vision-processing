@@ -145,8 +145,9 @@ public class DeepVision {
 
     // hand recognition
 
-    public HandDetectionNetwork _createHandDetector() {
+    public SSDMobileNetwork createHandDetector() {
         prepareDependencies(Repository.HandTrackJSWeight, Repository.HandTrackJSConfig);
-        return new HandDetectionNetwork(Repository.HandTrackJSWeight.getPath(), Repository.HandTrackJSConfig.getPath());
+        return new SSDMobileNetwork(Repository.HandTrackJSWeight.getPath(), Repository.HandTrackJSConfig.getPath(),
+                300, 300, 0.1f, "background", "hand");
     }
 }
