@@ -143,11 +143,23 @@ public class DeepVision {
         return new GenderNetwork(Repository.GenderNetProtoText.getPath(), Repository.GenderNetModel.getPath());
     }
 
-    // hand recognition
+    // ssd mobilenet
 
     public SSDMobileNetwork createHandDetector() {
         prepareDependencies(Repository.HandTrackJSWeight, Repository.HandTrackJSConfig);
         return new SSDMobileNetwork(Repository.HandTrackJSWeight.getPath(), Repository.HandTrackJSConfig.getPath(),
-                300, 300, 0.5f, "background", "hand");
+                300, 300, 0.5f, "hand");
+    }
+
+    public SSDMobileNetwork createMobileNetV2() {
+        prepareDependencies(
+                Repository.SSDMobileNetV2COCOWeight,
+                Repository.SSDMobileNetV2COCOConfig,
+                Repository.COCOLabelsPaper);
+
+        SSDMobileNetwork network = new SSDMobileNetwork(Repository.SSDMobileNetV2COCOWeight.getPath(), Repository.SSDMobileNetV2COCOConfig.getPath(),
+                300, 300, 0.5f);
+        network.loadLabels(Repository.COCOLabelsPaper.getPath());
+        return network;
     }
 }

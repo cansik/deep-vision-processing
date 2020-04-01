@@ -12,6 +12,8 @@ public class Repository {
     public static final Dependency VOCNames = new Dependency("voc.names");
     public static final Dependency OpenImagesNames = new Dependency("openimages.names");
     public static final Dependency NineKNames = new Dependency("9k.names");
+    public static final Dependency COCOLabels2014To2017 = new Dependency("coco-labels-2014_2017.txt");
+    public static final Dependency COCOLabelsPaper = new Dependency("coco-labels-paper.txt");
 
     // networks
 
@@ -28,12 +30,16 @@ public class Repository {
     public static final Dependency YOLO9kModel = new Dependency("yolo9000.cfg");
     public static final Dependency YOLO9kWeight = new Dependency("yolo9000.weights");
 
-    public static final Dependency SSDMobileNetV3COCOConfig = new Dependency("ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt");
-    public static final Dependency SSDMobileNetV3COCOWeight = new Dependency("ssd_mobilenet_v3_large_coco_2020_01_14.pb");
+    public static final Dependency SSDMobileNetV2COCOConfig = new Dependency("ssd_mobilenet_v2_coco_2018_03_29.pbtxt");
+    public static final Dependency SSDMobileNetV2COCOWeight = new Dependency("ssd_mobilenet_v2_coco_2018_03_29.pb");
 
-    // hand tracking
+    // hand detection
     public static final Dependency HandTrackJSWeight = new Dependency("handtrackingjs.pb");
     public static final Dependency HandTrackJSConfig = new Dependency("handtrackingjs.pbtxt");
+
+    // masking
+    public static final Dependency MaskRCNNInceptionv2Config = new Dependency("mask_rcnn_inception_v2_coco_2018_01_28.pbtxt");
+    public static final Dependency MaskRCNNInceptionv2Weight = new Dependency("mask_rcnn_inception_v2_coco_2018_01_28.pb");
 
     // pose estimation
     public static final Dependency SingleHumanPoseEstimationModel = new Dependency("single-human-pose-estimation-l4.onnx");

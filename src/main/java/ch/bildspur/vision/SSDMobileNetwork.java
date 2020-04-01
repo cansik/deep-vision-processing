@@ -79,7 +79,7 @@ public class SSDMobileNetwork extends ObjectDetectionNetwork {
             float confidence = dataPtr.get(2);
             if (confidence < confidenceThreshold) continue;
 
-            int label = Math.round(dataPtr.get(1));
+            int label = Math.round(dataPtr.get(1)) - 1;
             float xLeftBottom = dataPtr.get(3) * frame.cols();
             float yLeftBottom = dataPtr.get(4) * frame.rows();
             float xRightTop = dataPtr.get(5) * frame.cols();
