@@ -1,13 +1,17 @@
 package ch.bildspur.vision;
 
+import ch.bildspur.vision.network.PolyDetectionNetwork;
+import ch.bildspur.vision.network.PolyDetector;
 import ch.bildspur.vision.network.PoseNetwork;
 import ch.bildspur.vision.result.HumanPoseResult;
 import ch.bildspur.vision.result.KeyPointResult;
+import ch.bildspur.vision.result.ObjectDetectionResult;
 import org.bytedeco.javacpp.DoublePointer;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Point;
 import org.bytedeco.opencv.opencv_core.Scalar;
 import org.bytedeco.opencv.opencv_dnn.Net;
+import processing.core.PImage;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -16,8 +20,9 @@ import java.util.List;
 import static org.bytedeco.opencv.global.opencv_core.minMaxLoc;
 import static org.bytedeco.opencv.global.opencv_dnn.readNetFromONNX;
 
-public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> {
+public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> implements PolyDetectionNetwork<HumanPoseResult> {
     private final int pointCount = 17;
+    private final PolyDetector<HumanPoseResult> polyDetector = new PolyDetector<>(this);
 
     public SingleHumanPoseNetwork(Path modelPath) {
         // todo: check if this is really LIP or COCO dataset
@@ -61,5 +66,15 @@ public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> {
         minMaxLoc(probMap, null, probability, null, maxPoint, null);
 
         return new KeyPointResult(index, maxPoint.x(), maxPoint.y(), getProbability(probability.get()));
+    }
+
+    @Override
+    public List<HumanPoseResult> runByDetections(PImage image, List<ObjectDetectionResult> detections) {
+        return polyDetector.runByDetections(image, detections);
+    }
+
+    @Override
+    public List<HumanPoseResult> runByDetections(Mat frame, List<ObjectDetectionResult> detections) {
+        return polyDetector.runByDetections(frame, detections);
     }
 }

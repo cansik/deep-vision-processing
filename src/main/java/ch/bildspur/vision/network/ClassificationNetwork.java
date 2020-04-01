@@ -10,17 +10,15 @@ import org.bytedeco.opencv.opencv_core.Size;
 import org.bytedeco.opencv.opencv_dnn.Net;
 import processing.core.PImage;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static ch.bildspur.vision.util.CvProcessingUtils.createValidROI;
 import static org.bytedeco.opencv.global.opencv_core.CV_32F;
 import static org.bytedeco.opencv.global.opencv_core.minMaxLoc;
 import static org.bytedeco.opencv.global.opencv_dnn.blobFromImage;
 import static org.bytedeco.opencv.global.opencv_imgproc.COLOR_RGB2GRAY;
 import static org.bytedeco.opencv.global.opencv_imgproc.cvtColor;
 
-public abstract class ClassificationNetwork extends LabeledNetwork<ClassificationResult> implements NetworkFactory {
+public abstract class ClassificationNetwork extends LabeledNetwork<ClassificationResult> implements NetworkFactory, PolyDetectionNetwork<ClassificationResult> {
     private Net net;
 
     private int width;
@@ -34,6 +32,8 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
     private boolean crop;
 
     private float confidenceScale;
+
+    private final PolyDetector<ClassificationResult> polyDetector = new PolyDetector<>(this);
 
     public ClassificationNetwork(int width, int height, boolean convertToGrayScale, float scaleFactor, Scalar mean, boolean swapRB, boolean crop, float confidenceScale, String... labels) {
         this.width = width;
@@ -87,21 +87,13 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
         return new ClassificationResult(index, getLabelOrId(index), probability);
     }
 
+    @Override
     public List<ClassificationResult> runByDetections(PImage image, List<ObjectDetectionResult> detections) {
-        Mat frame = convertToMat(image);
-        return runByDetections(frame, detections);
+        return polyDetector.runByDetections(image, detections);
     }
 
+    @Override
     public List<ClassificationResult> runByDetections(Mat frame, List<ObjectDetectionResult> detections) {
-        List<ClassificationResult> results = new ArrayList<>();
-
-        for (ObjectDetectionResult detection : detections) {
-            Mat roi = new Mat(frame, createValidROI(frame.size(), detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight()));
-            ClassificationResult result = run(roi);
-            results.add(result);
-            roi.release();
-        }
-
-        return results;
+        return polyDetector.runByDetections(frame, detections);
     }
 }
