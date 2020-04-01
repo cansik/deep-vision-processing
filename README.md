@@ -12,11 +12,12 @@ The API should support the following (✨ = `implemented`):
 - Support for model & weights fetching
     - Local sketch installation ✨
     - Global library installation ✨
-- YOLO
+- COCO object detection
     - YOLOv3-tiny ✨
     - YOLOv3-spp ([spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326)) ✨
     - YOLOv3 (608) ✨
     - ~~YOLO 9K~~ ([not supported by OpenCV](https://answers.opencv.org/question/180425/opencv-darknet-error-when-initializing-darknet/?answer=180441#post-id-180441))
+    - SSDMobileNetV2 ✨
 - face detection
     - Ultra-Light-Fast-Generic-Face-Detector-1MB RFB (~30 FPS on CPU) ✨
     - Ultra-Light-Fast-Generic-Face-Detector-1MB Slim (~40 FPS on CPU) ✨
