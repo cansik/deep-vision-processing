@@ -54,12 +54,18 @@ The following list shows the networks that are on the list to be implemented:
 ### Object Detection
 tbd
 
+### Object Recognition
+tbd
+
+### KeyPoint Detection
+tbd
+
 ### Classification
 tbd
 
 ## Build
 - Install JDK 8 (because of Processing)
-- Download maven snapshots `mvn -U compile`
+- Download maven snapshots for JavaCV: `mvn -U compile`
 
 Run gradle to build a fat jar:
 
