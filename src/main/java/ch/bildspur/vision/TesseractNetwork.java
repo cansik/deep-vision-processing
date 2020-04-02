@@ -1,20 +1,26 @@
 package ch.bildspur.vision;
 
 import ch.bildspur.vision.network.DeepNeuralNetwork;
+import ch.bildspur.vision.network.PolyDetectionNetwork;
+import ch.bildspur.vision.network.PolyDetector;
+import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.TextResult;
 import org.bytedeco.javacpp.BytePointer;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.tesseract.TessBaseAPI;
+import processing.core.PImage;
 
 import java.nio.file.Path;
+import java.util.List;
 
 import static org.bytedeco.opencv.global.opencv_imgproc.CV_BGR2GRAY;
 import static org.bytedeco.opencv.global.opencv_imgproc.cvtColor;
 
-public class TesseractNetwork extends DeepNeuralNetwork<TextResult> {
+public class TesseractNetwork extends DeepNeuralNetwork<TextResult> implements PolyDetectionNetwork<TextResult> {
     private Path model;
     private String language;
     private TessBaseAPI api = new TessBaseAPI();
+    private final PolyDetector<TextResult> polyDetector = new PolyDetector<>(this);
 
     public TesseractNetwork(Path model, String language) {
         this.model = model;
@@ -24,7 +30,7 @@ public class TesseractNetwork extends DeepNeuralNetwork<TextResult> {
     @Override
     public boolean setup() {
         // Initialize tesseract-ocr with English, without specifying tessdata path
-        if (api.Init(model.toAbsolutePath().getParent().toString(), language) != 0) {
+        if (api.Init(model.toAbsolutePath().getParent().toString(), language, 1) != 0) {
             System.err.println("Could not initialize tesseract.");
             return false;
         }
@@ -52,5 +58,15 @@ public class TesseractNetwork extends DeepNeuralNetwork<TextResult> {
 
     public void release() {
         api.End();
+    }
+
+    @Override
+    public List<TextResult> runByDetections(PImage image, List<ObjectDetectionResult> detections) {
+        return polyDetector.runByDetections(image, detections);
+    }
+
+    @Override
+    public List<TextResult> runByDetections(Mat frame, List<ObjectDetectionResult> detections) {
+        return polyDetector.runByDetections(frame, detections);
     }
 }
