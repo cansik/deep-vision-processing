@@ -15,7 +15,50 @@ Download the [latest](releases/download/0.3.4/deepvision.zip) prebuilt version f
 Because the library is still under development, it is not yet published in the Processing contribution manager.
 
 ## Usage
-tbd
+The base of the library is the `DeepVision` class. It is used to download the pretrained models and create new networks.
+
+```java
+import ch.bildspur.vision.*;
+import ch.bildspur.vision.network.*;
+import ch.bildspur.vision.result.*;
+
+DeepVision vision = new DeepVision(this);
+```
+
+Usually it makes sense to define the network globally for your sketch and create it in setup. The network first has to be created and then be setup. The `setup` method downloads the pre-trained weights if they are not already existing.
+
+```java
+YOLONetwork network;
+
+void setup() {
+  // create the network
+  network = vision.createYOLOv3();
+
+  // download the pre-trained models
+  network.setup();
+  
+  // set network settings (optional)
+  network.setConfidenceThreshold(0.2);
+```
+
+By default, the weights are stored in the library folder of Processing. If you want to download them to the sketch folder, use the following command:
+
+```java
+// download to library folder
+vision.storeNetworksGlobal();
+
+// download to sketch/networks
+vision.storeNetworksInSketch();
+```
+
+Each network has a `run()` method, which takes an image as a parameter and outputs a result. You can just throw in any PImage and the library starts processing it.
+
+```java
+PImage myImg = loadImage("hello.jpg");
+ArrayList<ObjectDetectionResult> detections = network.run(myImg);
+```
+
+Please have a look at the specific networks for further information or at the [examples](examples).
 
 ## Networks
 
@@ -52,7 +95,16 @@ The following list shows the networks that are on the list to be implemented:
 
 
 ### Object Detection
-tbd
+
+#### YOLOv3
+
+#### SSDMobileNetV2
+
+#### Ultra-Light-Fast-Generic-Face-Detector
+
+#### Handtracker
+
+#### TextBoxes
 
 ### Object Recognition
 tbd
