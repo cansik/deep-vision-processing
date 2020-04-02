@@ -14,6 +14,12 @@
 
         <dependency>
             <groupId>org.bytedeco</groupId>
+            <artifactId>javacv-platform</artifactId>
+            <version>1.5.3-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bytedeco</groupId>
             <artifactId>opencv-platform</artifactId>
             <version>4.2.0-1.5.3-SNAPSHOT</version>
         </dependency>

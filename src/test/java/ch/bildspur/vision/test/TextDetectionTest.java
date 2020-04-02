@@ -32,7 +32,7 @@ public class TextDetectionTest extends PApplet {
         testImage = loadImage(sketchPath("data/sticker.jpg"));
 
         println("creating network...");
-        network = vision._createTextBoxesDetector();
+        network = vision.createTextBoxesDetector();
 
         println("loading model...");
         network.setup();

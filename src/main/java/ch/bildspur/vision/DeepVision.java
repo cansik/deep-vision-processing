@@ -163,7 +163,7 @@ public class DeepVision {
         return network;
     }
 
-    public TextBoxesNetwork _createTextBoxesDetector() {
+    public TextBoxesNetwork createTextBoxesDetector() {
         prepareDependencies(Repository.TextBoxesProtoText, Repository.TextBoxesModel);
         return new TextBoxesNetwork(Repository.TextBoxesProtoText.getPath(), Repository.TextBoxesModel.getPath());
     }

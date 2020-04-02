@@ -10,9 +10,7 @@ def outputName = 'deepvision'
 
 repositories {
     mavenCentral()
-    maven {
-        url 'https://oss.sonatype.org/content/repositories/snapshots/'
-    }
+    mavenLocal()
     maven { url 'https://jitpack.io' }
 }
 
@@ -33,13 +31,9 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
     // opencv
-    compile group: 'org.bytedeco', name: 'javacv', version: "$javaCvVersion"
-    compile group: 'org.bytedeco', name: 'opencv-platform', version: "4.1.2-$javaCvVersion"
-    compile group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.7-$javaCvVersion"
-
-    // compile group: 'org.bytedeco', name: 'javacv', version: "1.5.3-SNAPSHOT"
-    //compile group: 'org.bytedeco', name: 'opencv-platform', version: "4.2.0-1.5.3-SNAPSHOT"
-    //compile group: 'org.bytedeco', name: 'opencv-platform', version: "0.3.9-1.5.3-SNAPSHOT"
+    compile group: 'org.bytedeco', name: 'javacv', version: "1.5.3-SNAPSHOT"
+    compile group: 'org.bytedeco', name: 'opencv-platform', version: "4.2.0-1.5.3-SNAPSHOT"
+    compile group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.9-1.5.3-SNAPSHOT"
 
     // processing
     processing group: 'org.processing', name: 'core', version: '3.3.7'

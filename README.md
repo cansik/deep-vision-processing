@@ -32,6 +32,8 @@ Here you find a list of implemented networks:
 - Keypoint Detection 🤾🏻‍♀️
 	- Facial Landmark Detection
 	- Single Human Pose Detection based on lightweight openpose
+- Text Detection
+    - TextBoxes
 - Classification 🐈
     - MNIST CNN
     - FER+ Emotion
@@ -43,7 +45,6 @@ The following list shows the networks that are on the list to be implemented:
 * YOLO 9K (not supported by OpenCV)
 * Multi Human Pose Detection (currently struggling with the partial affinity fields 🤷🏻‍♂️ help?)
 * MaskRCNN
-* TextBoxes (waiting for update to opencv 4.2 because of [issue](https://github.com/opencv/opencv_contrib/issues/2279))
 * TextBoxes++
 * [CRNN](https://github.com/bgshih/crnn)
 * [PixelLink](https://github.com/ZJULearning/pixel_link)
