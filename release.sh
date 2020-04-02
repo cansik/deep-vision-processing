@@ -61,6 +61,13 @@ cd "release/"
 rm -f "$ARCHIVE_NAME.zip"
 zip -r "$ARCHIVE_NAME.zip" "$ARCHIVE_NAME" -x "*.DS_Store"
 
+# install
+if [[ $2 = "-i" ]]; then
+   echo "installing library..."
+   rm -rf "~/Documents/Processing/libraries/$ARCHIVE_NAME"
+   cp -r "$OUTPUT" "~/Documents/Processing/libraries/"
+fi
+
 # store it with version number
 cd ..
 mv -f "$OUTPUT" "$OUTPUTV"
