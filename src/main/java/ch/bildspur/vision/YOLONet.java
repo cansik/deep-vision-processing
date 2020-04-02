@@ -18,7 +18,7 @@ import static org.bytedeco.opencv.global.opencv_core.CV_32F;
 import static org.bytedeco.opencv.global.opencv_core.minMaxLoc;
 import static org.bytedeco.opencv.global.opencv_dnn.*;
 
-public class YOLONetwork extends ObjectDetectionNetwork {
+public class YOLONet extends ObjectDetectionNetwork {
 
     private Path configPath;
     private Path weightsPath;
@@ -30,7 +30,7 @@ public class YOLONetwork extends ObjectDetectionNetwork {
 
     private Net net;
 
-    public YOLONetwork(Path configPath, Path weightsPath, int width, int height) {
+    public YOLONet(Path configPath, Path weightsPath, int width, int height) {
         this.configPath = configPath;
         this.weightsPath = weightsPath;
         this.width = width;

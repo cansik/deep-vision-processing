@@ -39,6 +39,9 @@ void setup() {
   
   // set network settings (optional)
   network.setConfidenceThreshold(0.2);
+  
+  ...
+}
 ```
 
 By default, the weights are stored in the library folder of Processing. If you want to download them to the sketch folder, use the following command:
@@ -96,7 +99,7 @@ The following list shows the networks that are on the list to be implemented:
 
 ### Object Detection
 
-#### YOLOv3
+#### YOLOv3
 
 #### SSDMobileNetV2
 
