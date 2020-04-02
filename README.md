@@ -30,7 +30,7 @@ Here you find a list of implemented networks:
 	- Ultra-Light-Fast-Generic-Face-Detector-1MB Slim (~40 FPS on CPU)
 	- Handtracker based on SSDMobileNetV2
 	- TextBoxes
-- Object Recognition
+- Object Recognition 🚙
     - Tesseract LSTM
 - Keypoint Detection 🤾🏻‍♀️
 	- Facial Landmark Detection
