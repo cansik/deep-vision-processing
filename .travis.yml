@@ -12,6 +12,7 @@ addons:
 
 # command to build
 install:
+  - mvn -U compile
   - ./gradlew assemble
   - ./gradlew build
   - ./gradlew jar
