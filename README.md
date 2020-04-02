@@ -1,4 +1,4 @@
-# Deep Vision Processing [![Build Status](https://travis-ci.org/cansik/deep-vision-processing.svg?branch=master)](https://travis-ci.org/cansik/deep-vision-processing) [![Build status](https://ci.appveyor.com/api/projects/status/6026c9qq3my86jgh?svg=true)](https://ci.appveyor.com/project/cansik/deep-vision-processing)
+# Deep Vision Processing [![Build Status](https://travis-ci.org/cansik/deep-vision-processing.svg?branch=master)](https://travis-ci.org/cansik/deep-vision-processing)
 Deep computer-vision algorithms for [Processing](https://processing.org/).
 
 The idea behind this library is to provide a simple way to use (inference) neural networks for computer vision tasks inside Processing. Mainly portability and easy-to-use are the primary goals of this library. Because of that (and [javacv](https://github.com/bytedeco/javacpp-presets/pull/832)), **no GPU support** at the moment.
@@ -25,16 +25,16 @@ import ch.bildspur.vision.result.*;
 DeepVision vision = new DeepVision(this);
 ```
 
-Usually it makes sense to define the network globally for your sketch and create it in setup. The network first has to be created and then be setup. The `setup` method downloads the pre-trained weights if they are not already existing.
+Usually it makes sense to define the network globally for your sketch and create it in setup. The `create` method downloads the pre-trained weights if they are not already existing. The network first has to be created and then be setup.
 
 ```java
 YOLONetwork network;
 
 void setup() {
-  // create the network
+  // create the network & download the pre-trained models
   network = vision.createYOLOv3();
 
-  // download the pre-trained models
+  // load the model
   network.setup();
   
   // set network settings (optional)
