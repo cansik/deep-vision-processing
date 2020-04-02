@@ -1,7 +1,7 @@
 package ch.bildspur.vision.test;
 
 
-import ch.bildspur.vision.DeepVision;
+import ch.bildspur.vision.DeepVisionPreview;
 import ch.bildspur.vision.MultiHumanPoseNetwork;
 import ch.bildspur.vision.result.HumanPoseResult;
 import ch.bildspur.vision.result.KeyPointResult;
@@ -23,7 +23,7 @@ public class MultiPoseEstimationTest extends PApplet {
 
     PImage testImage;
 
-    DeepVision vision = new DeepVision(this);
+    DeepVisionPreview vision = new DeepVisionPreview(this);
 
     MultiHumanPoseNetwork pose;
     List<HumanPoseResult> result;
@@ -34,7 +34,7 @@ public class MultiPoseEstimationTest extends PApplet {
         testImage = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
-        pose = vision.testMultiHumanPoseEstimation();
+        pose = vision.createMultiHumanPoseEstimation();
 
         println("loading model...");
         pose.setup();

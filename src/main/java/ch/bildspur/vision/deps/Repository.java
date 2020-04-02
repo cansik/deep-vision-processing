@@ -47,6 +47,9 @@ public class Repository {
     // text recognition
     public static final Dependency CRNNModel = new Dependency("model_crnn.t7");
 
+    // super resolution
+    public static final Dependency FSRCNNModel = new Dependency("FSRCNN_x2.pb");
+
     // masking
     public static final Dependency MaskRCNNInceptionv2Config = new Dependency("mask_rcnn_inception_v2_coco_2018_01_28.pbtxt");
     public static final Dependency MaskRCNNInceptionv2Weight = new Dependency("mask_rcnn_inception_v2_coco_2018_01_28.pb");

@@ -1,36 +1,36 @@
 package ch.bildspur.vision.test;
 
 
-import ch.bildspur.vision.CRNNNetwork;
 import ch.bildspur.vision.DeepVisionPreview;
-import ch.bildspur.vision.result.TextResult;
+import ch.bildspur.vision.FSRCNNNetwork;
+import ch.bildspur.vision.result.ImageResult;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class CRNNTest extends PApplet {
+public class FSRCNNTest extends PApplet {
 
     public static void main(String... args) {
-        CRNNTest sketch = new CRNNTest();
+        FSRCNNTest sketch = new FSRCNNTest();
         sketch.runSketch();
     }
 
     public void settings() {
-        size(256, 256, FX2D);
+        size(640, 480, FX2D);
     }
 
     PImage testImage;
 
     DeepVisionPreview vision = new DeepVisionPreview(this);
-    CRNNNetwork network;
-    TextResult result;
+    FSRCNNNetwork network;
+    ImageResult result;
 
     public void setup() {
         colorMode(HSB, 360, 100, 100);
 
-        testImage = loadImage(sketchPath("data/text.png"));
+        testImage = loadImage(sketchPath("data/office_small.jpg"));
 
         println("creating network...");
-        network = vision.createCRNN();
+        network = vision.createFSCRNN();
 
         println("loading model...");
         network.setup();
@@ -38,14 +38,11 @@ public class CRNNTest extends PApplet {
         println("inferencing...");
         result = network.run(testImage);
         println("done!");
-
-        println("detected: " + result.getText() + " with " + Math.round(100f * result.getProbability()) + "% confidence!");
     }
 
     public void draw() {
         background(55);
-        imageMode(CENTER);
-        image(testImage, width / 2, height / 2);
-        surface.setTitle("CRNN Text Recognition - FPS: " + Math.round(frameRate));
+        image(result.getImage(), 0, 0);
+        surface.setTitle("FSRCNN Super Resolution - FPS: " + Math.round(frameRate));
     }
 }

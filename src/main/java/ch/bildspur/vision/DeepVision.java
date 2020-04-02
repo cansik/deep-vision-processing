@@ -25,7 +25,7 @@ public class DeepVision {
         storeNetworksInSketch = true;
     }
 
-    private void prepareDependencies(Dependency... dependencies) {
+    protected void prepareDependencies(Dependency... dependencies) {
         // decide where to store
         if (storeNetworksInSketch) {
             Repository.localStorageDirectory = Paths.get(sketch.sketchPath("networks"));
@@ -88,11 +88,6 @@ public class DeepVision {
     public SingleHumanPoseNetwork createSingleHumanPoseEstimation() {
         prepareDependencies(Repository.SingleHumanPoseEstimationModel);
         return new SingleHumanPoseNetwork(Repository.SingleHumanPoseEstimationModel.getPath());
-    }
-
-    public MultiHumanPoseNetwork testMultiHumanPoseEstimation() {
-        prepareDependencies(Repository.MultiHumanPoseEstimationModel);
-        return new MultiHumanPoseNetwork(Repository.MultiHumanPoseEstimationModel.getPath());
     }
 
     // face recognition
@@ -166,17 +161,6 @@ public class DeepVision {
     public TextBoxesNetwork createTextBoxesDetector() {
         prepareDependencies(Repository.TextBoxesProtoText, Repository.TextBoxesModel);
         return new TextBoxesNetwork(Repository.TextBoxesProtoText.getPath(), Repository.TextBoxesModel.getPath());
-    }
-
-    public TextBoxesNetwork testTextBoxesPlusPlusDetector() {
-        prepareDependencies(Repository.TextBoxesPlusPlusProtoText, Repository.TextBoxesPlusPlusModel);
-        return new TextBoxesNetwork(Repository.TextBoxesPlusPlusProtoText.getPath(), Repository.TextBoxesPlusPlusModel.getPath());
-    }
-
-    public CRNNNetwork testCRNN() {
-        prepareDependencies(Repository.CRNNModel);
-        return new CRNNNetwork(Repository.CRNNModel.getPath());
-
     }
 
     public TesseractNetwork createTesseractRecognizer() {
