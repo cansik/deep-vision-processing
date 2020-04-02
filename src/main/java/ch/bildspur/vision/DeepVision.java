@@ -172,4 +172,10 @@ public class DeepVision {
         prepareDependencies(Repository.TextBoxesPlusPlusProtoText, Repository.TextBoxesPlusPlusModel);
         return new TextBoxesNetwork(Repository.TextBoxesPlusPlusProtoText.getPath(), Repository.TextBoxesPlusPlusModel.getPath());
     }
+
+    public CRNNNetwork _createCRNN() {
+        prepareDependencies(Repository.CRNNModel);
+        return new CRNNNetwork(Repository.CRNNModel.getPath());
+
+    }
 }

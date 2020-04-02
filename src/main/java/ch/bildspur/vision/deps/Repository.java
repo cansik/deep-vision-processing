@@ -44,6 +44,9 @@ public class Repository {
     public static final Dependency TextBoxesPlusPlusProtoText = new Dependency("TextBoxes_plusplus_icdar15.prototxt");
     public static final Dependency TextBoxesPlusPlusModel = new Dependency("TextBoxes_plusplus_icdar15.caffemodel");
 
+    // text recognition
+    public static final Dependency CRNNModel = new Dependency("model_crnn.t7");
+
     // masking
     public static final Dependency MaskRCNNInceptionv2Config = new Dependency("mask_rcnn_inception_v2_coco_2018_01_28.pbtxt");
     public static final Dependency MaskRCNNInceptionv2Weight = new Dependency("mask_rcnn_inception_v2_coco_2018_01_28.pb");

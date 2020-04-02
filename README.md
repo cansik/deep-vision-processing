@@ -46,6 +46,7 @@ The following list shows the networks that are on the list to be implemented:
 * TextBoxes (waiting for update to opencv 4.2 because of [issue](https://github.com/opencv/opencv_contrib/issues/2279))
 * TextBoxes++
 * [CRNN](https://github.com/bgshih/crnn)
+* [PixelLink](https://github.com/ZJULearning/pixel_link)
 
 
 ### Object Detection
