@@ -24,7 +24,7 @@ build:
   verbosity: detailed
 
 build_script:
-  - mvn -U compile || true > /dev/null
+  - mvn -U compile > /dev/null || true
   - gradlew.bat assemble
   - gradlew.bat build
   - gradlew.bat jar
