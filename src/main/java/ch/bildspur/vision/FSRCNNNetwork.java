@@ -3,11 +3,8 @@ package ch.bildspur.vision;
 import ch.bildspur.vision.network.DeepNeuralNetwork;
 import ch.bildspur.vision.result.ImageResult;
 import ch.bildspur.vision.util.CvProcessingUtils;
-import org.bytedeco.javacpp.Loader;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_dnn_superres.DnnSuperResImpl;
-import org.bytedeco.opencv.opencv_java;
-import org.bytedeco.opencv.presets.opencv_dnn_superres;
 import processing.core.PImage;
 
 import java.nio.file.Path;
@@ -18,9 +15,6 @@ public class FSRCNNNetwork extends DeepNeuralNetwork<ImageResult> {
 
     public FSRCNNNetwork(Path model) {
         this.model = model;
-
-        Loader.load(opencv_java.class);
-        Loader.load(opencv_dnn_superres.class);
     }
 
     @Override
