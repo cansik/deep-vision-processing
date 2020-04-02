@@ -51,11 +51,11 @@ public class MultiHumanPoseNetwork extends PoseNetwork<List<HumanPoseResult>> {
         Mat[] heatMaps = splitNetOutputBlobToParts(heatMapOutput, frame.size(), true);
 
         for (int i = 0; i < affinityFields.length; i++) {
-            storeHeatMap("maps/a_" + i + ".bmp", affinityFields[i]);
+            //storeHeatMap("maps/a_" + i + ".bmp", affinityFields[i]);
         }
 
         // save global heat map
-        storeHeatMap("maps/global.bmp", heatMaps[heatMaps.length - 1]);
+        //storeHeatMap("maps/global.bmp", heatMaps[heatMaps.length - 1]);
 
         List<HumanPoseResult> humans = new ArrayList<>();
 
@@ -75,7 +75,7 @@ public class MultiHumanPoseNetwork extends PoseNetwork<List<HumanPoseResult>> {
 
         threshold(smoothProbMap, smoothProbMap, threshold, 255.0, THRESH_BINARY);
 
-        storeHeatMap("maps/c_" + index + ".bmp", smoothProbMap);
+        //storeHeatMap("maps/c_" + index + ".bmp", smoothProbMap);
 
         smoothProbMap.convertTo(smoothProbMap, CV_8U);
 

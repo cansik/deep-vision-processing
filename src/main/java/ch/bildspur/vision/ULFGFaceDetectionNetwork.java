@@ -1,6 +1,6 @@
 package ch.bildspur.vision;
 
-import ch.bildspur.vision.network.DeepNeuralNetwork;
+import ch.bildspur.vision.network.ObjectDetectionNetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.util.MathUtils;
 import org.bytedeco.javacpp.FloatPointer;
@@ -20,14 +20,13 @@ import static org.bytedeco.opencv.global.opencv_dnn.*;
  * Based on https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB/blob/master/caffe/ultra_face_opencvdnn_inference.py
  * Adapted and improved a lot.
  */
-public class ULFGFaceDetectionNetwork extends DeepNeuralNetwork<List<ObjectDetectionResult>> {
+public class ULFGFaceDetectionNetwork extends ObjectDetectionNetwork {
     private Path modelPath;
     protected Net net;
 
     private int width;
     private int height;
 
-    private float confidenceThreshold = 0.7f;
     private float iouThreshold = 0.3f;
     private int topK = -1;
 
@@ -45,6 +44,7 @@ public class ULFGFaceDetectionNetwork extends DeepNeuralNetwork<List<ObjectDetec
         this.modelPath = modelPath;
         this.width = width;
         this.height = height;
+        this.setConfidenceThreshold(0.7f);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class ULFGFaceDetectionNetwork extends DeepNeuralNetwork<List<ObjectDetec
             FloatPointer confidencesPtr = new FloatPointer(confidences.row(i).data());
             float probability = confidencesPtr.get(1); // read second column (face)
 
-            if (probability < confidenceThreshold) continue;
+            if (probability < getConfidenceThreshold()) continue;
 
             // add probability
             relevantConfidences.push_back(probability);
@@ -127,7 +127,7 @@ public class ULFGFaceDetectionNetwork extends DeepNeuralNetwork<List<ObjectDetec
         FloatPointer confidencesPointer = new FloatPointer(relevantConfidences.size());
         confidencesPointer.put(relevantConfidences.get());
 
-        NMSBoxes(relevantBoxes, confidencesPointer, confidenceThreshold, iouThreshold, indices, 1.0f, topK);
+        NMSBoxes(relevantBoxes, confidencesPointer, getConfidenceThreshold(), iouThreshold, indices, 1.0f, topK);
 
         // extract nms result
         List<ObjectDetectionResult> detections = new ArrayList<>();
@@ -185,14 +185,6 @@ public class ULFGFaceDetectionNetwork extends DeepNeuralNetwork<List<ObjectDetec
                 }
             }
         }
-    }
-
-    public float getConfidenceThreshold() {
-        return confidenceThreshold;
-    }
-
-    public void setConfidenceThreshold(float confidenceThreshold) {
-        this.confidenceThreshold = confidenceThreshold;
     }
 
     public float getIouThreshold() {

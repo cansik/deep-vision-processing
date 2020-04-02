@@ -25,9 +25,8 @@ public class YOLONetwork extends ObjectDetectionNetwork {
     private int width;
     private int height;
 
-    private float confidenceThreshold = 0.5f;
-    private float nonMaximumSuppressionThreshold = 0.4f;
-    private boolean skipNonMaximumSuppression = false;
+    private float nmsThreshold = 0.4f;
+    private boolean skipNMS = false;
 
     private Net net;
 
@@ -36,15 +35,13 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         this.weightsPath = weightsPath;
         this.width = width;
         this.height = height;
+        this.setConfidenceThreshold(0.5f);
     }
 
     public boolean setup() {
         net = readNetFromDarknet(
                 configPath.toAbsolutePath().toString(),
                 weightsPath.toAbsolutePath().toString());
-
-        //net.setPreferableBackend(DNN_BACKEND_OPENCV);
-        //net.setPreferableTarget(DNN_TARGET_OPENCL);
 
         if (net.empty()) {
             System.out.println("Can't load network!");
@@ -103,7 +100,7 @@ public class YOLONetwork extends ObjectDetectionNetwork {
 
                 // Get the value and location of the maximum score
                 minMaxLoc(scores, null, confidence, null, classIdPoint, null);
-                if (confidence.get() > confidenceThreshold) {
+                if (confidence.get() > getConfidenceThreshold()) {
                     // todo: maybe round instead of floor
                     int centerX = (int) (data.get(0) * frame.cols());
                     int centerY = (int) (data.get(1) * frame.rows());
@@ -120,7 +117,7 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         }
 
         // skip nms
-        if (skipNonMaximumSuppression) {
+        if (skipNMS) {
             List<ObjectDetectionResult> detections = new ArrayList<>();
             for (int i = 0; i < confidences.size(); ++i) {
                 Rect box = boxes.get(i);
@@ -138,7 +135,7 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         FloatPointer confidencesPointer = new FloatPointer(confidences.size());
         confidencesPointer.put(confidences.get());
 
-        NMSBoxes(boxes, confidencesPointer, confidenceThreshold, nonMaximumSuppressionThreshold, indices, 1.f, 0);
+        NMSBoxes(boxes, confidencesPointer, getConfidenceThreshold(), nmsThreshold, indices, 1.f, 0);
 
         List<ObjectDetectionResult> detections = new ArrayList<>();
         for (int i = 0; i < indices.limit(); ++i) {
@@ -153,28 +150,20 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         return detections;
     }
 
-    public float getConfidenceThreshold() {
-        return confidenceThreshold;
+    public float getNmsThreshold() {
+        return nmsThreshold;
     }
 
-    public void setConfidenceThreshold(float confidenceThreshold) {
-        this.confidenceThreshold = confidenceThreshold;
+    public void setNmsThreshold(float nmsThreshold) {
+        this.nmsThreshold = nmsThreshold;
     }
 
-    public float getNonMaximumSuppressionThreshold() {
-        return nonMaximumSuppressionThreshold;
+    public boolean isSkipNMS() {
+        return skipNMS;
     }
 
-    public void setNonMaximumSuppressionThreshold(float nonMaximumSuppressionThreshold) {
-        this.nonMaximumSuppressionThreshold = nonMaximumSuppressionThreshold;
-    }
-
-    public boolean isSkipNonMaximumSuppression() {
-        return skipNonMaximumSuppression;
-    }
-
-    public void setSkipNonMaximumSuppression(boolean skipNonMaximumSuppression) {
-        this.skipNonMaximumSuppression = skipNonMaximumSuppression;
+    public void setSkipNMS(boolean skipNMS) {
+        this.skipNMS = skipNMS;
     }
 
     public Path getConfigPath() {

@@ -65,6 +65,6 @@ public class HaarFaceDetectionTest extends PApplet {
             rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
         }
 
-        surface.setTitle("Face Recognition Test - FPS: " + Math.round(frameRate));
+        surface.setTitle("Face Detection Test - FPS: " + Math.round(frameRate));
     }
 }

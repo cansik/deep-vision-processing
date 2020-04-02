@@ -47,6 +47,7 @@ public class MultiPoseEstimationTest extends PApplet {
     public void draw() {
         background(55);
 
+        result = pose.run(testImage);
         image(testImage, 0, 0);
 
         // draw result

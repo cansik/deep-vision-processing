@@ -15,6 +15,7 @@ Download the [latest](releases/download/0.3.4/deepvision.zip) prebuilt version f
 Because the library is still under development, it is not yet published in the Processing contribution manager.
 
 ## Usage
+tbd
 
 ## Networks
 
@@ -41,14 +42,34 @@ The following list shows the networks that are on the list to be implemented:
 
 * YOLO 9K (not supported by OpenCV)
 * Multi Human Pose Detection (currently struggling with the partial affinity fields 🤷🏻‍♂️ help?)
+* MaskRCNN
+* TextBoxes (waiting for update to opencv 4.2 because of [issue](https://github.com/opencv/opencv_contrib/issues/2279))
+* TextBoxes++
+* [CRNN](https://github.com/bgshih/crnn)
 
 
 ### Object Detection
+tbd
 
 ### Classification
+tbd
 
 ## Build
+Install JDK 8 (because of Processing) and run gradle to build a fat jar:
 
+```bash
+# windows
+gradlew.bat fatjar
+
+# mac / unix
+./gradlew fatjar
+```
+
+Create a new release:
+
+```bash
+./release.sh version
+```
 
 ## FAQ
 
@@ -79,3 +100,4 @@ Stock images from the following peoples have been used:
 - faces.png by [shvetsa](https://www.pexels.com/@shvetsa) from Pexels
 - hand.jpg by Thought Catalog on Unsplash
 - sport.jpg by John Torcasio on Unsplash
+- sticker.jpg by 🇨🇭 Claudio Schwarz | @purzlbaum on Unsplash

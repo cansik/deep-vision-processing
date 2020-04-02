@@ -37,6 +37,13 @@ public class Repository {
     public static final Dependency HandTrackJSWeight = new Dependency("handtrackingjs.pb");
     public static final Dependency HandTrackJSConfig = new Dependency("handtrackingjs.pbtxt");
 
+    // text detection
+    public static final Dependency TextBoxesProtoText = new Dependency("TextBoxes_icdar13.prototxt");
+    public static final Dependency TextBoxesModel = new Dependency("TextBoxes_icdar13.caffemodel");
+
+    public static final Dependency TextBoxesPlusPlusProtoText = new Dependency("TextBoxes_plusplus_icdar15.prototxt");
+    public static final Dependency TextBoxesPlusPlusModel = new Dependency("TextBoxes_plusplus_icdar15.caffemodel");
+
     // masking
     public static final Dependency MaskRCNNInceptionv2Config = new Dependency("mask_rcnn_inception_v2_coco_2018_01_28.pbtxt");
     public static final Dependency MaskRCNNInceptionv2Weight = new Dependency("mask_rcnn_inception_v2_coco_2018_01_28.pb");

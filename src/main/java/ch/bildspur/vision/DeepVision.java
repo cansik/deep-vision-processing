@@ -162,4 +162,14 @@ public class DeepVision {
         network.loadLabels(Repository.COCOLabelsPaper.getPath());
         return network;
     }
+
+    public TextBoxesNetwork _createTextBoxesDetector() {
+        prepareDependencies(Repository.TextBoxesProtoText, Repository.TextBoxesModel);
+        return new TextBoxesNetwork(Repository.TextBoxesProtoText.getPath(), Repository.TextBoxesModel.getPath());
+    }
+
+    public TextBoxesNetwork _createTextBoxesPlusPlusDetector() {
+        prepareDependencies(Repository.TextBoxesPlusPlusProtoText, Repository.TextBoxesPlusPlusModel);
+        return new TextBoxesNetwork(Repository.TextBoxesPlusPlusProtoText.getPath(), Repository.TextBoxesPlusPlusModel.getPath());
+    }
 }
