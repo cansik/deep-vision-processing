@@ -5,6 +5,7 @@ import ch.bildspur.vision.DeepVision;
 import ch.bildspur.vision.TesseractNetwork;
 import ch.bildspur.vision.result.TextResult;
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PImage;
 
 public class TesseractTest extends PApplet {
@@ -27,7 +28,8 @@ public class TesseractTest extends PApplet {
     public void setup() {
         colorMode(HSB, 360, 100, 100);
 
-        testImage = loadImage(sketchPath("data/text.png"));
+        testImage = loadImage(sketchPath("data/text2.png"));
+        testImage.filter(PConstants.THRESHOLD);
 
         println("creating network...");
         network = vision.createTesseractRecognizer();
