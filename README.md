@@ -29,11 +29,12 @@ Here you find a list of implemented networks:
 	- Ultra-Light-Fast-Generic-Face-Detector-1MB RFB (~30 FPS on CPU)
 	- Ultra-Light-Fast-Generic-Face-Detector-1MB Slim (~40 FPS on CPU)
 	- Handtracker based on SSDMobileNetV2
+	- TextBoxes
+- Object Recognition
+    - Tesseract LSTM
 - Keypoint Detection 🤾🏻‍♀️
 	- Facial Landmark Detection
 	- Single Human Pose Detection based on lightweight openpose
-- Text Detection
-    - TextBoxes
 - Classification 🐈
     - MNIST CNN
     - FER+ Emotion

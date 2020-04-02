@@ -5,7 +5,7 @@ apply plugin: 'java'
 
 sourceCompatibility = 1.8
 
-def javaCvVersion = '1.5.2'
+def javaCvVersion = '1.5.3-SNAPSHOT'
 def outputName = 'deepvision'
 
 repositories {
@@ -30,10 +30,11 @@ dependencies {
     // compile
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
-    // opencv
-    compile group: 'org.bytedeco', name: 'javacv', version: "1.5.3-SNAPSHOT"
-    compile group: 'org.bytedeco', name: 'opencv-platform', version: "4.2.0-1.5.3-SNAPSHOT"
-    compile group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.9-1.5.3-SNAPSHOT"
+    // opencv (make sure you have updated the local maven repo: mvn -U compile)
+    compile group: 'org.bytedeco', name: 'javacv', version: "$javaCvVersion"
+    compile group: 'org.bytedeco', name: 'opencv-platform', version: "4.2.0-$javaCvVersion"
+    compile group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.9-$javaCvVersion"
+    compile group: 'org.bytedeco', name: 'tesseract-platform', version: "4.1.1-$javaCvVersion"
 
     // processing
     processing group: 'org.processing', name: 'core', version: '3.3.7'

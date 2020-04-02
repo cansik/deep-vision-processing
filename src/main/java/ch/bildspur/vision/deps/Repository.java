@@ -77,4 +77,7 @@ public class Repository {
 
     // haar cascade
     public static final Dependency HaarCascadeFrontalFaceAlt = new Dependency("haarcascade_frontalface_alt.xml");
+
+    // text models
+    public static final Dependency TesseractEngBest = new Dependency("eng.traineddata");
 }

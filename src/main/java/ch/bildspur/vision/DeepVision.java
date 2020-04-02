@@ -178,4 +178,9 @@ public class DeepVision {
         return new CRNNNetwork(Repository.CRNNModel.getPath());
 
     }
+
+    public TesseractNetwork createTesseractRecognizer() {
+        prepareDependencies(Repository.TesseractEngBest);
+        return new TesseractNetwork(Repository.TesseractEngBest.getPath(), "eng");
+    }
 }

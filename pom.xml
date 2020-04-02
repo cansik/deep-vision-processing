@@ -24,11 +24,16 @@
             <version>4.2.0-1.5.3-SNAPSHOT</version>
         </dependency>
 
-        <!-- Additional dependencies to use DNN -->
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>openblas-platform</artifactId>
             <version>0.3.9-1.5.3-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>tesseract-platform</artifactId>
+            <version>4.1.1-1.5.3-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
