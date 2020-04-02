@@ -55,7 +55,10 @@ tbd
 tbd
 
 ## Build
-Install JDK 8 (because of Processing) and run gradle to build a fat jar:
+- Install JDK 8 (because of Processing)
+- Download maven snapshots `mvn -U compile`
+
+Run gradle to build a fat jar:
 
 ```bash
 # windows
