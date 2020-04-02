@@ -58,10 +58,10 @@ public class DeepVision {
 
     // yolo
 
-    private YOLONet createYOLONetwork(Dependency model, Dependency weights, Dependency names, int size) {
+    private YOLONetwork createYOLONetwork(Dependency model, Dependency weights, Dependency names, int size) {
         prepareDependencies(model, weights, names);
 
-        YOLONet network = new YOLONet(
+        YOLONetwork network = new YOLONetwork(
                 model.getPath(),
                 weights.getPath(),
                 size, size
@@ -71,15 +71,15 @@ public class DeepVision {
         return network;
     }
 
-    public YOLONet createYOLOv3() {
+    public YOLONetwork createYOLOv3() {
         return createYOLONetwork(Repository.YOLOv3Model, Repository.YOLOv3Weight, Repository.COCONames, 608);
     }
 
-    public YOLONet createYOLOv3Tiny() {
+    public YOLONetwork createYOLOv3Tiny() {
         return createYOLONetwork(Repository.YOLOv3TinyModel, Repository.YOLOv3TinyWeight, Repository.COCONames, 416);
     }
 
-    public YOLONet createYOLOv3SPP() {
+    public YOLONetwork createYOLOv3SPP() {
         return createYOLONetwork(Repository.YOLOv3SPPModel, Repository.YOLOv3SPPWeight, Repository.COCONames, 608);
     }
 

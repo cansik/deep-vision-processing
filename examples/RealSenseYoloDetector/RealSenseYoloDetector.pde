@@ -1,5 +1,5 @@
 import ch.bildspur.vision.DeepVision;
-import ch.bildspur.vision.YOLONet;
+import ch.bildspur.vision.YOLONetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 
 import ch.bildspur.realsense.*;
