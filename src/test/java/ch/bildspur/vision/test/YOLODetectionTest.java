@@ -2,7 +2,7 @@ package ch.bildspur.vision.test;
 
 
 import ch.bildspur.vision.DeepVision;
-import ch.bildspur.vision.YOLONetwork;
+import ch.bildspur.vision.YOLONet;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -23,7 +23,7 @@ public class YOLODetectionTest extends PApplet {
     PImage testImage;
 
     DeepVision vision = new DeepVision(this);
-    YOLONetwork yolo;
+    YOLONet yolo;
     List<ObjectDetectionResult> detections;
 
     public void setup() {
