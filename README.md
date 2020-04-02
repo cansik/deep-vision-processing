@@ -5,6 +5,10 @@ The idea behind this library is to provide a simple way to use (inference) neura
 
 _Caution_: The API is still in development and can change at any time.
 
+![Pose](readme/pose.jpg)
+
+*Lightweight OpenPose Example*
+
 ## Install
 Download the [latest](releases/download/0.3.4/deepvision.zip) prebuilt version from the [release](releases) sections and install it into your Processing library folder.
 
@@ -16,7 +20,7 @@ Because the library is still under development, it is not yet published in the P
 
 Here you find a list of implemented networks:
 
-- Object Detection
+- Object Detection ✨
 	- YOLOv3-tiny
 	- YOLOv3-spp ([spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326))
 	- YOLOv3 (608)
@@ -24,12 +28,19 @@ Here you find a list of implemented networks:
 	- Ultra-Light-Fast-Generic-Face-Detector-1MB RFB (~30 FPS on CPU)
 	- Ultra-Light-Fast-Generic-Face-Detector-1MB Slim (~40 FPS on CPU)
 	- Handtracker based on SSDMobileNetV2
+- Keypoint Detection 🤾🏻‍♀️
+	- Facial Landmark Detection
 	- Single Human Pose Detection based on lightweight openpose
-- Classification
+- Classification 🐈
     - MNIST CNN
     - FER+ Emotion
     - Age Net
     - Gender Net
+
+The following list shows the networks that are on the list to be implemented:
+
+* YOLO 9K (not supported by OpenCV)
+* Multi Human Pose Detection (currently struggling with the partial affinity fields 🤷🏻‍♂️ help?)
 
 
 ### Object Detection
@@ -38,36 +49,6 @@ Here you find a list of implemented networks:
 
 ## Build
 
-
-## API Structure
-The API should support the following (✨ = `implemented`):
-
-- Support for model & weights fetching
-    - Local sketch installation ✨
-    - Global library installation ✨
-- COCO object detection
-    - YOLOv3-tiny ✨
-    - YOLOv3-spp ([spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326)) ✨
-    - YOLOv3 (608) ✨
-    - ~~YOLO 9K~~ ([not supported by OpenCV](https://answers.opencv.org/question/180425/opencv-darknet-error-when-initializing-darknet/?answer=180441#post-id-180441))
-    - SSDMobileNetV2 ✨
-- face detection
-    - Ultra-Light-Fast-Generic-Face-Detector-1MB RFB (~30 FPS on CPU) ✨
-    - Ultra-Light-Fast-Generic-Face-Detector-1MB Slim (~40 FPS on CPU) ✨
-- hand detection
-    - Handtracker.js ✨
-- openPose
-    - Single Human Pose Detection based on lightweight openpose ✨
-    - Multi Human Pose Detection (currently struggling with the partial affinity fields 🤷🏻‍♂️ help?)
-- classification
-    - MNIST CNN ✨
-    - FER+ Emotion ✨
-    - Age Net ✨
-    - Gender Net ✨
-- openVINO (support is on it's way [javacpp-presets](https://github.com/bytedeco/javacpp-presets/pull/820))
-    - Lightweight OpenPose (Multi-Person)
-    - Face Detection
-    - Facial Landmark Detection
 
 ## FAQ
 
