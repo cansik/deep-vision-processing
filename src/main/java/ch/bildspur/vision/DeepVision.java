@@ -90,7 +90,7 @@ public class DeepVision {
         return new SingleHumanPoseNetwork(Repository.SingleHumanPoseEstimationModel.getPath());
     }
 
-    public MultiHumanPoseNetwork _createMultiHumanPoseEstimation() {
+    public MultiHumanPoseNetwork testMultiHumanPoseEstimation() {
         prepareDependencies(Repository.MultiHumanPoseEstimationModel);
         return new MultiHumanPoseNetwork(Repository.MultiHumanPoseEstimationModel.getPath());
     }
@@ -168,12 +168,12 @@ public class DeepVision {
         return new TextBoxesNetwork(Repository.TextBoxesProtoText.getPath(), Repository.TextBoxesModel.getPath());
     }
 
-    public TextBoxesNetwork _createTextBoxesPlusPlusDetector() {
+    public TextBoxesNetwork testTextBoxesPlusPlusDetector() {
         prepareDependencies(Repository.TextBoxesPlusPlusProtoText, Repository.TextBoxesPlusPlusModel);
         return new TextBoxesNetwork(Repository.TextBoxesPlusPlusProtoText.getPath(), Repository.TextBoxesPlusPlusModel.getPath());
     }
 
-    public CRNNNetwork _createCRNN() {
+    public CRNNNetwork testCRNN() {
         prepareDependencies(Repository.CRNNModel);
         return new CRNNNetwork(Repository.CRNNModel.getPath());
 

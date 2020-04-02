@@ -30,7 +30,7 @@ public class CRNNTest extends PApplet {
         testImage = loadImage(sketchPath("data/text.png"));
 
         println("creating network...");
-        network = vision._createCRNN();
+        network = vision.testCRNN();
 
         println("loading model...");
         network.setup();
