@@ -158,7 +158,9 @@ This network is a single shot detector based on the mobilenetv2 architecture. It
 SSDMobileNetwork net = vision.createMobileNetV2();
 ```
 
-#### Ultra-Light-Fast-Generic-Face-Detector
+* [WebCam Example MobileNet](examples/MobileNetObjectDetectorWebcam)
+
+#### Ultra-Light-Fast-Generic-Face-Detector [[Project](https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB)]
 ULFG Face Detector is a very fast CNN based face detector which reaches up to 40 FPS on a MacBook Pro. The face detector comes with four different pre-trained weights:
 
 * RFB640 & RFB320 - More accurate but slower detector
@@ -172,6 +174,9 @@ ULFGFaceDetectionNetwork net = vision.createULFGFaceDetectorSlim320();
 ```
 
 The detector detects only the frontal face part and not the complete head. Most algorithms that run on results of face detections need a rectangular detection shape.
+
+* [Face Detector Example](examples/FaceDetectorExample)
+* [Face Detector WebCam Example](examples/FaceDetectorCNNWebcam)
 
 #### Handtracker
 
