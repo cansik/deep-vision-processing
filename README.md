@@ -73,9 +73,10 @@ Here you find a list of implemented networks:
 	- YOLOv3 (608)
 	- SSDMobileNetV2
 	- Handtracking based on SSDMobileNetV2
+	- TextBoxes
 	- Ultra-Light-Fast-Generic-Face-Detector-1MB RFB (~30 FPS on CPU)
 	- Ultra-Light-Fast-Generic-Face-Detector-1MB Slim (~40 FPS on CPU)
-	- TextBoxes
+	- Cascade Classifier
 - Object Recognition 🚙
     - Tesseract LSTM
 - Keypoint Detection 🤾🏻‍♀️
@@ -191,6 +192,13 @@ The detector detects only the frontal face part and not the complete head. Most 
 
 * [Face Detector Example](examples/FaceDetectorExample)
 * [Face Detector WebCam Example](examples/FaceDetectorCNNWebcam)
+
+#### Cascade Classifier [[Paper](https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.110.4868)]
+The cascade classifier detector is based on boosting and very common as pre-processor for many classifiers.
+
+```java
+CascadeClassifierNetwork net = vision.createCascadeFrontalFace();
+```
 
 ### Object Recognition
 tbd
