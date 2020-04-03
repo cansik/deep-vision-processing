@@ -22,9 +22,4 @@ public class DeepVisionPreview extends DeepVision {
         prepareDependencies(Repository.CRNNModel);
         return new CRNNNetwork(Repository.CRNNModel.getPath());
     }
-
-    public FSRCNNNetwork createFSCRNN() {
-        prepareDependencies(Repository.FSRCNNModel);
-        return new FSRCNNNetwork(Repository.FSRCNNModel.getPath());
-    }
 }

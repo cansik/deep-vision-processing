@@ -167,4 +167,9 @@ public class DeepVision {
         prepareDependencies(Repository.TesseractEngBest);
         return new TesseractNetwork(Repository.TesseractEngBest.getPath(), "eng");
     }
+
+    public FSRCNNNetwork createFSCRNN() {
+        prepareDependencies(Repository.FSRCNNModel);
+        return new FSRCNNNetwork(Repository.FSRCNNModel.getPath());
+    }
 }
