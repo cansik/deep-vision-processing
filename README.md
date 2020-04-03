@@ -86,14 +86,16 @@ Here you find a list of implemented networks:
     - FER+ Emotion
     - Age Net
     - Gender Net
+- Transfer
+    - FSRCNN for 2x Superresolution
 
-The following list shows the networks that are on the list to be implemented:
+The following list shows the networks that are on the list to be implemented (⚡️ already in progress):
 
 * YOLO 9K (not supported by OpenCV)
-* Multi Human Pose Detection (currently struggling with the partial affinity fields 🤷🏻‍♂️ help?)
+* Multi Human Pose Detection ⚡️ (currently struggling with the partial affinity fields 🤷🏻‍♂️ help?)
 * MaskRCNN
-* TextBoxes++
-* [CRNN](https://github.com/bgshih/crnn)
+* TextBoxes++ ⚡️
+* [CRNN](https://github.com/bgshih/crnn) ⚡️
 * [PixelLink](https://github.com/ZJULearning/pixel_link)
 
 
