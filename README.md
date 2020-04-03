@@ -72,9 +72,9 @@ Here you find a list of implemented networks:
 	- YOLOv3-spp ([spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326))
 	- YOLOv3 (608)
 	- SSDMobileNetV2
+	- Handtracking based on SSDMobileNetV2
 	- Ultra-Light-Fast-Generic-Face-Detector-1MB RFB (~30 FPS on CPU)
 	- Ultra-Light-Fast-Generic-Face-Detector-1MB Slim (~40 FPS on CPU)
-	- Handtracker based on SSDMobileNetV2
 	- TextBoxes
 - Object Recognition 🚙
     - Tesseract LSTM
@@ -160,6 +160,20 @@ SSDMobileNetwork net = vision.createMobileNetV2();
 
 * [WebCam Example MobileNet](examples/MobileNetObjectDetectorWebcam)
 
+#### Handtracking [[Project](https://github.com/victordibia/handtracking)]
+This is a pre-trained SSD MobilenetV2 network to detect hands.
+
+```java
+SSDMobileNetwork net = vision.createHandDetector();
+```
+
+#### TextBoxes [[Paper](https://arxiv.org/abs/1611.06779)]
+TextBoxes is a scene text detector in the wild based on SSD MobileNet. It is able to detect text in a scene and return its location.
+
+```java
+TextBoxesNetwork net = vision.createTextBoxesDetector();
+```
+
 #### Ultra-Light-Fast-Generic-Face-Detector [[Project](https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB)]
 ULFG Face Detector is a very fast CNN based face detector which reaches up to 40 FPS on a MacBook Pro. The face detector comes with four different pre-trained weights:
 
@@ -177,10 +191,6 @@ The detector detects only the frontal face part and not the complete head. Most 
 
 * [Face Detector Example](examples/FaceDetectorExample)
 * [Face Detector WebCam Example](examples/FaceDetectorCNNWebcam)
-
-#### Handtracker
-
-#### TextBoxes
 
 ### Object Recognition
 tbd
