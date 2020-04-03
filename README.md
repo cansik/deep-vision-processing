@@ -168,6 +168,8 @@ This is a pre-trained SSD MobilenetV2 network to detect hands.
 SSDMobileNetwork net = vision.createHandDetector();
 ```
 
+* [Hand Detector WebCam Example](examples/HandDetectorWebcam)
+
 #### TextBoxes [[Paper](https://arxiv.org/abs/1611.06779)]
 TextBoxes is a scene text detector in the wild based on SSD MobileNet. It is able to detect text in a scene and return its location.
 
@@ -199,6 +201,8 @@ The cascade classifier detector is based on boosting and very common as pre-proc
 ```java
 CascadeClassifierNetwork net = vision.createCascadeFrontalFace();
 ```
+
+* [Face Detector Haar Webcam Example](examples/FaceDetectorHaarWebcam)
 
 ### Object Recognition
 tbd
