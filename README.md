@@ -133,27 +133,45 @@ Every object detection result contains the following fields:
 #### YOLOv3 [[Paper](https://pjreddie.com/darknet/yolo/)]
 YOLOv3 the third version of the very fast and accurate single shot network. The pre-trained model is trained on the 80 classes COCO dataset. There are three different weights & models available in the repository:
 
-- YOLOv3-tiny (very fast, but trading performance with accuracy)
+- YOLOv3-tiny (very fast, but trading performance for accuracy)
 - YOLOv3-spp (original model using [spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326))
 - YOLOv3 (608) (most accurate network)
 
 ```java
 // setup the network
-YOLONetwork yolo = vision.createYOLOv3();
-YOLONetwork yolo = vision.createYOLOv3SPP();
-YOLONetwork yolo = vision.createYOLOv3Tiny();
+YOLONetwork net = vision.createYOLOv3();
+YOLONetwork net = vision.createYOLOv3SPP();
+YOLONetwork net = vision.createYOLOv3Tiny();
 
 // set confidence threshold
-yolo.setConfidenceThreshold(0.2f);
+net.setConfidenceThreshold(0.2f);
 ```
 
 * [Basic Example YOLO](examples/YOLODetectObjects)
 * [WebCam Example YOLO](examples/YOLOWebcamExample)
 * [RealSense Example YOLO](examples/RealSenseYoloDetector)
 
-#### SSDMobileNetV2
+#### SSDMobileNetV2 [[Paper](https://arxiv.org/abs/1512.02325)]
+This network is a single shot detector based on the mobilenetv2 architecture. It is pre-trained on the 90 classes COCO dataset and is really fast.
+
+```java
+SSDMobileNetwork net = vision.createMobileNetV2();
+```
 
 #### Ultra-Light-Fast-Generic-Face-Detector
+ULFG Face Detector is a very fast CNN based face detector which reaches up to 40 FPS on a MacBook Pro. The face detector comes with four different pre-trained weights:
+
+* RFB640 & RFB320 - More accurate but slower detector
+* Slim640 & Slim320 - Less accurate but faster detector
+  
+```java
+ULFGFaceDetectionNetwork net = vision.createULFGFaceDetectorRFB640();
+ULFGFaceDetectionNetwork net = vision.createULFGFaceDetectorRFB320();
+ULFGFaceDetectionNetwork net = vision.createULFGFaceDetectorSlim640();
+ULFGFaceDetectionNetwork net = vision.createULFGFaceDetectorSlim320();
+```
+
+The detector detects only the frontal face part and not the complete head. Most algorithms that run on results of face detections need a rectangular detection shape.
 
 #### Handtracker
 
