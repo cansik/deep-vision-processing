@@ -86,7 +86,7 @@ Here you find a list of implemented networks:
     - FER+ Emotion
     - Age Net
     - Gender Net
-- Transfer
+- Image Processing
     - FSRCNN for 2x Superresolution
 
 The following list shows the networks that are on the list to be implemented (⚡️ already in progress):
@@ -100,8 +100,56 @@ The following list shows the networks that are on the list to be implemented (�
 
 
 ### Object Detection
+Locating one or multiple predefined objects in an image is the task of the object detection networks.
 
-#### YOLOv3
+![YOLO](readme/yolo.jpg)
+
+*YOLO Example*
+
+The result of these networks is usually a list of `ObjectDetectionResult`.
+
+```java
+ObjectDetectionNetwork net = vision.createYOLOv3();
+net.setup();
+
+// detect new objects
+List<ObjectDetectionResult> detections = net.run(image);
+
+for (ObjectDetectionResult detection : detections) {
+    println(detection.getClassName() + "\t[" + detection.getConfidence() + "]");
+}
+```
+
+Every object detection result contains the following fields:
+
+* `getClassId()` - id of the class the object belongs to
+* `getClassName()` - name of the class the object belongs to
+* `getConfidence()` - how confident the network is on this detection
+* `getX()` - x position of the bounding box
+* `getY()` - y position of the bounding box
+* `getWidth()` - width of the bounding box
+* `getHeight()` - height of the bounding box
+
+#### YOLOv3 [[Paper](https://pjreddie.com/darknet/yolo/)]
+YOLOv3 the third version of the very fast and accurate single shot network. The pre-trained model is trained on the 80 classes COCO dataset. There are three different weights & models available in the repository:
+
+- YOLOv3-tiny (very fast, but trading performance with accuracy)
+- YOLOv3-spp (original model using [spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326))
+- YOLOv3 (608) (most accurate network)
+
+```java
+// setup the network
+YOLONetwork yolo = vision.createYOLOv3();
+YOLONetwork yolo = vision.createYOLOv3SPP();
+YOLONetwork yolo = vision.createYOLOv3Tiny();
+
+// set confidence threshold
+yolo.setConfidenceThreshold(0.2f);
+```
+
+* [Basic Example YOLO](examples/YOLODetectObjects)
+* [WebCam Example YOLO](examples/YOLOWebcamExample)
+* [RealSense Example YOLO](examples/RealSenseYoloDetector)
 
 #### SSDMobileNetV2
 
@@ -118,6 +166,9 @@ tbd
 tbd
 
 ### Classification
+tbd
+
+### Image Processing
 tbd
 
 ## Build

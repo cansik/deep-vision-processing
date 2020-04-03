@@ -29,7 +29,7 @@ public class YOLODetectionTest extends PApplet {
     public void setup() {
         colorMode(HSB, 360, 100, 100);
 
-        testImage = loadImage(sketchPath("data/raum.jpeg"));
+        testImage = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
         yolo = vision.createYOLOv3();
@@ -37,7 +37,7 @@ public class YOLODetectionTest extends PApplet {
         println("loading model...");
         yolo.setup();
 
-        yolo.setConfidenceThreshold(0.2f);
+        //yolo.setConfidenceThreshold(0.3f);
 
         println("inferencing...");
         detections = yolo.run(testImage);
@@ -46,6 +46,8 @@ public class YOLODetectionTest extends PApplet {
         for (ObjectDetectionResult detection : detections) {
             System.out.println(detection.getClassName() + "\t[" + detection.getConfidence() + "]");
         }
+
+        noLoop();
     }
 
     public void draw() {
