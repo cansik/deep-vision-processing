@@ -58,7 +58,7 @@ Each network has a `run()` method, which takes an image as a parameter and outpu
 
 ```java
 PImage myImg = loadImage("hello.jpg");
-ArrayList<ObjectDetectionResult> detections = network.run(myImg);
+ResultList<ObjectDetectionResult> detections = network.run(myImg);
 ```
 
 Please have a look at the specific networks for further information or at the [examples](examples).
@@ -114,7 +114,7 @@ ObjectDetectionNetwork net = vision.createYOLOv3();
 net.setup();
 
 // detect new objects
-List<ObjectDetectionResult> detections = net.run(image);
+ResultList<ObjectDetectionResult> detections = net.run(image);
 
 for (ObjectDetectionResult detection : detections) {
     println(detection.getClassName() + "\t[" + detection.getConfidence() + "]");
