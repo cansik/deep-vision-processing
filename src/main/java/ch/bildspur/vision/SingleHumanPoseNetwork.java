@@ -6,6 +6,7 @@ import ch.bildspur.vision.network.PoseNetwork;
 import ch.bildspur.vision.result.HumanPoseResult;
 import ch.bildspur.vision.result.KeyPointResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.result.ResultList;
 import org.bytedeco.javacpp.DoublePointer;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Point;
@@ -69,12 +70,12 @@ public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> impleme
     }
 
     @Override
-    public List<HumanPoseResult> runByDetections(PImage image, List<ObjectDetectionResult> detections) {
+    public ResultList<HumanPoseResult> runByDetections(PImage image, ResultList<ObjectDetectionResult> detections) {
         return polyExecutor.runByDetections(image, detections);
     }
 
     @Override
-    public List<HumanPoseResult> runByDetections(Mat frame, List<ObjectDetectionResult> detections) {
+    public ResultList<HumanPoseResult> runByDetections(Mat frame, ResultList<ObjectDetectionResult> detections) {
         return polyExecutor.runByDetections(frame, detections);
     }
 }

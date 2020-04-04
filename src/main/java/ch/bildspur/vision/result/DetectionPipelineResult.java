@@ -2,9 +2,9 @@ package ch.bildspur.vision.result;
 
 public class DetectionPipelineResult<R extends NetworkResult> implements NetworkResult {
     private ObjectDetectionResult detection;
-    private R[] results;
+    private ResultList<R> results;
 
-    public DetectionPipelineResult(ObjectDetectionResult detection, R... results) {
+    public DetectionPipelineResult(ObjectDetectionResult detection, ResultList<R> results) {
         this.detection = detection;
         this.results = results;
     }
@@ -13,7 +13,7 @@ public class DetectionPipelineResult<R extends NetworkResult> implements Network
         return detection;
     }
 
-    public R[] getResults() {
+    public ResultList<R> getResults() {
         return results;
     }
 }

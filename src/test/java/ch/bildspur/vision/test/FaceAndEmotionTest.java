@@ -6,10 +6,9 @@ import ch.bildspur.vision.FERPlusEmotionNetwork;
 import ch.bildspur.vision.ULFGFaceDetectionNetwork;
 import ch.bildspur.vision.result.ClassificationResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.result.ResultList;
 import processing.core.PApplet;
 import processing.core.PImage;
-
-import java.util.List;
 
 public class FaceAndEmotionTest extends PApplet {
 
@@ -28,8 +27,8 @@ public class FaceAndEmotionTest extends PApplet {
     ULFGFaceDetectionNetwork faceNetwork;
     FERPlusEmotionNetwork emotionNetwork;
 
-    List<ObjectDetectionResult> detections;
-    List<ClassificationResult> emotions;
+    ResultList<ObjectDetectionResult> detections;
+    ResultList<ClassificationResult> emotions;
 
     public void setup() {
         colorMode(HSB, 360, 100, 100);

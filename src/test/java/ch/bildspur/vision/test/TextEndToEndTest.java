@@ -5,11 +5,10 @@ import ch.bildspur.vision.DeepVision;
 import ch.bildspur.vision.TesseractNetwork;
 import ch.bildspur.vision.TextBoxesNetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.result.ResultList;
 import ch.bildspur.vision.result.TextResult;
 import processing.core.PApplet;
 import processing.core.PImage;
-
-import java.util.List;
 
 public class TextEndToEndTest extends PApplet {
 
@@ -28,8 +27,8 @@ public class TextEndToEndTest extends PApplet {
     TextBoxesNetwork network;
     TesseractNetwork tesseract;
 
-    List<ObjectDetectionResult> detections;
-    List<TextResult> textResults;
+    ResultList<ObjectDetectionResult> detections;
+    ResultList<TextResult> textResults;
 
     public void setup() {
         colorMode(HSB, 360, 100, 100);

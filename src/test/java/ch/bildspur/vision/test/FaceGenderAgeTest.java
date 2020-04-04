@@ -7,10 +7,9 @@ import ch.bildspur.vision.GenderNetwork;
 import ch.bildspur.vision.ULFGFaceDetectionNetwork;
 import ch.bildspur.vision.result.ClassificationResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.result.ResultList;
 import processing.core.PApplet;
 import processing.core.PImage;
-
-import java.util.List;
 
 public class FaceGenderAgeTest extends PApplet {
 
@@ -30,9 +29,9 @@ public class FaceGenderAgeTest extends PApplet {
     GenderNetwork genderNetwork;
     AgeNetwork ageNetwork;
 
-    List<ObjectDetectionResult> detections;
-    List<ClassificationResult> genders;
-    List<ClassificationResult> ages;
+    ResultList<ObjectDetectionResult> detections;
+    ResultList<ClassificationResult> genders;
+    ResultList<ClassificationResult> ages;
 
     public void setup() {
         colorMode(HSB, 360, 100, 100);

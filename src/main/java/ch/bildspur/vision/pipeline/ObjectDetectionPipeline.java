@@ -8,7 +8,9 @@ import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.ResultList;
 import org.bytedeco.opencv.opencv_core.Mat;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ObjectDetectionPipeline<R extends NetworkResult> extends NetworkPipeline<ResultList<DetectionPipelineResult<R>>> {
     private ObjectDetectionNetwork detectionNetwork;
@@ -33,19 +35,28 @@ public class ObjectDetectionPipeline<R extends NetworkResult> extends NetworkPip
 
     @Override
     public ResultList<DetectionPipelineResult<R>> run(Mat frame) {
-        ResultList<DetectionPipelineResult<R>> results = new ResultList<>();
-
         // detect objects
-        List<ObjectDetectionResult> detections = detectionNetwork.run(frame);
+        ResultList<ObjectDetectionResult> detections = detectionNetwork.run(frame);
 
         // run post processors on detections
-        for (ObjectDetectionResult detection : detections) {
-
-            for (MultiProcessingNetwork<R> network : postProcessors) {
-
-            }
+        List<ResultList<R>> results = new ArrayList<>();
+        for (MultiProcessingNetwork<R> network : postProcessors) {
+            results.add(network.runByDetections(frame, detections));
         }
 
-        return results;
+        // create pipeline results
+        ResultList<DetectionPipelineResult<R>> pipelineResults = new ResultList<>();
+
+        for (int i = 0; i < detections.size(); i++) {
+            final int index = i;
+            ObjectDetectionResult detection = detections.get(index);
+            ResultList<R> combinedResults = new ResultList<>(results.stream()
+                    .map(e -> e.get(index))
+                    .collect(Collectors.toList())
+            );
+            pipelineResults.add(new DetectionPipelineResult<>(detection, combinedResults));
+        }
+
+        return pipelineResults;
     }
 }

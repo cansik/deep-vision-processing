@@ -4,6 +4,7 @@ import ch.bildspur.vision.network.BaseNeuralNetwork;
 import ch.bildspur.vision.network.MultiProcessingNetwork;
 import ch.bildspur.vision.network.MultiProcessor;
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.result.ResultList;
 import ch.bildspur.vision.result.TextResult;
 import org.bytedeco.javacpp.BytePointer;
 import org.bytedeco.opencv.opencv_core.Mat;
@@ -11,7 +12,6 @@ import org.bytedeco.tesseract.TessBaseAPI;
 import processing.core.PImage;
 
 import java.nio.file.Path;
-import java.util.List;
 
 import static org.bytedeco.opencv.global.opencv_imgproc.CV_BGR2GRAY;
 import static org.bytedeco.opencv.global.opencv_imgproc.cvtColor;
@@ -61,12 +61,12 @@ public class TesseractNetwork extends BaseNeuralNetwork<TextResult> implements M
     }
 
     @Override
-    public List<TextResult> runByDetections(PImage image, List<ObjectDetectionResult> detections) {
+    public ResultList<TextResult> runByDetections(PImage image, ResultList<ObjectDetectionResult> detections) {
         return polyExecutor.runByDetections(image, detections);
     }
 
     @Override
-    public List<TextResult> runByDetections(Mat frame, List<ObjectDetectionResult> detections) {
+    public ResultList<TextResult> runByDetections(Mat frame, ResultList<ObjectDetectionResult> detections) {
         return polyExecutor.runByDetections(frame, detections);
     }
 }

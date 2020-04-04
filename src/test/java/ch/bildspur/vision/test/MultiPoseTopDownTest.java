@@ -7,11 +7,10 @@ import ch.bildspur.vision.SingleHumanPoseNetwork;
 import ch.bildspur.vision.result.HumanPoseResult;
 import ch.bildspur.vision.result.KeyPointResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.result.ResultList;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class MultiPoseTopDownTest extends PApplet {
@@ -31,8 +30,8 @@ public class MultiPoseTopDownTest extends PApplet {
     SSDMobileNetwork network;
     SingleHumanPoseNetwork pose;
 
-    List<ObjectDetectionResult> detections;
-    List<HumanPoseResult> humanPoseResults = new ArrayList<>();
+    ResultList<ObjectDetectionResult> detections;
+    ResultList<HumanPoseResult> humanPoseResults;
 
     float scale = 1.0f;
 
@@ -50,9 +49,11 @@ public class MultiPoseTopDownTest extends PApplet {
         pose.setup();
 
         print("inferencing detections...");
-        detections = network.run(testImage).stream()
-                .filter(e -> e.getClassName().equals("person"))
-                .collect(Collectors.toList());
+        detections = new ResultList<>(
+                network.run(testImage).stream()
+                        .filter(e -> e.getClassName().equals("person"))
+                        .collect(Collectors.toList())
+        );
         println("done!");
 
         println("detected " + detections.size() + " poses.");

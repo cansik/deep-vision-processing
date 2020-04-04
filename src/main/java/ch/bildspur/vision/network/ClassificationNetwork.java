@@ -2,6 +2,7 @@ package ch.bildspur.vision.network;
 
 import ch.bildspur.vision.result.ClassificationResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.result.ResultList;
 import org.bytedeco.javacpp.DoublePointer;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Point;
@@ -9,8 +10,6 @@ import org.bytedeco.opencv.opencv_core.Scalar;
 import org.bytedeco.opencv.opencv_core.Size;
 import org.bytedeco.opencv.opencv_dnn.Net;
 import processing.core.PImage;
-
-import java.util.List;
 
 import static org.bytedeco.opencv.global.opencv_core.CV_32F;
 import static org.bytedeco.opencv.global.opencv_core.minMaxLoc;
@@ -88,12 +87,12 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
     }
 
     @Override
-    public List<ClassificationResult> runByDetections(PImage image, List<ObjectDetectionResult> detections) {
+    public ResultList<ClassificationResult> runByDetections(PImage image, ResultList<ObjectDetectionResult> detections) {
         return polyExecutor.runByDetections(image, detections);
     }
 
     @Override
-    public List<ClassificationResult> runByDetections(Mat frame, List<ObjectDetectionResult> detections) {
+    public ResultList<ClassificationResult> runByDetections(Mat frame, ResultList<ObjectDetectionResult> detections) {
         return polyExecutor.runByDetections(frame, detections);
     }
 }

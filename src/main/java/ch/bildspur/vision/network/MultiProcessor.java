@@ -6,8 +6,6 @@ import ch.bildspur.vision.result.ResultList;
 import org.bytedeco.opencv.opencv_core.Mat;
 import processing.core.PImage;
 
-import java.util.List;
-
 import static ch.bildspur.vision.util.CvProcessingUtils.createValidROI;
 
 public class MultiProcessor<R extends NetworkResult> implements MultiProcessingNetwork<R> {
@@ -18,13 +16,13 @@ public class MultiProcessor<R extends NetworkResult> implements MultiProcessingN
     }
 
     @Override
-    public ResultList<R> runByDetections(PImage image, List<ObjectDetectionResult> detections) {
+    public ResultList<R> runByDetections(PImage image, ResultList<ObjectDetectionResult> detections) {
         Mat frame = network.convertToMat(image);
         return runByDetections(frame, detections);
     }
 
     @Override
-    public ResultList<R> runByDetections(Mat frame, List<ObjectDetectionResult> detections) {
+    public ResultList<R> runByDetections(Mat frame, ResultList<ObjectDetectionResult> detections) {
         ResultList<R> results = new ResultList<>();
 
         for (ObjectDetectionResult detection : detections) {
