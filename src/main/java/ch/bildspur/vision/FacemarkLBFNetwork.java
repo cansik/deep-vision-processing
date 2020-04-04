@@ -1,9 +1,11 @@
 package ch.bildspur.vision;
 
 import ch.bildspur.vision.network.BaseNeuralNetwork;
+import ch.bildspur.vision.network.MultiProcessingNetwork;
 import ch.bildspur.vision.result.FacialLandmarkResult;
 import ch.bildspur.vision.result.KeyPointResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.result.ResultList;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_face.FacemarkLBF;
 import processing.core.PImage;
@@ -15,7 +17,7 @@ import java.util.List;
 
 import static ch.bildspur.vision.util.CvProcessingUtils.createValidROI;
 
-public class FacemarkLBFNetwork extends BaseNeuralNetwork<FacialLandmarkResult> {
+public class FacemarkLBFNetwork extends BaseNeuralNetwork<FacialLandmarkResult> implements MultiProcessingNetwork<FacialLandmarkResult> {
     private Path model;
     private FacemarkLBF net;
 
@@ -33,18 +35,18 @@ public class FacemarkLBFNetwork extends BaseNeuralNetwork<FacialLandmarkResult> 
     @Override
     public FacialLandmarkResult run(Mat frame) {
         // tries to detect on full frame
-        return runByDetections(frame, Collections.singletonList(
+        return runByDetections(frame, new ResultList<>(Collections.singletonList(
                 new ObjectDetectionResult(0, "face", 1.0f, 0, 0, frame.size().width(), frame.size().height())
-        )).get(0);
+        ))).get(0);
     }
 
-    public List<FacialLandmarkResult> runByDetections(PImage image, List<ObjectDetectionResult> detections) {
+    public ResultList<FacialLandmarkResult> runByDetections(PImage image, ResultList<ObjectDetectionResult> detections) {
         Mat frame = convertToMat(image);
         return runByDetections(frame, detections);
     }
 
-    public List<FacialLandmarkResult> runByDetections(Mat frame, List<ObjectDetectionResult> detections) {
-        List<FacialLandmarkResult> results = new ArrayList<>();
+    public ResultList<FacialLandmarkResult> runByDetections(Mat frame, ResultList<ObjectDetectionResult> detections) {
+        ResultList<FacialLandmarkResult> results = new ResultList<>();
         RectVector rois = new RectVector();
         Point2fVectorVector extractedFaces = new Point2fVectorVector();
 

@@ -7,10 +7,9 @@ import ch.bildspur.vision.ULFGFaceDetectionNetwork;
 import ch.bildspur.vision.result.FacialLandmarkResult;
 import ch.bildspur.vision.result.KeyPointResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.result.ResultList;
 import processing.core.PApplet;
 import processing.core.PImage;
-
-import java.util.List;
 
 public class FacemarkTest extends PApplet {
 
@@ -29,8 +28,8 @@ public class FacemarkTest extends PApplet {
     ULFGFaceDetectionNetwork faceNetwork;
     FacemarkLBFNetwork facemark;
 
-    List<ObjectDetectionResult> detections;
-    List<FacialLandmarkResult> markedFaces;
+    ResultList<ObjectDetectionResult> detections;
+    ResultList<FacialLandmarkResult> markedFaces;
 
     public void setup() {
         colorMode(HSB, 360, 100, 100);
