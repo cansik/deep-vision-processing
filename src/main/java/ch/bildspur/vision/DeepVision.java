@@ -67,7 +67,6 @@ public class DeepVision {
         }
 
         for (Dependency dependency : dependencies) {
-            System.out.println("preparing " + dependency.getName() + "...");
             dependency.resolve();
         }
     }

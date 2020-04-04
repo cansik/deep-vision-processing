@@ -21,7 +21,7 @@ public class RepositoryTest extends PApplet {
         println("clearing repository...");
         vision.clearRepository();
 
-        println("downloading yolo...");
+        // download data
         vision.createYOLOv3();
 
         exit();

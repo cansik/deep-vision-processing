@@ -31,20 +31,19 @@ public class Dependency {
         }
 
         // try to download
-        System.out.print("downloading: ");
-
+        System.out.print("downloading " + name + ": ");
         AtomicReference<Integer> lastProgress = new AtomicReference<>(0);
-        NetworkUtility.downloadFile(url, path, (source, progress) -> {
-            double p = progress * 100.0;
-            int current = lastProgress.get();
+        NetworkUtility.downloadFile(url, path, (source, p) -> {
+            int last = lastProgress.get();
+            int progress = Math.round((float) p);
+            int delta = progress - last;
 
-            if (p - current > 30) {
+            if (delta >= 10) {
+                lastProgress.set(progress);
                 System.out.print(".");
-                System.out.flush();
-                lastProgress.set(current + 10);
             }
         });
-        System.out.println("done!");
+        System.out.println(" done!");
 
         // second check after download
         if (Files.exists(path)) {
