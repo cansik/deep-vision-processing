@@ -37,6 +37,8 @@ public class Repository {
     public static final Dependency HandTrackJSWeight = new Dependency("handtrackingjs.pb");
     public static final Dependency HandTrackJSConfig = new Dependency("handtrackingjs.pbtxt");
 
+    public static final Dependency HaarCascadeHand = new Dependency("haarcascade_hand.xml");
+
     // text detection
     public static final Dependency TextBoxesProtoText = new Dependency("TextBoxes_icdar13.prototxt");
     public static final Dependency TextBoxesModel = new Dependency("TextBoxes_icdar13.caffemodel");

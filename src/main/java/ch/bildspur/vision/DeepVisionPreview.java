@@ -22,4 +22,10 @@ public class DeepVisionPreview extends DeepVision {
         prepareDependencies(Repository.CRNNModel);
         return new CRNNNetwork(Repository.CRNNModel.getPath());
     }
+
+    public CascadeClassifierNetwork createCascadeHand() {
+        prepareDependencies(Repository.HaarCascadeHand);
+
+        return new CascadeClassifierNetwork(Repository.HaarCascadeHand.getPath(), "hand");
+    }
 }

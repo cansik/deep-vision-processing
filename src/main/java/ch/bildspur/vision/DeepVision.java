@@ -25,15 +25,39 @@ public class DeepVision {
         storeNetworksInSketch = true;
     }
 
-    protected void prepareDependencies(Dependency... dependencies) {
+    public void clearRepository() {
+        updateRepositoryPath();
+
+        try {
+            Files.list(Repository.localStorageDirectory)
+                    .filter(e -> !Files.isDirectory(e))
+                    .forEach(e -> {
+                        try {
+                            Files.delete(e);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getNetworkStoragePath() {
+        return Repository.localStorageDirectory.toAbsolutePath().toString();
+    }
+
+    protected void updateRepositoryPath() {
         // decide where to store
         if (storeNetworksInSketch) {
             Repository.localStorageDirectory = Paths.get(sketch.sketchPath("networks"));
         } else {
             Repository.localStorageDirectory = Paths.get(ProcessingUtils.getLibPath(this), "networks");
         }
+    }
 
-        System.out.println("Storing networks to: " + Repository.localStorageDirectory.toAbsolutePath().toString());
+    protected void prepareDependencies(Dependency... dependencies) {
+        updateRepositoryPath();
 
         // download
         try {
@@ -90,7 +114,7 @@ public class DeepVision {
         return new SingleHumanPoseNetwork(Repository.SingleHumanPoseEstimationModel.getPath());
     }
 
-    // face recognition
+    // face detection
     public ULFGFaceDetectionNetwork createULFGFaceDetectorRFB320() {
         prepareDependencies(Repository.ULFGFaceDetectorRFB320Simplified);
         return new ULFGFaceDetectionNetwork(Repository.ULFGFaceDetectorRFB320Simplified.getPath(), 320, 240);
