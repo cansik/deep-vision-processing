@@ -1,6 +1,6 @@
 package ch.bildspur.vision;
 
-import ch.bildspur.vision.network.BaseNeuralNetwork;
+import ch.bildspur.vision.network.ObjectDetectionNetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.ResultList;
 import org.bytedeco.opencv.opencv_core.Mat;
@@ -11,7 +11,7 @@ import org.bytedeco.opencv.opencv_objdetect.CascadeClassifier;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class CascadeClassifierNetwork extends BaseNeuralNetwork<ResultList<ObjectDetectionResult>> {
+public class CascadeClassifierNetwork extends ObjectDetectionNetwork {
     private Path model;
     private String className;
     private CascadeClassifier net;
