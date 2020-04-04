@@ -10,8 +10,8 @@ DeepVision vision;
 CascadeClassifierNetwork faceNetwork;
 FERPlusEmotionNetwork emotionNetwork;
 
-List<ObjectDetectionResult> detections;
-List<ClassificationResult> emotions;
+ResultList<ObjectDetectionResult> detections;
+ResultList<ClassificationResult> emotions;
 
 public void setup() {
   size(640, 480, FX2D);

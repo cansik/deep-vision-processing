@@ -1,12 +1,11 @@
 import ch.bildspur.vision.*;
 import ch.bildspur.vision.result.*;
-import java.util.List;
 
 PImage testImage;
 
 DeepVision vision = new DeepVision(this);
 ULFGFaceDetectionNetwork network;
-List<ObjectDetectionResult> detections;
+ResultList<ObjectDetectionResult> detections;
 
 public void setup() {
   size(640, 480);

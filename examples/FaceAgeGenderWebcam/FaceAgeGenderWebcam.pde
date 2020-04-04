@@ -1,6 +1,5 @@
 import ch.bildspur.vision.*;
 import ch.bildspur.vision.result.*;
-import java.util.List;
 
 import processing.video.Capture;
 
@@ -12,9 +11,9 @@ CascadeClassifierNetwork faceNetwork;
 GenderNetwork genderNetwork;
 AgeNetwork ageNetwork;
 
-List<ObjectDetectionResult> detections;
-List<ClassificationResult> genders;
-List<ClassificationResult> ages;
+ResultList<ObjectDetectionResult> detections;
+ResultList<ClassificationResult> genders;
+ResultList<ClassificationResult> ages;
 
 public void setup() {
   size(640, 480, FX2D);

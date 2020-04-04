@@ -6,13 +6,11 @@ import processing.core.PConstants;
 import processing.core.PImage;
 import processing.video.Capture;
 
-import java.util.List;
-
 Capture cam;
 
 DeepVision deepVision = new DeepVision(this);
 YOLONetwork yolo;
-List<ObjectDetectionResult> detections;
+ResultList<ObjectDetectionResult> detections;
 
 public void setup() {
   size(640, 480, FX2D);

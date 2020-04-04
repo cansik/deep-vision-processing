@@ -4,13 +4,11 @@ import ch.bildspur.vision.result.ObjectDetectionResult;
 
 import ch.bildspur.realsense.*;
 
-import java.util.List;
-
 RealSenseCamera camera = new RealSenseCamera(this);
 DeepVision vision = new DeepVision(this);
 
 YOLONetwork net;
-List<ObjectDetectionResult> result;
+ResultList<ObjectDetectionResult> result;
 
 void setup()
 {

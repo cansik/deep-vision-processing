@@ -1,6 +1,5 @@
 import ch.bildspur.vision.*;
 import ch.bildspur.vision.result.*;
-import java.util.List;
 
 import processing.video.Capture;
 
@@ -8,7 +7,7 @@ Capture cam;
 
 DeepVision vision;
 CascadeClassifierNetwork network;
-List<ObjectDetectionResult> detections;
+ResultList<ObjectDetectionResult> detections;
 
 public void setup() {
   size(640, 480, FX2D);

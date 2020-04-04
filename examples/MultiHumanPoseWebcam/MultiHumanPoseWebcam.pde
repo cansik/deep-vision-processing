@@ -1,6 +1,5 @@
 import ch.bildspur.vision.*;
 import ch.bildspur.vision.result.*;
-import java.util.List;
 
 import processing.video.Capture;
 
@@ -11,9 +10,9 @@ DeepVision vision = new DeepVision(this);
 SSDMobileNetwork network;
 SingleHumanPoseNetwork pose;
 
-List<ObjectDetectionResult> detections;
-List<ObjectDetectionResult> humans = new ArrayList<ObjectDetectionResult>();
-List<HumanPoseResult> humanPoseResults = new ArrayList<HumanPoseResult>();
+ResultList<ObjectDetectionResult> detections;
+ResultList<ObjectDetectionResult> humans = new ArrayList<ObjectDetectionResult>();
+ResultList<HumanPoseResult> humanPoseResults = new ArrayList<HumanPoseResult>();
 
 float minProbability = 0.3;
 

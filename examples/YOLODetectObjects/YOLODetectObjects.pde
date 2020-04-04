@@ -1,10 +1,9 @@
 import ch.bildspur.vision.*;
 import ch.bildspur.vision.result.*;
-import java.util.List;
 
 DeepVision deepVision = new DeepVision(this);
 YOLONetwork yolo;
-List<ObjectDetectionResult> detections;
+ResultList<ObjectDetectionResult> detections;
 
 PImage image;
 

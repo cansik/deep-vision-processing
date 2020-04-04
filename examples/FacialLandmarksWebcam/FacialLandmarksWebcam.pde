@@ -1,6 +1,5 @@
 import ch.bildspur.vision.*;
 import ch.bildspur.vision.result.*;
-import java.util.List;
 
 import processing.video.Capture;
 
@@ -10,8 +9,8 @@ DeepVision vision = new DeepVision(this);
 CascadeClassifierNetwork faceNetwork;
 FacemarkLBFNetwork facemark;
 
-List<ObjectDetectionResult> detections;
-List<FacialLandmarkResult> markedFaces;
+ResultList<ObjectDetectionResult> detections;
+ResultList<FacialLandmarkResult> markedFaces;
 
 public void setup() {
   size(640, 480, FX2D);
