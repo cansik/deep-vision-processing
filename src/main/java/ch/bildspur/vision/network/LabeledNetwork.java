@@ -1,5 +1,7 @@
 package ch.bildspur.vision.network;
 
+import ch.bildspur.vision.result.NetworkResult;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class LabeledNetwork<T> extends DeepNeuralNetwork<T> {
+public abstract class LabeledNetwork<R extends NetworkResult> extends BaseNeuralNetwork<R> {
     private List<String> labels = new ArrayList<>();
 
     public void loadLabels(Path namesFile) {

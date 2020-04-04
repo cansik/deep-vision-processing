@@ -18,7 +18,7 @@ import static org.bytedeco.opencv.global.opencv_dnn.blobFromImage;
 import static org.bytedeco.opencv.global.opencv_imgproc.COLOR_RGB2GRAY;
 import static org.bytedeco.opencv.global.opencv_imgproc.cvtColor;
 
-public abstract class ClassificationNetwork extends LabeledNetwork<ClassificationResult> implements NetworkFactory, PolyDetectionNetwork<ClassificationResult> {
+public abstract class ClassificationNetwork extends LabeledNetwork<ClassificationResult> implements NetworkFactory, MultiProcessingNetwork<ClassificationResult> {
     private Net net;
 
     private int width;
@@ -33,7 +33,7 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
 
     private float confidenceScale;
 
-    private final PolyDetector<ClassificationResult> polyDetector = new PolyDetector<>(this);
+    private final MultiProcessor<ClassificationResult> polyExecutor = new MultiProcessor<>(this);
 
     public ClassificationNetwork(int width, int height, boolean convertToGrayScale, float scaleFactor, Scalar mean, boolean swapRB, boolean crop, float confidenceScale, String... labels) {
         this.width = width;
@@ -89,11 +89,11 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
 
     @Override
     public List<ClassificationResult> runByDetections(PImage image, List<ObjectDetectionResult> detections) {
-        return polyDetector.runByDetections(image, detections);
+        return polyExecutor.runByDetections(image, detections);
     }
 
     @Override
     public List<ClassificationResult> runByDetections(Mat frame, List<ObjectDetectionResult> detections) {
-        return polyDetector.runByDetections(frame, detections);
+        return polyExecutor.runByDetections(frame, detections);
     }
 }

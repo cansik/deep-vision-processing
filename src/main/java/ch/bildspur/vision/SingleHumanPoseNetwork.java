@@ -1,7 +1,7 @@
 package ch.bildspur.vision;
 
-import ch.bildspur.vision.network.PolyDetectionNetwork;
-import ch.bildspur.vision.network.PolyDetector;
+import ch.bildspur.vision.network.MultiProcessingNetwork;
+import ch.bildspur.vision.network.MultiProcessor;
 import ch.bildspur.vision.network.PoseNetwork;
 import ch.bildspur.vision.result.HumanPoseResult;
 import ch.bildspur.vision.result.KeyPointResult;
@@ -20,9 +20,9 @@ import java.util.List;
 import static org.bytedeco.opencv.global.opencv_core.minMaxLoc;
 import static org.bytedeco.opencv.global.opencv_dnn.readNetFromONNX;
 
-public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> implements PolyDetectionNetwork<HumanPoseResult> {
+public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> implements MultiProcessingNetwork<HumanPoseResult> {
     private final int pointCount = 17;
-    private final PolyDetector<HumanPoseResult> polyDetector = new PolyDetector<>(this);
+    private final MultiProcessor<HumanPoseResult> polyExecutor = new MultiProcessor<>(this);
 
     public SingleHumanPoseNetwork(Path modelPath) {
         // todo: check if this is really LIP or COCO dataset
@@ -70,11 +70,11 @@ public class SingleHumanPoseNetwork extends PoseNetwork<HumanPoseResult> impleme
 
     @Override
     public List<HumanPoseResult> runByDetections(PImage image, List<ObjectDetectionResult> detections) {
-        return polyDetector.runByDetections(image, detections);
+        return polyExecutor.runByDetections(image, detections);
     }
 
     @Override
     public List<HumanPoseResult> runByDetections(Mat frame, List<ObjectDetectionResult> detections) {
-        return polyDetector.runByDetections(frame, detections);
+        return polyExecutor.runByDetections(frame, detections);
     }
 }

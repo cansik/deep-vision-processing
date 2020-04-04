@@ -1,6 +1,6 @@
 package ch.bildspur.vision.result;
 
-public class KeyPointResult {
+public class KeyPointResult implements NetworkResult {
     private final int id;
     private final int x;
     private final int y;

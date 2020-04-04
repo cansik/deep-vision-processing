@@ -1,6 +1,6 @@
 package ch.bildspur.vision;
 
-import ch.bildspur.vision.network.DeepNeuralNetwork;
+import ch.bildspur.vision.network.BaseNeuralNetwork;
 import ch.bildspur.vision.result.ImageResult;
 import ch.bildspur.vision.util.CvProcessingUtils;
 import org.bytedeco.javacpp.Loader;
@@ -11,7 +11,7 @@ import processing.core.PImage;
 
 import java.nio.file.Path;
 
-public class FSRCNNNetwork extends DeepNeuralNetwork<ImageResult> {
+public class FSRCNNNetwork extends BaseNeuralNetwork<ImageResult> {
     private Path model;
     private DnnSuperResImpl net;
 

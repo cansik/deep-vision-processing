@@ -1,6 +1,6 @@
 package ch.bildspur.vision;
 
-import ch.bildspur.vision.deps.Repository;
+import ch.bildspur.vision.dependency.Repository;
 import processing.core.PApplet;
 
 public class DeepVisionPreview extends DeepVision {

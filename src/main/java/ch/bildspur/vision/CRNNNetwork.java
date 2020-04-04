@@ -1,6 +1,6 @@
 package ch.bildspur.vision;
 
-import ch.bildspur.vision.network.DeepNeuralNetwork;
+import ch.bildspur.vision.network.BaseNeuralNetwork;
 import ch.bildspur.vision.result.TextResult;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.Net;
@@ -13,7 +13,7 @@ import static org.bytedeco.opencv.global.opencv_dnn.readNetFromTorch;
 import static org.bytedeco.opencv.global.opencv_imgproc.COLOR_RGB2GRAY;
 import static org.bytedeco.opencv.global.opencv_imgproc.cvtColor;
 
-public class CRNNNetwork extends DeepNeuralNetwork<TextResult> {
+public class CRNNNetwork extends BaseNeuralNetwork<TextResult> {
     private Path model;
     private Net net;
 

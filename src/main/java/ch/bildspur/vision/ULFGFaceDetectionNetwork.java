@@ -2,6 +2,7 @@ package ch.bildspur.vision;
 
 import ch.bildspur.vision.network.ObjectDetectionNetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.result.ResultList;
 import ch.bildspur.vision.util.MathUtils;
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacpp.IntPointer;
@@ -63,7 +64,7 @@ public class ULFGFaceDetectionNetwork extends ObjectDetectionNetwork {
     }
 
     @Override
-    public List<ObjectDetectionResult> run(Mat frame) {
+    public ResultList<ObjectDetectionResult> run(Mat frame) {
         // convert image into batch of images
         Mat inputBlob = blobFromImage(frame,
                 1 / imageStd,
@@ -94,7 +95,7 @@ public class ULFGFaceDetectionNetwork extends ObjectDetectionNetwork {
         return predict(frame.size().width(), frame.size().height(), confidences, boxes);
     }
 
-    private List<ObjectDetectionResult> predict(int frameWidth, int frameHeight, Mat confidences, Mat boxes) {
+    private ResultList<ObjectDetectionResult> predict(int frameWidth, int frameHeight, Mat confidences, Mat boxes) {
         FloatVector relevantConfidences = new FloatVector();
         RectVector relevantBoxes = new RectVector();
 
@@ -130,7 +131,7 @@ public class ULFGFaceDetectionNetwork extends ObjectDetectionNetwork {
         NMSBoxes(relevantBoxes, confidencesPointer, getConfidenceThreshold(), iouThreshold, indices, 1.0f, topK);
 
         // extract nms result
-        List<ObjectDetectionResult> detections = new ArrayList<>();
+        ResultList<ObjectDetectionResult> detections = new ResultList<>();
         for (int i = 0; i < indices.limit(); ++i) {
             int idx = indices.get(i);
             Rect box = relevantBoxes.get(idx);

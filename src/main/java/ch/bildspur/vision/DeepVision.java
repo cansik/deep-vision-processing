@@ -1,7 +1,7 @@
 package ch.bildspur.vision;
 
-import ch.bildspur.vision.deps.Dependency;
-import ch.bildspur.vision.deps.Repository;
+import ch.bildspur.vision.dependency.Dependency;
+import ch.bildspur.vision.dependency.Repository;
 import ch.bildspur.vision.util.ProcessingUtils;
 import processing.core.PApplet;
 

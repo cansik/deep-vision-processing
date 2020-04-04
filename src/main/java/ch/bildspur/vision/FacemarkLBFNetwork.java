@@ -1,6 +1,6 @@
 package ch.bildspur.vision;
 
-import ch.bildspur.vision.network.DeepNeuralNetwork;
+import ch.bildspur.vision.network.BaseNeuralNetwork;
 import ch.bildspur.vision.result.FacialLandmarkResult;
 import ch.bildspur.vision.result.KeyPointResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import static ch.bildspur.vision.util.CvProcessingUtils.createValidROI;
 
-public class FacemarkLBFNetwork extends DeepNeuralNetwork<FacialLandmarkResult> {
+public class FacemarkLBFNetwork extends BaseNeuralNetwork<FacialLandmarkResult> {
     private Path model;
     private FacemarkLBF net;
 

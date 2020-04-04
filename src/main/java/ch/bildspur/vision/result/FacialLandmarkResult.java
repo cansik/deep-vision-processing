@@ -2,7 +2,7 @@ package ch.bildspur.vision.result;
 
 import java.util.List;
 
-public class FacialLandmarkResult {
+public class FacialLandmarkResult implements NetworkResult {
     private List<KeyPointResult> keyPoints;
 
     public FacialLandmarkResult(List<KeyPointResult> keyPoints) {

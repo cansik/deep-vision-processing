@@ -1,4 +1,4 @@
-package ch.bildspur.vision.deps;
+package ch.bildspur.vision.dependency;
 
 import ch.bildspur.vision.web.NetworkUtility;
 

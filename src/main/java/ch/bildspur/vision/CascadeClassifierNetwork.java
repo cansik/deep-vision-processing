@@ -1,7 +1,8 @@
 package ch.bildspur.vision;
 
-import ch.bildspur.vision.network.DeepNeuralNetwork;
+import ch.bildspur.vision.network.BaseNeuralNetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.result.ResultList;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Rect;
 import org.bytedeco.opencv.opencv_core.RectVector;
@@ -9,10 +10,8 @@ import org.bytedeco.opencv.opencv_objdetect.CascadeClassifier;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
-public class CascadeClassifierNetwork extends DeepNeuralNetwork<List<ObjectDetectionResult>> {
+public class CascadeClassifierNetwork extends BaseNeuralNetwork<ResultList<ObjectDetectionResult>> {
     private Path model;
     private String className;
     private CascadeClassifier net;
@@ -40,8 +39,8 @@ public class CascadeClassifierNetwork extends DeepNeuralNetwork<List<ObjectDetec
     }
 
     @Override
-    public List<ObjectDetectionResult> run(Mat frame) {
-        List<ObjectDetectionResult> detections = new ArrayList<>();
+    public ResultList<ObjectDetectionResult> run(Mat frame) {
+        ResultList<ObjectDetectionResult> detections = new ResultList<>();
         RectVector detectObjects = new RectVector();
 
         net.detectMultiScale(frame, detectObjects, scaleFactor, minNeighbors, flags, null, null);

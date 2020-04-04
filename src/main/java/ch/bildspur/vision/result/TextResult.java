@@ -1,6 +1,6 @@
 package ch.bildspur.vision.result;
 
-public class TextResult {
+public class TextResult implements NetworkResult {
     private String text;
     private float probability;
 

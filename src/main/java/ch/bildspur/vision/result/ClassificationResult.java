@@ -1,6 +1,6 @@
 package ch.bildspur.vision.result;
 
-public class ClassificationResult {
+public class ClassificationResult implements NetworkResult {
     private int classId;
     private String className;
     private float confidence;

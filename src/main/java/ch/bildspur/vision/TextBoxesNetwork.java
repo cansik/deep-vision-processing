@@ -2,6 +2,7 @@ package ch.bildspur.vision;
 
 import ch.bildspur.vision.network.ObjectDetectionNetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.result.ResultList;
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacpp.IntPointer;
 import org.bytedeco.opencv.opencv_core.Mat;
@@ -11,8 +12,6 @@ import org.bytedeco.opencv.opencv_text.FloatVector;
 import org.bytedeco.opencv.opencv_text.TextDetectorCNN;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.bytedeco.opencv.global.opencv_dnn.NMSBoxes;
 
@@ -41,7 +40,7 @@ public class TextBoxesNetwork extends ObjectDetectionNetwork {
     }
 
     @Override
-    public List<ObjectDetectionResult> run(Mat frame) {
+    public ResultList<ObjectDetectionResult> run(Mat frame) {
         // detect boxes
         RectVector boxes = new RectVector();
         FloatVector confidences = new FloatVector();
@@ -55,7 +54,7 @@ public class TextBoxesNetwork extends ObjectDetectionNetwork {
         NMSBoxes(boxes, confidencesPointer, getConfidenceThreshold(), nmsThreshold, indices);
 
         // extract relevant results
-        List<ObjectDetectionResult> detections = new ArrayList<>();
+        ResultList<ObjectDetectionResult> detections = new ResultList<>();
         for (int i = 0; i < indices.limit(); ++i) {
             int idx = indices.get(i);
             Rect box = boxes.get(idx);

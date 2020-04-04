@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * LIP based Human Result (16 Parts)
  */
-public class HumanPoseResult {
+public class HumanPoseResult implements NetworkResult {
     private List<KeyPointResult> keyPoints;
 
     public HumanPoseResult(List<KeyPointResult> keyPoints) {

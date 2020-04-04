@@ -1,4 +1,4 @@
-package ch.bildspur.vision.deps;
+package ch.bildspur.vision.dependency;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

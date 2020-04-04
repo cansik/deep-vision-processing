@@ -2,13 +2,12 @@ package ch.bildspur.vision;
 
 import ch.bildspur.vision.network.ObjectDetectionNetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.result.ResultList;
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.Net;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.bytedeco.opencv.global.opencv_core.CV_32F;
 import static org.bytedeco.opencv.global.opencv_dnn.blobFromImage;
@@ -50,7 +49,7 @@ public class SSDMobileNetwork extends ObjectDetectionNetwork {
     }
 
     @Override
-    public List<ObjectDetectionResult> run(Mat frame) {
+    public ResultList<ObjectDetectionResult> run(Mat frame) {
         // convert image into batch of images
         Mat inputBlob = blobFromImage(frame,
                 1,
@@ -72,7 +71,7 @@ public class SSDMobileNetwork extends ObjectDetectionNetwork {
         Mat detectionMat = new Mat(detection.size(2), detection.size(3), CV_32F, detection.ptr());
 
         // extract detections
-        List<ObjectDetectionResult> detections = new ArrayList<>();
+        ResultList<ObjectDetectionResult> detections = new ResultList<>();
         for (int i = 0; i < detectionMat.rows(); i++) {
             FloatPointer dataPtr = new FloatPointer(detectionMat.row(i).data());
 

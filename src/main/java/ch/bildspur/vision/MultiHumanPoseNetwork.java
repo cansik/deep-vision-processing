@@ -3,6 +3,7 @@ package ch.bildspur.vision;
 import ch.bildspur.vision.network.PoseNetwork;
 import ch.bildspur.vision.result.HumanPoseResult;
 import ch.bildspur.vision.result.KeyPointResult;
+import ch.bildspur.vision.result.ResultList;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.MatVector;
 import org.bytedeco.opencv.opencv_core.Size;
@@ -17,7 +18,7 @@ import static org.bytedeco.opencv.global.opencv_core.CV_8U;
 import static org.bytedeco.opencv.global.opencv_dnn.readNetFromONNX;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
 
-public class MultiHumanPoseNetwork extends PoseNetwork<List<HumanPoseResult>> {
+public class MultiHumanPoseNetwork extends PoseNetwork<ResultList<HumanPoseResult>> {
     private final int pointCount = 18;
     private final StringVector outputLayerNames = new StringVector("stage_1_output_0_pafs", "stage_1_output_1_heatmaps");
 
@@ -33,7 +34,7 @@ public class MultiHumanPoseNetwork extends PoseNetwork<List<HumanPoseResult>> {
     }
 
     @Override
-    public List<HumanPoseResult> run(Mat frame) {
+    public ResultList<HumanPoseResult> run(Mat frame) {
         // prepare
         Mat inputBlob = createInputBlob(frame);
 
@@ -57,7 +58,7 @@ public class MultiHumanPoseNetwork extends PoseNetwork<List<HumanPoseResult>> {
         // save global heat map
         //storeHeatMap("maps/global.bmp", heatMaps[heatMaps.length - 1]);
 
-        List<HumanPoseResult> humans = new ArrayList<>();
+        ResultList<HumanPoseResult> humans = new ResultList<>();
 
         for (int i = 0; i < pointCount; i++) {
             List<KeyPointResult> keyPoints = extractKeyPoints(i, heatMaps[i]);

@@ -15,10 +15,11 @@ public class FSRCNNTest extends PApplet {
     }
 
     public void settings() {
-        size(640, 480, FX2D);
+        size(1280, 960, FX2D);
     }
 
     PImage testImage;
+    PImage groundTruth;
 
     DeepVisionPreview vision = new DeepVisionPreview(this);
     FSRCNNNetwork network;
@@ -28,6 +29,7 @@ public class FSRCNNTest extends PApplet {
         colorMode(HSB, 360, 100, 100);
 
         testImage = loadImage(sketchPath("data/office_small.jpg"));
+        groundTruth = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
         network = vision.createFSCRNN();
@@ -38,11 +40,18 @@ public class FSRCNNTest extends PApplet {
         println("inferencing...");
         result = network.run(testImage);
         println("done!");
+
+        // test
+        testImage.resize(640, 0);
+
+        noLoop();
     }
 
     public void draw() {
         background(55);
-        image(result.getImage(), 0, 0);
+        image(testImage, 0, 0);
+        image(result.getImage(), 640, 0);
+        image(groundTruth, 320, 480);
         surface.setTitle("FSRCNN Super Resolution - FPS: " + Math.round(frameRate));
     }
 }

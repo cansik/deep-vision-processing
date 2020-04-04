@@ -1,8 +1,8 @@
 package ch.bildspur.vision;
 
-import ch.bildspur.vision.network.DeepNeuralNetwork;
-import ch.bildspur.vision.network.PolyDetectionNetwork;
-import ch.bildspur.vision.network.PolyDetector;
+import ch.bildspur.vision.network.BaseNeuralNetwork;
+import ch.bildspur.vision.network.MultiProcessingNetwork;
+import ch.bildspur.vision.network.MultiProcessor;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.TextResult;
 import org.bytedeco.javacpp.BytePointer;
@@ -16,11 +16,11 @@ import java.util.List;
 import static org.bytedeco.opencv.global.opencv_imgproc.CV_BGR2GRAY;
 import static org.bytedeco.opencv.global.opencv_imgproc.cvtColor;
 
-public class TesseractNetwork extends DeepNeuralNetwork<TextResult> implements PolyDetectionNetwork<TextResult> {
+public class TesseractNetwork extends BaseNeuralNetwork<TextResult> implements MultiProcessingNetwork<TextResult> {
     private Path model;
     private String language;
     private TessBaseAPI api = new TessBaseAPI();
-    private final PolyDetector<TextResult> polyDetector = new PolyDetector<>(this);
+    private final MultiProcessor<TextResult> polyExecutor = new MultiProcessor<>(this);
 
     public TesseractNetwork(Path model, String language) {
         this.model = model;
@@ -62,11 +62,11 @@ public class TesseractNetwork extends DeepNeuralNetwork<TextResult> implements P
 
     @Override
     public List<TextResult> runByDetections(PImage image, List<ObjectDetectionResult> detections) {
-        return polyDetector.runByDetections(image, detections);
+        return polyExecutor.runByDetections(image, detections);
     }
 
     @Override
     public List<TextResult> runByDetections(Mat frame, List<ObjectDetectionResult> detections) {
-        return polyDetector.runByDetections(frame, detections);
+        return polyExecutor.runByDetections(frame, detections);
     }
 }
