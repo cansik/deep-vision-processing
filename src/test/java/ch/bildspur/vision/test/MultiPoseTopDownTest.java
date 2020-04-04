@@ -49,12 +49,14 @@ public class MultiPoseTopDownTest extends PApplet {
         pose.setup();
 
         print("inferencing detections...");
+        int start = millis();
         detections = new ResultList<>(
                 network.run(testImage).stream()
                         .filter(e -> e.getClassName().equals("person"))
                         .collect(Collectors.toList())
         );
-        println("done!");
+        int end = millis();
+        println("done! Time: " + (end - start) + " ms");
 
         println("detected " + detections.size() + " poses.");
 

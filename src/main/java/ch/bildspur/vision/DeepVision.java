@@ -95,15 +95,27 @@ public class DeepVision {
     }
 
     public YOLONetwork createYOLOv3() {
-        return createYOLONetwork(Repository.YOLOv3Model, Repository.YOLOv3Weight, Repository.COCONames, 608);
+        return createYOLOv3(608);
+    }
+
+    public YOLONetwork createYOLOv3(int inputSize) {
+        return createYOLONetwork(Repository.YOLOv3Model, Repository.YOLOv3Weight, Repository.COCONames, inputSize);
     }
 
     public YOLONetwork createYOLOv3Tiny() {
-        return createYOLONetwork(Repository.YOLOv3TinyModel, Repository.YOLOv3TinyWeight, Repository.COCONames, 416);
+        return createYOLOv3Tiny(416);
+    }
+
+    public YOLONetwork createYOLOv3Tiny(int inputSize) {
+        return createYOLONetwork(Repository.YOLOv3TinyModel, Repository.YOLOv3TinyWeight, Repository.COCONames, inputSize);
     }
 
     public YOLONetwork createYOLOv3SPP() {
-        return createYOLONetwork(Repository.YOLOv3SPPModel, Repository.YOLOv3SPPWeight, Repository.COCONames, 608);
+        return createYOLOv3SPP(608);
+    }
+
+    public YOLONetwork createYOLOv3SPP(int inputSize) {
+        return createYOLONetwork(Repository.YOLOv3SPPModel, Repository.YOLOv3SPPWeight, Repository.COCONames, inputSize);
     }
 
     // pose
@@ -164,19 +176,27 @@ public class DeepVision {
     // ssd mobilenet
 
     public SSDMobileNetwork createHandDetector() {
+        return createHandDetector(300);
+    }
+
+    public SSDMobileNetwork createHandDetector(int inputSize) {
         prepareDependencies(Repository.HandTrackJSWeight, Repository.HandTrackJSConfig);
         return new SSDMobileNetwork(Repository.HandTrackJSWeight.getPath(), Repository.HandTrackJSConfig.getPath(),
-                300, 300, 0.5f, "hand");
+                inputSize, inputSize, 0.5f, "hand");
     }
 
     public SSDMobileNetwork createMobileNetV2() {
+        return createMobileNetV2(300);
+    }
+
+    public SSDMobileNetwork createMobileNetV2(int inputSize) {
         prepareDependencies(
                 Repository.SSDMobileNetV2COCOWeight,
                 Repository.SSDMobileNetV2COCOConfig,
                 Repository.COCOLabelsPaper);
 
         SSDMobileNetwork network = new SSDMobileNetwork(Repository.SSDMobileNetV2COCOWeight.getPath(), Repository.SSDMobileNetV2COCOConfig.getPath(),
-                300, 300, 0.5f);
+                inputSize, inputSize, 0.5f);
         network.loadLabels(Repository.COCOLabelsPaper.getPath());
         return network;
     }
