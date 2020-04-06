@@ -93,6 +93,8 @@ public class SSDMobileNetwork extends ObjectDetectionNetwork {
                     x, y, width, height));
         }
 
+        // todo: implement global nms for object detection algorithms
+
         return detections;
     }
 
