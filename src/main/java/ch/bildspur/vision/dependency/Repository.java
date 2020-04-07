@@ -37,6 +37,9 @@ public class Repository {
     public static final Dependency HandTrackJSWeight = new Dependency("handtrackingjs.pb");
     public static final Dependency HandTrackJSConfig = new Dependency("handtrackingjs.pbtxt");
 
+    public static final Dependency CMUHandYOLOv3Weights = new Dependency("cmu_hand.weights");
+    public static final Dependency CMUHandYOLOv3Model = new Dependency("cmu_hand.cfg");
+
     public static final Dependency HaarCascadeHand = new Dependency("haarcascade_hand.xml");
 
     // text detection

@@ -118,6 +118,21 @@ public class DeepVision {
         return createYOLONetwork(Repository.YOLOv3SPPModel, Repository.YOLOv3SPPWeight, Repository.COCONames, inputSize);
     }
 
+    public YOLONetwork createYOLOv3HandDetector() {
+        return createYOLOv3HandDetector(416);
+    }
+
+    public YOLONetwork createYOLOv3HandDetector(int inputSize) {
+        prepareDependencies(Repository.CMUHandYOLOv3Model, Repository.CMUHandYOLOv3Weights);
+
+        YOLONetwork network = new YOLONetwork(
+                Repository.CMUHandYOLOv3Model.getPath(), Repository.CMUHandYOLOv3Weights.getPath(),
+                inputSize, inputSize
+        );
+        network.setLabels("hand");
+        return network;
+    }
+
     // pose
 
     public SingleHumanPoseNetwork createSingleHumanPoseEstimation() {
