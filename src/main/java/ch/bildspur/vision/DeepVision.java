@@ -133,6 +133,21 @@ public class DeepVision {
         return network;
     }
 
+    public YOLONetwork createYOLOv3TinyHandDetector() {
+        return createYOLOv3TinyHandDetector(416);
+    }
+
+    public YOLONetwork createYOLOv3TinyHandDetector(int inputSize) {
+        prepareDependencies(Repository.CMUHandYOLOv3TinyModel, Repository.CMUHandYOLOv3TinyWeights);
+
+        YOLONetwork network = new YOLONetwork(
+                Repository.CMUHandYOLOv3TinyModel.getPath(), Repository.CMUHandYOLOv3TinyWeights.getPath(),
+                inputSize, inputSize
+        );
+        network.setLabels("hand");
+        return network;
+    }
+
     // pose
 
     public SingleHumanPoseNetwork createSingleHumanPoseEstimation() {
