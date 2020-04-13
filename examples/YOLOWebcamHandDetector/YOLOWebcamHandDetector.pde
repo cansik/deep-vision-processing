@@ -19,7 +19,7 @@ public void setup() {
   colorMode(HSB, 360, 100, 100);
 
   println("creating model...");
-  yolo = deepVision.createYOLOv3HandDetector(256);
+  yolo = deepVision.createCrossHandDetector(256);
 
   println("loading yolo model...");
   yolo.setup();

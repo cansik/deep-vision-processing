@@ -43,6 +43,9 @@ public class Repository {
     public static final Dependency CMUHandYOLOv3TinyWeights = new Dependency("cmu_hand_yolov3_tiny.weights");
     public static final Dependency CMUHandYOLOv3TinyModel = new Dependency("cmu_hand_yolov3_tiny.cfg");
 
+    public static final Dependency CrossHandsYOLOv3Weights = new Dependency("cross-hands.weights");
+    public static final Dependency CrossHandsYOLOv3Model = new Dependency("cross-hands.cfg");
+
     public static final Dependency HaarCascadeHand = new Dependency("haarcascade_hand.xml");
 
     // text detection
