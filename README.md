@@ -218,7 +218,7 @@ tbd
 
 ## Build
 - Install JDK 8 (because of Processing)
-- Download maven snapshots for JavaCV: `mvn -U compile`
+- ~~Download maven snapshots for JavaCV:~~ `mvn -U compile`
 
 Run gradle to build a fat jar:
 
