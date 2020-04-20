@@ -312,5 +312,12 @@ public class DeepVision {
     }
 
     // style transfer
+    public StyleTransferNetwork createStyleTransfer(Dependency model) {
+        prepareDependencies(model);
+        return new StyleTransferNetwork(model.getPath());
+    }
 
+    public StyleTransferNetwork createStyleTransfer() {
+        return createStyleTransfer(Repository.ECCV16CompositionVII);
+    }
 }

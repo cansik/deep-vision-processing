@@ -118,4 +118,11 @@ public class Repository {
     public static final Dependency ECCV16LaMuse = new Dependency("la_muse.t7");
     public static final Dependency ECCV16StarryNight = new Dependency("starry_night.t7");
     public static final Dependency ECCV16TheWave = new Dependency("the_wave.t7");
+
+    public static final Dependency InstanceNormCandy = new Dependency("candy.t7");
+    public static final Dependency InstanceNormFeathers = new Dependency("feathers.t7");
+    public static final Dependency InstanceNormLaMuse = new Dependency("in_la_muse.t7");
+    public static final Dependency InstanceNormMosaic = new Dependency("mosaic.t7");
+    public static final Dependency InstanceNormTheScream = new Dependency("the_scream.t7");
+    public static final Dependency InstanceNormUdnie = new Dependency("udnie.t7");
 }
