@@ -88,7 +88,8 @@ Here you find a list of implemented networks:
     - Age Net
     - Gender Net
 - Image Processing
-    - FSRCNN for 2x Superresolution
+    - Style Transfer
+    - Multiple Networks for x2 x3 x4 Superresolution
 
 The following list shows the networks that are on the list to be implemented (⚡️ already in progress):
 
