@@ -25,7 +25,11 @@ public class DeepVisionPreview extends DeepVision {
 
     public CascadeClassifierNetwork createCascadeHand() {
         prepareDependencies(Repository.HaarCascadeHand);
-
         return new CascadeClassifierNetwork(Repository.HaarCascadeHand.getPath(), "hand");
+    }
+
+    public StyleTransferNetwork createStyleTransfer() {
+        prepareDependencies(Repository.ECCV16LaMuse);
+        return new StyleTransferNetwork(Repository.ECCV16LaMuse.getPath());
     }
 }

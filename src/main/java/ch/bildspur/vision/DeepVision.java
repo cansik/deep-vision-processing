@@ -256,12 +256,14 @@ public class DeepVision {
         return new TesseractNetwork(Repository.TesseractEngBest.getPath(), "eng");
     }
 
+    // super resolution
+
     public SuperResolutionNetwork createSuperResolutionNetwork(String name, int scale, Dependency model) {
         prepareDependencies(model);
         return new SuperResolutionNetwork(model.getPath(), name, scale);
     }
 
-    public SuperResolutionNetwork createFSCRNN(int scale) {
+    public SuperResolutionNetwork createSuperResolutionFSCRNN(int scale) {
         String name = "fsrcnn";
         switch (scale) {
             case 3:
@@ -273,7 +275,7 @@ public class DeepVision {
         }
     }
 
-    public SuperResolutionNetwork createLapSRN(int scale) {
+    public SuperResolutionNetwork createSuperResolutionLapSRN(int scale) {
         String name = "lapsrn";
         switch (scale) {
             case 4:
@@ -285,7 +287,7 @@ public class DeepVision {
         }
     }
 
-    public SuperResolutionNetwork createESPCN(int scale) {
+    public SuperResolutionNetwork createSuperResolutionESPCN(int scale) {
         String name = "espcn";
         switch (scale) {
             case 3:
@@ -297,7 +299,7 @@ public class DeepVision {
         }
     }
 
-    public SuperResolutionNetwork createEDSR(int scale) {
+    public SuperResolutionNetwork createSuperResolutionEDSR(int scale) {
         String name = "edsr";
         switch (scale) {
             case 3:
@@ -308,4 +310,7 @@ public class DeepVision {
                 return createSuperResolutionNetwork(name, 2, Repository.EDSRx2Model);
         }
     }
+
+    // style transfer
+
 }

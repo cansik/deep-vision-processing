@@ -112,4 +112,10 @@ public class Repository {
 
     // text models
     public static final Dependency TesseractEngBest = new Dependency("eng.traineddata");
+
+    // style transfer
+    public static final Dependency ECCV16CompositionVII = new Dependency("composition_vii.t7");
+    public static final Dependency ECCV16LaMuse = new Dependency("la_muse.t7");
+    public static final Dependency ECCV16StarryNight = new Dependency("starry_night.t7");
+    public static final Dependency ECCV16TheWave = new Dependency("the_wave.t7");
 }
