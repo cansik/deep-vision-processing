@@ -2,15 +2,15 @@ package ch.bildspur.vision.test;
 
 
 import ch.bildspur.vision.DeepVisionPreview;
-import ch.bildspur.vision.FSRCNNNetwork;
+import ch.bildspur.vision.SuperResolutionNetwork;
 import ch.bildspur.vision.result.ImageResult;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class FSRCNNTest extends PApplet {
+public class SuperResolutionTest extends PApplet {
 
     public static void main(String... args) {
-        FSRCNNTest sketch = new FSRCNNTest();
+        SuperResolutionTest sketch = new SuperResolutionTest();
         sketch.runSketch();
     }
 
@@ -22,7 +22,7 @@ public class FSRCNNTest extends PApplet {
     PImage groundTruth;
 
     DeepVisionPreview vision = new DeepVisionPreview(this);
-    FSRCNNNetwork network;
+    SuperResolutionNetwork network;
     ImageResult result;
 
     public void setup() {
@@ -32,7 +32,7 @@ public class FSRCNNTest extends PApplet {
         groundTruth = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
-        network = vision.createFSCRNN();
+        network = vision.createLapSRN(8);
 
         println("loading model...");
         network.setup();
@@ -50,7 +50,7 @@ public class FSRCNNTest extends PApplet {
     public void draw() {
         background(55);
         image(testImage, 0, 0);
-        image(result.getImage(), 640, 0);
+        image(result.getImage(), 640, 0, 640, 480);
         image(groundTruth, 320, 480);
         surface.setTitle("FSRCNN Super Resolution - FPS: " + Math.round(frameRate));
     }

@@ -256,8 +256,56 @@ public class DeepVision {
         return new TesseractNetwork(Repository.TesseractEngBest.getPath(), "eng");
     }
 
-    public FSRCNNNetwork createFSCRNN() {
-        prepareDependencies(Repository.FSRCNNModel);
-        return new FSRCNNNetwork(Repository.FSRCNNModel.getPath());
+    public SuperResolutionNetwork createSuperResolutionNetwork(String name, int scale, Dependency model) {
+        prepareDependencies(model);
+        return new SuperResolutionNetwork(model.getPath(), name, scale);
+    }
+
+    public SuperResolutionNetwork createFSCRNN(int scale) {
+        String name = "fsrcnn";
+        switch (scale) {
+            case 3:
+                return createSuperResolutionNetwork(name, scale, Repository.FSRCNNx3Model);
+            case 4:
+                return createSuperResolutionNetwork(name, scale, Repository.FSRCNNx4Model);
+            default:
+                return createSuperResolutionNetwork(name, 2, Repository.FSRCNNx2Model);
+        }
+    }
+
+    public SuperResolutionNetwork createLapSRN(int scale) {
+        String name = "lapsrn";
+        switch (scale) {
+            case 4:
+                return createSuperResolutionNetwork(name, scale, Repository.LapSRNx4Model);
+            case 8:
+                return createSuperResolutionNetwork(name, scale, Repository.LapSRNx8Model);
+            default:
+                return createSuperResolutionNetwork(name, 2, Repository.LapSRNx2Model);
+        }
+    }
+
+    public SuperResolutionNetwork createESPCN(int scale) {
+        String name = "espcn";
+        switch (scale) {
+            case 3:
+                return createSuperResolutionNetwork(name, scale, Repository.ESPCNx3Model);
+            case 4:
+                return createSuperResolutionNetwork(name, scale, Repository.ESPCNx4Model);
+            default:
+                return createSuperResolutionNetwork(name, 2, Repository.ESPCNx2Model);
+        }
+    }
+
+    public SuperResolutionNetwork createEDSR(int scale) {
+        String name = "edsr";
+        switch (scale) {
+            case 3:
+                return createSuperResolutionNetwork(name, scale, Repository.EDSRx3Model);
+            case 4:
+                return createSuperResolutionNetwork(name, scale, Repository.EDSRx4Model);
+            default:
+                return createSuperResolutionNetwork(name, 2, Repository.EDSRx2Model);
+        }
     }
 }

@@ -11,12 +11,16 @@ import processing.core.PImage;
 
 import java.nio.file.Path;
 
-public class FSRCNNNetwork extends BaseNeuralNetwork<ImageResult> {
+public class SuperResolutionNetwork extends BaseNeuralNetwork<ImageResult> {
     private Path model;
+    private String name;
+    private int scale;
     private DnnSuperResImpl net;
 
-    public FSRCNNNetwork(Path model) {
+    public SuperResolutionNetwork(Path model, String name, int scale) {
         this.model = model;
+        this.name = name;
+        this.scale = scale;
 
         // fix: https://github.com/bytedeco/javacv/issues/1396
         Loader.load(opencv_quality.class);
@@ -26,7 +30,7 @@ public class FSRCNNNetwork extends BaseNeuralNetwork<ImageResult> {
     public boolean setup() {
         net = new DnnSuperResImpl();
         net.readModel(model.toAbsolutePath().toString());
-        net.setModel("fsrcnn", 2);
+        net.setModel(name, scale);
         return true;
     }
 

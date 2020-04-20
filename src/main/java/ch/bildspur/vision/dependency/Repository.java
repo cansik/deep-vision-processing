@@ -59,7 +59,25 @@ public class Repository {
     public static final Dependency CRNNModel = new Dependency("model_crnn.t7");
 
     // super resolution
-    public static final Dependency FSRCNNModel = new Dependency("FSRCNN_x2.pb");
+    public static final Dependency FSRCNNx2Model = new Dependency("FSRCNN_x2.pb");
+    public static final Dependency FSRCNNx3Model = new Dependency("FSRCNN_x3.pb");
+    public static final Dependency FSRCNNx4Model = new Dependency("FSRCNN_x4.pb");
+
+    public static final Dependency FSRCNNx2ModelSmall = new Dependency("FSRCNN-small_x2.pb");
+    public static final Dependency FSRCNNx3ModelSmall = new Dependency("FSRCNN-small_x3.pb");
+    public static final Dependency FSRCNNx4ModelSmall = new Dependency("FSRCNN-small_x4.pb");
+
+    public static final Dependency LapSRNx2Model = new Dependency("LapSRN_x2.pb");
+    public static final Dependency LapSRNx4Model = new Dependency("LapSRN_x4.pb");
+    public static final Dependency LapSRNx8Model = new Dependency("LapSRN_x8.pb");
+
+    public static final Dependency ESPCNx2Model = new Dependency("ESPCN_x2.pb");
+    public static final Dependency ESPCNx3Model = new Dependency("ESPCN_x3.pb");
+    public static final Dependency ESPCNx4Model = new Dependency("ESPCN_x4.pb");
+
+    public static final Dependency EDSRx2Model = new Dependency("EDSR_x2.pb");
+    public static final Dependency EDSRx3Model = new Dependency("EDSR_x3.pb");
+    public static final Dependency EDSRx4Model = new Dependency("EDSR_x4.pb");
 
     // masking
     public static final Dependency MaskRCNNInceptionv2Config = new Dependency("mask_rcnn_inception_v2_coco_2018_01_28.pbtxt");
