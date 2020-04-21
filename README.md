@@ -95,7 +95,7 @@ The following list shows the networks that are on the list to be implemented (�
 
 * YOLO 9K (not supported by OpenCV)
 * Multi Human Pose Detection ⚡️ (currently struggling with the partial affinity fields 🤷🏻‍♂️ help?)
-* MaskRCNN
+* MaskRCNN ⚡️
 * TextBoxes++ ⚡️
 * [CRNN](https://github.com/bgshih/crnn) ⚡️
 * [PixelLink](https://github.com/ZJULearning/pixel_link)
@@ -219,7 +219,7 @@ tbd
 
 ## Build
 - Install JDK 8 (because of Processing)
-- ~~Download maven snapshots for JavaCV:~~ `mvn -U compile`
+- ~~Download maven snapshots for JavaCV:~~ `mvn -U compile` (*No need to this anymore*)
 
 Run gradle to build a fat jar:
 
