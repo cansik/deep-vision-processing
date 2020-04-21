@@ -27,4 +27,9 @@ public class DeepVisionPreview extends DeepVision {
         prepareDependencies(Repository.HaarCascadeHand);
         return new CascadeClassifierNetwork(Repository.HaarCascadeHand.getPath(), "hand");
     }
+
+    public MaskRCNN createMaskRCNN() {
+        prepareDependencies(Repository.MaskRCNNInceptionv2Config, Repository.MaskRCNNInceptionv2Weight);
+        return new MaskRCNN(Repository.MaskRCNNInceptionv2Config.getPath(), Repository.MaskRCNNInceptionv2Weight.getPath());
+    }
 }
