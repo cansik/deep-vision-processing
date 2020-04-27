@@ -32,7 +32,7 @@ public class YOLODetectionTest extends PApplet {
         testImage = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
-        yolo = vision.createYOLOv3TinyPRN();
+        yolo = vision.createEfficientNetB0Yolov3();
 
         println("loading model...");
         yolo.setup();

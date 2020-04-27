@@ -70,6 +70,7 @@ Here you find a list of implemented networks:
 - Object Detection ✨
 	- YOLOv3-tiny
 	- YOLOv3-tiny-prn
+	- EfficientNetB0-YOLOv3
 	- YOLOv3-spp ([spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326))
 	- YOLOv3
 	- SSDMobileNetV2

@@ -36,6 +36,9 @@ public class Repository {
     public static final Dependency YOLO9kModel = new Dependency("yolo9000.cfg");
     public static final Dependency YOLO9kWeight = new Dependency("yolo9000.weights");
 
+    public static final Dependency EfficientNetB0Yolov3Model = new Dependency("enet-coco.cfg");
+    public static final Dependency EfficientNetB0Yolov3Weight = new Dependency("enetb0-coco_final.weights");
+
     public static final Dependency SSDMobileNetV2COCOConfig = new Dependency("ssd_mobilenet_v2_coco_2018_03_29.pbtxt");
     public static final Dependency SSDMobileNetV2COCOWeight = new Dependency("ssd_mobilenet_v2_coco_2018_03_29.pb");
 
