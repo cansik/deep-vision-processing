@@ -32,12 +32,12 @@ public class YOLODetectionTest extends PApplet {
         testImage = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
-        yolo = vision.createEfficientNetB0Yolov3();
+        yolo = vision.createYOLOv3OpenImages();
 
         println("loading model...");
         yolo.setup();
 
-        //yolo.setConfidenceThreshold(0.3f);
+        yolo.setConfidenceThreshold(0.2f);
 
         println("inferencing...");
         detections = yolo.run(testImage);
