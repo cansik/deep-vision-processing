@@ -69,8 +69,9 @@ Here you find a list of implemented networks:
 
 - Object Detection ✨
 	- YOLOv3-tiny
+	- YOLOv3-tiny-prn
 	- YOLOv3-spp ([spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326))
-	- YOLOv3 (608)
+	- YOLOv3
 	- SSDMobileNetV2
 	- Handtracking based on SSDMobileNetV2
 	- TextBoxes
@@ -99,7 +100,7 @@ The following list shows the networks that are on the list to be implemented (�
 * TextBoxes++ ⚡️
 * [CRNN](https://github.com/bgshih/crnn) ⚡️
 * [PixelLink](https://github.com/ZJULearning/pixel_link)
-* YOLOv4
+* YOLOv4 (mish not implemented even it is has been [merged](https://github.com/opencv/opencv/pull/15808))
 
 
 ### Object Detection

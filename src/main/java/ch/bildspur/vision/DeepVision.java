@@ -110,6 +110,14 @@ public class DeepVision {
         return createYOLONetwork(Repository.YOLOv3TinyModel, Repository.YOLOv3TinyWeight, Repository.COCONames, inputSize);
     }
 
+    public YOLONetwork createYOLOv3TinyPRN() {
+        return createYOLOv3TinyPRN(416);
+    }
+
+    public YOLONetwork createYOLOv3TinyPRN(int inputSize) {
+        return createYOLONetwork(Repository.YOLOv3TinyModelPRN, Repository.YOLOv3TinyWeightPRN, Repository.COCONames, inputSize);
+    }
+
     public YOLONetwork createYOLOv3SPP() {
         return createYOLOv3SPP(608);
     }
