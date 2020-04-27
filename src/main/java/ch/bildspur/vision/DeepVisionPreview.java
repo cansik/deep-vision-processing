@@ -32,4 +32,12 @@ public class DeepVisionPreview extends DeepVision {
         prepareDependencies(Repository.MaskRCNNInceptionv2Config, Repository.MaskRCNNInceptionv2Weight);
         return new MaskRCNN(Repository.MaskRCNNInceptionv2Config.getPath(), Repository.MaskRCNNInceptionv2Weight.getPath());
     }
+
+    public YOLONetwork createYOLOv4() {
+        return createYOLOv4(608);
+    }
+
+    public YOLONetwork createYOLOv4(int inputSize) {
+        return createYOLONetwork(Repository.YOLOv4Model, Repository.YOLOv4Weight, Repository.COCONames, inputSize);
+    }
 }

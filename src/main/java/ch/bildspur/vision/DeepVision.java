@@ -81,7 +81,7 @@ public class DeepVision {
 
     // yolo
 
-    private YOLONetwork createYOLONetwork(Dependency model, Dependency weights, Dependency names, int size) {
+    protected YOLONetwork createYOLONetwork(Dependency model, Dependency weights, Dependency names, int size) {
         prepareDependencies(model, weights, names);
 
         YOLONetwork network = new YOLONetwork(

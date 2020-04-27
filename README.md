@@ -99,6 +99,7 @@ The following list shows the networks that are on the list to be implemented (�
 * TextBoxes++ ⚡️
 * [CRNN](https://github.com/bgshih/crnn) ⚡️
 * [PixelLink](https://github.com/ZJULearning/pixel_link)
+* YOLOv4
 
 
 ### Object Detection

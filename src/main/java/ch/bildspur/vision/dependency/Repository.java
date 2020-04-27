@@ -18,6 +18,9 @@ public class Repository {
     // networks
 
     // object detection
+    public static final Dependency YOLOv4Model = new Dependency("yolov4.cfg");
+    public static final Dependency YOLOv4Weight = new Dependency("yolov4.weights");
+
     public static final Dependency YOLOv3Model = new Dependency("yolov3.cfg");
     public static final Dependency YOLOv3Weight = new Dependency("yolov3.weights");
 

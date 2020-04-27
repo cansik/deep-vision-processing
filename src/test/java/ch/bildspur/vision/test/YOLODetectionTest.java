@@ -1,7 +1,7 @@
 package ch.bildspur.vision.test;
 
 
-import ch.bildspur.vision.DeepVision;
+import ch.bildspur.vision.DeepVisionPreview;
 import ch.bildspur.vision.YOLONetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import processing.core.PApplet;
@@ -22,7 +22,7 @@ public class YOLODetectionTest extends PApplet {
 
     PImage testImage;
 
-    DeepVision vision = new DeepVision(this);
+    DeepVisionPreview vision = new DeepVisionPreview(this);
     YOLONetwork yolo;
     List<ObjectDetectionResult> detections;
 
@@ -32,7 +32,7 @@ public class YOLODetectionTest extends PApplet {
         testImage = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
-        yolo = vision.createYOLOv3();
+        yolo = vision.createYOLOv4();
 
         println("loading model...");
         yolo.setup();
