@@ -19,14 +19,14 @@ public void setup() {
   colorMode(HSB, 360, 100, 100);
 
   println("creating model...");
-  yolo = deepVision.createYOLOv3TinyHandDetector(256);
+  yolo = deepVision.createCrossHandDetectorTinyPRN();
   yolo.setConfidenceThreshold(0.3);
 
   println("loading yolo model...");
   yolo.setup();
 
   String[] cams = Capture.list();
-  cam = new Capture(this, 640, 480, cams[0]);
+  cam = new Capture(this, 640, 480, cams[1]);
   cam.start();
   
   inputImage = new PImage(320, 240, RGB);
@@ -44,7 +44,6 @@ public void draw() {
   image(cam, 0, 0);
   inputImage.copy(cam, 0, 0, cam.width, cam.height, 0, 0, inputImage.width, inputImage.height);
 
-  yolo.setConfidenceThreshold(0.5f);
   detections = yolo.run(inputImage);
   
   scale(2);
