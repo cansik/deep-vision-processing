@@ -172,6 +172,21 @@ public class DeepVision {
         return network;
     }
 
+    public YOLONetwork createCrossHandDetectorTinyPRN() {
+        return createCrossHandDetectorTinyPRN(416);
+    }
+
+    public YOLONetwork createCrossHandDetectorTinyPRN(int inputSize) {
+        prepareDependencies(Repository.CrossHandsYOLOv3TinyPRNModel, Repository.CrossHandsYOLOv3TinyPRNWeights);
+
+        YOLONetwork network = new YOLONetwork(
+                Repository.CrossHandsYOLOv3TinyPRNModel.getPath(), Repository.CrossHandsYOLOv3TinyPRNWeights.getPath(),
+                inputSize, inputSize
+        );
+        network.setLabels("hand");
+        return network;
+    }
+
     public YOLONetwork createYOLOv3TinyHandDetector() {
         return createYOLOv3TinyHandDetector(416);
     }

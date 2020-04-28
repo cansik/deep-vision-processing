@@ -58,6 +58,9 @@ public class Repository {
     public static final Dependency CrossHandsYOLOv3Weights = new Dependency("cross-hands.weights");
     public static final Dependency CrossHandsYOLOv3Model = new Dependency("cross-hands.cfg");
 
+    public static final Dependency CrossHandsYOLOv3TinyPRNModel = new Dependency("cross-hands-tiny-prn.cfg");
+    public static final Dependency CrossHandsYOLOv3TinyPRNWeights = new Dependency("cross-hands-tiny-prn.weights");
+
     public static final Dependency HaarCascadeHand = new Dependency("haarcascade_hand.xml");
 
     // text detection

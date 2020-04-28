@@ -32,7 +32,7 @@ public class HandYoloDetectionTest extends PApplet {
         testImage = loadImage(sketchPath("data/hand.jpg"));
 
         println("creating network...");
-        network = vision.createYOLOv3HandDetector();
+        network = vision.createCrossHandDetectorTinyPRN();
 
         println("loading model...");
         network.setup();
