@@ -26,7 +26,7 @@ public void setup() {
   yolo.setup();
 
   String[] cams = Capture.list();
-  cam = new Capture(this, 640, 480, cams[0]);
+  cam = new Capture(this, 640, 480, cams[1]);
   cam.start();
   
   inputImage = new PImage(320, 240, RGB);
