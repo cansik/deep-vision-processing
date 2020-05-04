@@ -5,7 +5,10 @@ import ch.bildspur.vision.DeepVisionPreview;
 import ch.bildspur.vision.MaskRCNN;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.ObjectSegmentationResult;
+import ch.bildspur.vision.util.CvProcessingUtils;
+import org.bytedeco.opencv.opencv_core.Mat;
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PImage;
 
 import java.util.List;
@@ -61,12 +64,20 @@ public class MaskRCNNDetectionTest extends PApplet {
         noFill();
         strokeWeight(2f);
 
-        for (ObjectDetectionResult detection : detections) {
+        for (ObjectSegmentationResult detection : detections) {
+            // display rect
             stroke(round(360.0f * (float) detection.getClassId() / rcnn.getLabels().size()), 75, 100);
             rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
 
             textSize(15);
             text(detection.getClassName(), detection.getX(), detection.getY());
+
+            // display mask
+            Mat cvMask = detection.getMask();
+            PImage mask = new PImage(cvMask.size().width(), cvMask.size().height(), PConstants.RGB);
+            CvProcessingUtils.toPImage(detection.getMask(), mask);
+
+            image(mask, detection.getX(), detection.getY());
         }
 
         surface.setTitle("MaskRCNN Test - FPS: " + Math.round(frameRate));

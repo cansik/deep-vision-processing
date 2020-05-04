@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import static org.bytedeco.opencv.global.opencv_core.CV_32F;
 import static org.bytedeco.opencv.global.opencv_dnn.blobFromImage;
 import static org.bytedeco.opencv.global.opencv_dnn.readNetFromTensorflow;
+import static org.bytedeco.opencv.global.opencv_imgproc.resize;
 
 public class MaskRCNN extends ObjectSegmentationNetwork {
     private Path configPath;
@@ -95,6 +96,7 @@ public class MaskRCNN extends ObjectSegmentationNetwork {
             if (score < getConfidenceThreshold())
                 continue;
 
+            // extract information
             int classId = (int) data.get(1);
             int left = Math.round(data.get(3) * size.width());
             int top = Math.round(data.get(4) * size.height());
@@ -104,10 +106,11 @@ public class MaskRCNN extends ObjectSegmentationNetwork {
             int width = right - left;
             int height = bottom - top;
 
-            // todo: extract mask
-            //Mat objectMask (outMasks.size[2], outMasks.size[3], CV_32F, outMasks.ptr < float>(i, classId));
+            // extracting mask and resize
+            Mat objectMask = new Mat(masks.size(2), masks.size(3), CV_32F, masks.ptr(i, classId));
+            resize(objectMask, objectMask, new Size(width, height));
 
-            results.add(new ObjectSegmentationResult(classId, getLabelOrId(classId), score, left, top, width, height, null));
+            results.add(new ObjectSegmentationResult(classId, getLabelOrId(classId), score, left, top, width, height, objectMask));
         }
 
         return results;
