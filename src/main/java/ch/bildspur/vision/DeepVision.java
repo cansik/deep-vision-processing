@@ -202,6 +202,11 @@ public class DeepVision {
         return network;
     }
 
+    public MaskRCNN createMaskRCNN() {
+        prepareDependencies(Repository.MaskRCNNInceptionv2Config, Repository.MaskRCNNInceptionv2Weight, Repository.COCOLabelsPaper);
+        return new MaskRCNN(Repository.MaskRCNNInceptionv2Config.getPath(), Repository.MaskRCNNInceptionv2Weight.getPath(), Repository.COCOLabelsPaper.getPath());
+    }
+
     // pose
 
     public SingleHumanPoseNetwork createSingleHumanPoseEstimation() {

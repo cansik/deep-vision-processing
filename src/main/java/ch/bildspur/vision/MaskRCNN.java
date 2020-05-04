@@ -10,6 +10,7 @@ import org.bytedeco.opencv.opencv_dnn.Net;
 import java.nio.file.Path;
 
 import static org.bytedeco.opencv.global.opencv_core.CV_32F;
+import static org.bytedeco.opencv.global.opencv_core.CV_8UC1;
 import static org.bytedeco.opencv.global.opencv_dnn.blobFromImage;
 import static org.bytedeco.opencv.global.opencv_dnn.readNetFromTensorflow;
 import static org.bytedeco.opencv.global.opencv_imgproc.resize;
@@ -106,9 +107,10 @@ public class MaskRCNN extends ObjectSegmentationNetwork {
             int width = right - left;
             int height = bottom - top;
 
-            // extracting mask and resize
+            // extracting mask, resize and convert to 8bit channel 1
             Mat objectMask = new Mat(masks.size(2), masks.size(3), CV_32F, masks.ptr(i, classId));
             resize(objectMask, objectMask, new Size(width, height));
+            objectMask.convertTo(objectMask, CV_8UC1, 255.0, 0.0);
 
             results.add(new ObjectSegmentationResult(classId, getLabelOrId(classId), score, left, top, width, height, objectMask));
         }

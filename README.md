@@ -80,6 +80,8 @@ Here you find a list of implemented networks:
 	- Ultra-Light-Fast-Generic-Face-Detector-1MB RFB (~30 FPS on CPU)
 	- Ultra-Light-Fast-Generic-Face-Detector-1MB Slim (~40 FPS on CPU)
 	- Cascade Classifier
+- Object Segmentation
+    - Mask R-CNN
 - Object Recognition 🚙
     - Tesseract LSTM
 - Keypoint Detection 🤾🏻‍♀️
@@ -98,7 +100,6 @@ The following list shows the networks that are on the list to be implemented (�
 
 * YOLO 9K (not supported by OpenCV)
 * Multi Human Pose Detection ⚡️ (currently struggling with the partial affinity fields 🤷🏻‍♂️ help?)
-* MaskRCNN ⚡️
 * TextBoxes++ ⚡️
 * [CRNN](https://github.com/bgshih/crnn) ⚡️
 * [PixelLink](https://github.com/ZJULearning/pixel_link)

@@ -57,6 +57,7 @@ public class StyleTransferNetwork extends BaseNeuralNetwork<ImageResult> {
         output.convertTo(output, CV_8U);
 
         // convert to processing
+        // todo: make that later (keep free of processing)
         PImage result = new PImage(output.size().width(), output.size().height());
         CvProcessingUtils.toPImage(output, result);
         return new ImageResult(result);

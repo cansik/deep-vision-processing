@@ -54,11 +54,14 @@ public class MaskRCNNDetectionTest extends PApplet {
         }
 
         println("found " + detections.size() + " objects. avg conf: " + nf(confidenceSum / detections.size(), 0, 2));
+        noLoop();
     }
 
     public void draw() {
         background(55);
 
+        blendMode(BLEND);
+        tint(255, 255);
         image(testImage, 0, 0);
 
         noFill();
@@ -66,7 +69,9 @@ public class MaskRCNNDetectionTest extends PApplet {
 
         for (ObjectSegmentationResult detection : detections) {
             // display rect
-            stroke(round(360.0f * (float) detection.getClassId() / rcnn.getLabels().size()), 75, 100);
+            int c = color(round(360.0f * (float) detection.getClassId() / rcnn.getLabels().size()), 75, 100);
+
+            stroke(c);
             rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
 
             textSize(15);
@@ -77,6 +82,8 @@ public class MaskRCNNDetectionTest extends PApplet {
             PImage mask = new PImage(cvMask.size().width(), cvMask.size().height(), PConstants.RGB);
             CvProcessingUtils.toPImage(detection.getMask(), mask);
 
+            blendMode(SCREEN);
+            tint(c, 200);
             image(mask, detection.getX(), detection.getY());
         }
 

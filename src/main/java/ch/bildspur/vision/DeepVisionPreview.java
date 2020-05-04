@@ -28,11 +28,6 @@ public class DeepVisionPreview extends DeepVision {
         return new CascadeClassifierNetwork(Repository.HaarCascadeHand.getPath(), "hand");
     }
 
-    public MaskRCNN createMaskRCNN() {
-        prepareDependencies(Repository.MaskRCNNInceptionv2Config, Repository.MaskRCNNInceptionv2Weight, Repository.COCOLabelsPaper);
-        return new MaskRCNN(Repository.MaskRCNNInceptionv2Config.getPath(), Repository.MaskRCNNInceptionv2Weight.getPath(), Repository.COCOLabelsPaper.getPath());
-    }
-
     public YOLONetwork createYOLOv4() {
         return createYOLOv4(608);
     }
