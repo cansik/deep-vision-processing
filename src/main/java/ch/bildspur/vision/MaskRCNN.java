@@ -73,9 +73,6 @@ public class MaskRCNN extends ObjectSegmentationNetwork {
         Mat boxes = outs.get(0);
         Mat masks = outs.get(1);
 
-        // todo: implement RCNN
-        // help: https://www.learnopencv.com/deep-learning-based-object-detection-and-instance-segmentation-using-mask-r-cnn-in-opencv-python-c/
-
         return postProcess(boxes, masks, frame.size());
     }
 
