@@ -61,6 +61,14 @@ public class MaskRCNNDetectionTest extends PApplet {
         noFill();
         strokeWeight(2f);
 
-        surface.setTitle("YOLO Test - FPS: " + Math.round(frameRate));
+        for (ObjectDetectionResult detection : detections) {
+            stroke(round(360.0f * (float) detection.getClassId() / rcnn.getLabels().size()), 75, 100);
+            rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
+
+            textSize(15);
+            text(detection.getClassName(), detection.getX(), detection.getY());
+        }
+
+        surface.setTitle("MaskRCNN Test - FPS: " + Math.round(frameRate));
     }
 }

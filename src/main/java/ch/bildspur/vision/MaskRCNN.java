@@ -14,15 +14,17 @@ import static org.bytedeco.opencv.global.opencv_dnn.blobFromImage;
 import static org.bytedeco.opencv.global.opencv_dnn.readNetFromTensorflow;
 
 public class MaskRCNN extends ObjectSegmentationNetwork {
-    private Path config;
-    private Path model;
+    private Path configPath;
+    private Path modelPath;
+    private Path labelsPath;
     private Net net;
 
     private float maskThreshold = 0.3f;
 
-    public MaskRCNN(Path config, Path model) {
-        this.config = config;
-        this.model = model;
+    public MaskRCNN(Path configPath, Path modelPath, Path labelsPath) {
+        this.configPath = configPath;
+        this.modelPath = modelPath;
+        this.labelsPath = labelsPath;
 
         this.setConfidenceThreshold(0.5f);
     }
@@ -30,9 +32,11 @@ public class MaskRCNN extends ObjectSegmentationNetwork {
     @Override
     public boolean setup() {
         net = readNetFromTensorflow(
-                model.toAbsolutePath().toString(),
-                config.toAbsolutePath().toString()
+                modelPath.toAbsolutePath().toString(),
+                configPath.toAbsolutePath().toString()
         );
+
+        this.loadLabels(labelsPath);
 
         if (net.empty()) {
             System.out.println("Can't load network!");
@@ -99,6 +103,9 @@ public class MaskRCNN extends ObjectSegmentationNetwork {
 
             int width = right - left;
             int height = bottom - top;
+
+            // todo: extract mask
+            //Mat objectMask (outMasks.size[2], outMasks.size[3], CV_32F, outMasks.ptr < float>(i, classId));
 
             results.add(new ObjectSegmentationResult(classId, getLabelOrId(classId), score, left, top, width, height, null));
         }
