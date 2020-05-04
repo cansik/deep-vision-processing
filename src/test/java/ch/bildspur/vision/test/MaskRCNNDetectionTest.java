@@ -4,6 +4,7 @@ package ch.bildspur.vision.test;
 import ch.bildspur.vision.DeepVisionPreview;
 import ch.bildspur.vision.MaskRCNN;
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.result.ObjectSegmentationResult;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -24,7 +25,7 @@ public class MaskRCNNDetectionTest extends PApplet {
 
     DeepVisionPreview vision = new DeepVisionPreview(this);
     MaskRCNN rcnn;
-    List<ObjectDetectionResult> detections;
+    List<ObjectSegmentationResult> detections;
 
     public void setup() {
         colorMode(HSB, 360, 100, 100);
