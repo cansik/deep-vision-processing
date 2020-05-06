@@ -35,4 +35,9 @@ public class DeepVisionPreview extends DeepVision {
     public YOLONetwork createYOLOv4(int inputSize) {
         return createYOLONetwork(Repository.YOLOv4Model, Repository.YOLOv4Weight, Repository.COCONames, inputSize);
     }
+
+    public DORNDepthEstimationNetwork createDORNDepthEstimation() {
+        prepareDependencies(Repository.DORNDepthEstimationDeployPrototext, Repository.DORNDepthEstimationModel);
+        return new DORNDepthEstimationNetwork(Repository.DORNDepthEstimationDeployPrototext.getPath(), Repository.DORNDepthEstimationModel.getPath());
+    }
 }

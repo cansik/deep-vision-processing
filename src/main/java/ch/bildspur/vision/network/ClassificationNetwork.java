@@ -32,7 +32,7 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
 
     private float confidenceScale;
 
-    private final MultiProcessor<ClassificationResult> polyExecutor = new MultiProcessor<>(this);
+    private final MultiProcessor<ClassificationResult> multiProcessor = new MultiProcessor<>(this);
 
     public ClassificationNetwork(int width, int height, boolean convertToGrayScale, float scaleFactor, Scalar mean, boolean swapRB, boolean crop, float confidenceScale, String... labels) {
         this.width = width;
@@ -88,11 +88,11 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
 
     @Override
     public ResultList<ClassificationResult> runByDetections(PImage image, ResultList<ObjectDetectionResult> detections) {
-        return polyExecutor.runByDetections(image, detections);
+        return multiProcessor.runByDetections(image, detections);
     }
 
     @Override
     public ResultList<ClassificationResult> runByDetections(Mat frame, ResultList<ObjectDetectionResult> detections) {
-        return polyExecutor.runByDetections(frame, detections);
+        return multiProcessor.runByDetections(frame, detections);
     }
 }
