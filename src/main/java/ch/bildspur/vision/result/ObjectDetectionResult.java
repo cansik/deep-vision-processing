@@ -32,6 +32,14 @@ public class ObjectDetectionResult extends ClassificationResult {
         return height;
     }
 
+    public float getCenterX() {
+        return x + width * 0.5f;
+    }
+
+    public float getCenterY() {
+        return y + height * 0.5f;
+    }
+
     public void scale(float xScale, float yScale) {
         int dx = Math.round(width * xScale) - width;
         int dy = Math.round(height * yScale) - height;
