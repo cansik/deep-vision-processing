@@ -38,7 +38,7 @@ public class FaceSimilarityTest extends PApplet {
     float[][] resultMatrix;
 
     public void setup() {
-        testImage = loadImage(sketchPath("data/runner.jpg"));
+        testImage = loadImage(sketchPath("data/children.jpg"));
 
         println("creating network...");
         faceNetwork = vision.createULFGFaceDetectorRFB640();
