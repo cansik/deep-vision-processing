@@ -13,6 +13,8 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
+import javax.swing.*;
+
 public class FaceSimilarityTest extends PApplet {
 
     public static void main(String... args) {
@@ -21,7 +23,7 @@ public class FaceSimilarityTest extends PApplet {
     }
 
     public void settings() {
-        size(1000, 720);
+        size(1280, 720);
     }
 
     PImage testImage;
@@ -36,8 +38,6 @@ public class FaceSimilarityTest extends PApplet {
     float[][] resultMatrix;
 
     public void setup() {
-        colorMode(HSB, 360, 100, 100);
-
         testImage = loadImage(sketchPath("data/children.jpg"));
 
         println("creating network...");
@@ -93,7 +93,7 @@ public class FaceSimilarityTest extends PApplet {
         image(testImage, 0, 0);
 
         // show result mat
-        stroke(30, 80, 20);
+        stroke(30, 80, 255);
         for(int i = 0; i < faceEmbeddings.size(); i++) {
             for (int j = i + 1; j < faceEmbeddings.size(); j++) {
                 ObjectDetectionResult fi = detections.get(i);
@@ -107,7 +107,7 @@ public class FaceSimilarityTest extends PApplet {
 
                 PVector textPos = PVector.lerp(a, b, 0.5f);
 
-                fill(map(distance, 0.0f, 1.0f, 0f, 50f), 80, 100);
+                fill(colormap(distance));
                 textAlign(CENTER, CENTER);
                 textSize(12);
                 text("D: " + nf(distance, 0, 2), textPos.x, textPos.y);
@@ -128,7 +128,44 @@ public class FaceSimilarityTest extends PApplet {
             text("ID: " + i, face.getX(), face.getY());
         }
 
+        drawSimilarityChart(resultMatrix, 1000, 0, 280);
+
         surface.setTitle("Face Similarity Test - FPS: " + Math.round(frameRate));
+    }
+
+    private void drawSimilarityChart(float[][] data, int xOrigin, int yOrigin,  int size) {
+        float boxSize = size / (data.length + 1f);
+
+        pushMatrix();
+        translate(xOrigin, yOrigin);
+
+        for(int i = 0; i < data.length; i++) {
+            for(int j = 0; j < data.length; j++) {
+                float distance = data[i][j];
+                float x = boxSize * i + boxSize * 0.5f;
+                float y = boxSize * j + boxSize * 0.5f;
+
+                fill(255);
+                textAlign(CENTER, CENTER);
+                textSize(12);
+
+                if(i == 0)
+                    text(j, x - (boxSize * 0.25f), y + boxSize * 0.5f);
+
+                if(j == 0)
+                    text(i, x + boxSize * 0.5f, y - (boxSize * 0.25f));
+
+                fill(colormap(distance));
+
+                if(i == j)
+                    noFill();
+
+                stroke(0);
+                rect(x, y, boxSize, boxSize);
+            }
+        }
+
+        popMatrix();
     }
 
     private float euclideanDistance(float[] a, float[] b) {
@@ -140,5 +177,20 @@ public class FaceSimilarityTest extends PApplet {
             dist += Math.pow(c, 2);
         }
         return (float) Math.sqrt(dist);
+    }
+
+    private float colormapRed(float x) {
+        return (1.0f + 1.0f / 63.0f) * x - 1.0f / 63.0f;
+    }
+
+    private float colormapGreen(float x) {
+        return -(1.0f + 1.0f / 63.0f) * x + (1.0f + 1.0f / 63.0f);
+    }
+
+    int colormap(float x) {
+        float r = constrain(colormapRed(x), 0.0f, 1.0f);
+        float g = constrain(colormapGreen(x), 0.0f, 1.0f);
+        float b = 1.0f;
+        return color(r * 255f, g * 255f, b * 255f);
     }
 }
