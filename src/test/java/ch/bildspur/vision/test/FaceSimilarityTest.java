@@ -38,7 +38,7 @@ public class FaceSimilarityTest extends PApplet {
     float[][] resultMatrix;
 
     public void setup() {
-        testImage = loadImage(sketchPath("data/children.jpg"));
+        testImage = loadImage(sketchPath("data/family.jpg"));
 
         println("creating network...");
         faceNetwork = vision.createULFGFaceDetectorRFB640();
@@ -73,7 +73,7 @@ public class FaceSimilarityTest extends PApplet {
         // create result matrix
         resultMatrix = new float[detections.size()][detections.size()];
 
-        for(int i = 0; i < faceEmbeddings.size(); i++) {
+        for (int i = 0; i < faceEmbeddings.size(); i++) {
             for (int j = i + 1; j < faceEmbeddings.size(); j++) {
                 float[] vi = faceEmbeddings.get(i).getVector();
                 float[] vj = faceEmbeddings.get(j).getVector();
@@ -93,8 +93,8 @@ public class FaceSimilarityTest extends PApplet {
         image(testImage, 0, 0);
 
         // show result mat
-        stroke(30, 80, 255);
-        for(int i = 0; i < faceEmbeddings.size(); i++) {
+        stroke(30, 255, 80);
+        for (int i = 0; i < faceEmbeddings.size(); i++) {
             for (int j = i + 1; j < faceEmbeddings.size(); j++) {
                 ObjectDetectionResult fi = detections.get(i);
                 ObjectDetectionResult fj = detections.get(j);
@@ -109,7 +109,7 @@ public class FaceSimilarityTest extends PApplet {
 
                 fill(colormap(distance));
                 textAlign(CENTER, CENTER);
-                textSize(12);
+                textSize(15);
                 text("D: " + nf(distance, 0, 2), textPos.x, textPos.y);
             }
         }
@@ -128,19 +128,21 @@ public class FaceSimilarityTest extends PApplet {
             text("ID: " + i, face.getX(), face.getY());
         }
 
-        drawSimilarityChart(resultMatrix, 1000, 0, 280);
+        fill(255);
+        text("Similarity Matrix (lower is better):", 1020, 25);
+        drawSimilarityChart(resultMatrix, 1000, 30, 280);
 
         surface.setTitle("Face Similarity Test - FPS: " + Math.round(frameRate));
     }
 
-    private void drawSimilarityChart(float[][] data, int xOrigin, int yOrigin,  int size) {
+    private void drawSimilarityChart(float[][] data, int xOrigin, int yOrigin, int size) {
         float boxSize = size / (data.length + 1f);
 
         pushMatrix();
         translate(xOrigin, yOrigin);
 
-        for(int i = 0; i < data.length; i++) {
-            for(int j = 0; j < data.length; j++) {
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data.length; j++) {
                 float distance = data[i][j];
                 float x = boxSize * i + boxSize * 0.5f;
                 float y = boxSize * j + boxSize * 0.5f;
@@ -149,22 +151,50 @@ public class FaceSimilarityTest extends PApplet {
                 textAlign(CENTER, CENTER);
                 textSize(12);
 
-                if(i == 0)
+                if (i == 0)
                     text(j, x - (boxSize * 0.25f), y + boxSize * 0.5f);
 
-                if(j == 0)
+                if (j == 0)
                     text(i, x + boxSize * 0.5f, y - (boxSize * 0.25f));
 
-                fill(colormap(distance));
+                int colorValue = colormap(distance);
+                fill(colorValue);
 
-                if(i == j)
+                if (i == j)
                     noFill();
 
                 stroke(0);
                 rect(x, y, boxSize, boxSize);
+
+                // draw value
+                fill(brightness(colorValue) > 128 ? 0 : 255);
+                text(nf(distance, 0, 2), x + boxSize * 0.5f, y + boxSize * 0.5f);
             }
         }
 
+        // draw map
+        pushMatrix();
+
+        float length = boxSize * (data.length + 1f);
+        float hl = length * 0.7f;
+        float bs = hl / 100f;
+
+        translate((length - hl) * 0.5f, length);
+
+        noStroke();
+        for (int i = 0; i < 100; i++) {
+            float x = bs * i;
+
+            fill(colormap(i / 100f));
+            rect(x, 0, bs, boxSize * 0.2f);
+
+            if (i == 0 || i == 99) {
+                fill(255);
+                text(i == 0 ? 0 : 1, x, -10);
+            }
+        }
+
+        popMatrix();
         popMatrix();
     }
 
