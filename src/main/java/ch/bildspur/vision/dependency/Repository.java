@@ -102,11 +102,14 @@ public class Repository {
     public static final Dependency SingleHumanPoseEstimationModel = new Dependency("single-human-pose-estimation-l4.onnx");
     public static final Dependency MultiHumanPoseEstimationModel = new Dependency("multi-human-pose-estimation.onnx");
 
-    // face recognition
+    // face detection
     public static final Dependency ULFGFaceDetectorRFB320Simplified = new Dependency("version-RFB-320_simplified.onnx");
     public static final Dependency ULFGFaceDetectorSlim320Simplified = new Dependency("version-slim-320_simplified.onnx");
     public static final Dependency ULFGFaceDetectorRFB640Simplified = new Dependency("version-RFB-640_simplified.onnx");
     public static final Dependency ULFGFaceDetectorSlim640Simplified = new Dependency("version-slim-640_simplified.onnx");
+
+    // face recognition
+    public static final Dependency OpenFaceNN4Small2v1 = new Dependency("nn4.small2.v1.t7");
 
     // facial landmark
     public static final Dependency FaceMarkLBFModel = new Dependency("lbfmodel.yaml");
