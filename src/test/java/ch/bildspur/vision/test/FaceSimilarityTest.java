@@ -38,7 +38,7 @@ public class FaceSimilarityTest extends PApplet {
     float[][] resultMatrix;
 
     public void setup() {
-        testImage = loadImage(sketchPath("data/family.jpg"));
+        testImage = loadImage(sketchPath("data/runner.jpg"));
 
         println("creating network...");
         faceNetwork = vision.createULFGFaceDetectorRFB640();
@@ -54,8 +54,7 @@ public class FaceSimilarityTest extends PApplet {
 
         // scale width of face detection (better for emotions);
         for (ObjectDetectionResult face : detections) {
-            face.scale(1.4f, 1.0f);
-            //face.squareByHeight();
+            face.squareByHeight();
         }
 
         print("extract embeddings...");

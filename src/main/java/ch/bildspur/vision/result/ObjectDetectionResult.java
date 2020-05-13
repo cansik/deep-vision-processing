@@ -52,10 +52,12 @@ public class ObjectDetectionResult extends ClassificationResult {
     }
 
     public void squareByWidth() {
+        this.y = Math.round(y + (height - width) * 0.5f);
         this.height = width;
     }
 
     public void squareByHeight() {
+        this.x = Math.round(x + (width - height) * 0.5f);
         this.width = height;
     }
 }
