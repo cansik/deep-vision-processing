@@ -272,3 +272,4 @@ Stock images from the following peoples have been used:
 - hand.jpg by Thought Catalog on Unsplash
 - sport.jpg by John Torcasio on Unsplash
 - sticker.jpg by 🇨🇭 Claudio Schwarz | @purzlbaum on Unsplash
+- children.jpg by [Sandeep Kr Yadav](https://unsplash.com/@fiftymm)

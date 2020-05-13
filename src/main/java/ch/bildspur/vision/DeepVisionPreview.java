@@ -40,4 +40,9 @@ public class DeepVisionPreview extends DeepVision {
         prepareDependencies(Repository.DORNDepthEstimationDeployPrototext, Repository.DORNDepthEstimationModel);
         return new DORNDepthEstimationNetwork(Repository.DORNDepthEstimationDeployPrototext.getPath(), Repository.DORNDepthEstimationModel.getPath());
     }
+
+    public OpenFaceNetwork createOpenFaceNetwork() {
+        prepareDependencies(Repository.OpenFaceNN4Small2v1);
+        return new OpenFaceNetwork(Repository.OpenFaceNN4Small2v1.getPath());
+    }
 }

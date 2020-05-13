@@ -42,4 +42,12 @@ public class ObjectDetectionResult extends ClassificationResult {
         this.width += dx * 2;
         this.height += dy * 2;
     }
+
+    public void squareByWidth() {
+        this.height = width;
+    }
+
+    public void squareByHeight() {
+        this.width = height;
+    }
 }
