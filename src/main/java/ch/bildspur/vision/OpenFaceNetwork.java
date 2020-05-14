@@ -40,7 +40,7 @@ public class OpenFaceNetwork extends BaseNeuralNetwork<VectorResult> implements 
                 1 / 255.0,
                 new Size(96, 96),
                 new Scalar(0.0),
-                true, false, CV_32F);
+                false, false, CV_32F);
 
         // set input
         net.setInput(inputBlob);
