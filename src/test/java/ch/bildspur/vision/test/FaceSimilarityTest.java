@@ -2,18 +2,14 @@ package ch.bildspur.vision.test;
 
 
 import ch.bildspur.vision.DeepVisionPreview;
-import ch.bildspur.vision.FERPlusEmotionNetwork;
 import ch.bildspur.vision.OpenFaceNetwork;
 import ch.bildspur.vision.ULFGFaceDetectionNetwork;
-import ch.bildspur.vision.result.ClassificationResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.ResultList;
 import ch.bildspur.vision.result.VectorResult;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
-
-import javax.swing.*;
 
 public class FaceSimilarityTest extends PApplet {
 
