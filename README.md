@@ -38,7 +38,7 @@ void setup() {
   network.setup();
   
   // set network settings (optional)
-  network.setConfidenceThreshold(0.2);
+  network.setConfidenceThreshold(0.2f);
   
   ...
 }
