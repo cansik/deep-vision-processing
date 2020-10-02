@@ -16,7 +16,7 @@ public class PoseEstimationTest extends PApplet {
     }
 
     public void settings() {
-        size(427, 640, FX2D);
+        size(427, 640);
     }
 
     PImage testImage;
