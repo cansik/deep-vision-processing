@@ -113,6 +113,7 @@ public class Repository {
 
     // facial landmark
     public static final Dependency FaceMarkLBFModel = new Dependency("lbfmodel.yaml");
+    public static final Dependency Face3DDFAV2Model = new Dependency("mb1_120x120.onnx");
 
     // classification
     public static final Dependency MNISTModel = new Dependency("mnist.onnx");

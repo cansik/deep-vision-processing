@@ -45,4 +45,9 @@ public class DeepVisionPreview extends DeepVision {
         prepareDependencies(Repository.OpenFaceNN4Small2v1);
         return new OpenFaceNetwork(Repository.OpenFaceNN4Small2v1.getPath());
     }
+
+    public Face3DDFAV2Network create3DDFAV2() {
+        prepareDependencies(Repository.Face3DDFAV2Model);
+        return new Face3DDFAV2Network(Repository.Face3DDFAV2Model.getPath());
+    }
 }
