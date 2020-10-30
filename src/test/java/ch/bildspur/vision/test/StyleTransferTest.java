@@ -31,7 +31,7 @@ public class StyleTransferTest extends PApplet {
         groundTruth = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
-        network = vision.createStyleTransfer(Repository.InstanceNormCandy);
+        network = vision.createStyleTransfer();
 
         println("loading model...");
         network.setup();
