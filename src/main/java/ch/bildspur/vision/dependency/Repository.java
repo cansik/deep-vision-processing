@@ -148,4 +148,6 @@ public class Repository {
     // depth estimation
     public static final Dependency DORNDepthEstimationDeployPrototext = new Dependency("DORN_deploy.prototxt");
     public static final Dependency DORNDepthEstimationModel = new Dependency("DORN_cvpr_nyuv2.caffemodel");
+
+    public static final Dependency MidasNetModel = new Dependency("midasnet.onnx");
 }
