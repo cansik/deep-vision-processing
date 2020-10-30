@@ -3,6 +3,9 @@ package ch.bildspur.vision;
 import ch.bildspur.vision.network.BaseNeuralNetwork;
 import ch.bildspur.vision.result.ImageResult;
 import ch.bildspur.vision.util.CvProcessingUtils;
+import org.bytedeco.javacpp.DoublePointer;
+import org.bytedeco.javacpp.FloatPointer;
+import org.bytedeco.javacpp.IntPointer;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.Net;
 import processing.core.PImage;
@@ -17,6 +20,7 @@ import static org.bytedeco.opencv.global.opencv_imgproc.cvResize;
 public class MidasNetwork extends BaseNeuralNetwork<ImageResult> {
     private Path model;
     private Net net;
+    // todo: means are from MiDas Net
     private Scalar mean = new Scalar(0.485, 0.456, 0.406, 0.0);
 
     public MidasNetwork(Path model) {
@@ -31,9 +35,12 @@ public class MidasNetwork extends BaseNeuralNetwork<ImageResult> {
 
     @Override
     public ImageResult run(Mat frame) {
+        Size inputSize = frame.size();
+
         // convert image into batch of images
         Mat inputBlob = blobFromImage(frame,
-                1.0,
+                // todo: is the scale factor correct?!
+                1 / 255.0,
                 new Size(384, 384),
                 mean, true, false, CV_32F);
 
@@ -49,15 +56,35 @@ public class MidasNetwork extends BaseNeuralNetwork<ImageResult> {
         Mat output = outs.get(0);
 
         // reshape output mat
-        int height = output.size(2);
+        int height = output.size(1);
+        int width = output.size(2);
+
         output = output.reshape(1, height);
 
-        // convert to grayscale image
-        output.convertTo(output, CV_8UC3);
-        //cvResize(output, reshaped, CV_INTER_AREA);
-
+        // todo: result a depth frame instead of a color image!
         PImage result = new PImage(output.size().width(), output.size().height());
-        CvProcessingUtils.toPImage(output, result);
+        mapDepthToImage(output, result);
+        result.resize(inputSize.width(), inputSize.height());
         return new ImageResult(result);
+    }
+
+    private void mapDepthToImage(Mat depthFrame, PImage img) {
+        // find min / max
+        DoublePointer minValuePtr = new DoublePointer(1);
+        DoublePointer maxValuePtr = new DoublePointer(1);
+
+        minMaxLoc(depthFrame, minValuePtr, maxValuePtr, null, null, null);
+
+        double minValue = minValuePtr.get();
+        double maxValue = maxValuePtr.get();
+
+        double distance = maxValue - minValue;
+        double minScaled = minValue / distance;
+
+        double alpha = 1.0 / distance * 255.0;
+        double beta = -1.0 * minScaled * 255.0;
+
+        depthFrame.convertTo(depthFrame, CV_8U, alpha, beta);
+        CvProcessingUtils.toPImage(depthFrame, img);
     }
 }
