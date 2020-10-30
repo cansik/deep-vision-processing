@@ -3,6 +3,7 @@ package ch.bildspur.vision.test;
 
 import ch.bildspur.vision.DeepVisionPreview;
 import ch.bildspur.vision.StyleTransferNetwork;
+import ch.bildspur.vision.dependency.Repository;
 import ch.bildspur.vision.result.ImageResult;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -30,7 +31,7 @@ public class StyleTransferTest extends PApplet {
         groundTruth = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
-        network = vision.createStyleTransfer();
+        network = vision.createStyleTransfer(Repository.InstanceNormCandy);
 
         println("loading model...");
         network.setup();

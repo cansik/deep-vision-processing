@@ -362,6 +362,6 @@ public class DeepVision {
     }
 
     public StyleTransferNetwork createStyleTransfer() {
-        return createStyleTransfer(Repository.ECCV16CompositionVII);
+        return createStyleTransfer(Repository.InstanceNormCandy);
     }
 }
