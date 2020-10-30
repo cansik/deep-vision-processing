@@ -5,6 +5,7 @@ import ch.bildspur.vision.DeepVisionPreview;
 import ch.bildspur.vision.MidasNetwork;
 import ch.bildspur.vision.StyleTransferNetwork;
 import ch.bildspur.vision.result.ImageResult;
+import ch.bildspur.vision.test.tools.StopWatch;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -25,6 +26,8 @@ public class MidasNetworkTest extends PApplet {
     MidasNetwork network;
     ImageResult result;
 
+    StopWatch watch = new StopWatch();
+
     public void setup() {
         colorMode(HSB, 360, 100, 100);
 
@@ -37,7 +40,9 @@ public class MidasNetworkTest extends PApplet {
         network.setup();
 
         println("inferencing...");
+        watch.start();
         result = network.run(groundTruth);
+        watch.stop();
         println("done!");
 
         noLoop();
