@@ -7,6 +7,8 @@ if [ $# -eq 0 ]
     exit
 fi
 
+export JAVA_HOME=$(/usr/libexec/java_home -v1.8)
+
 # parameter
 VERSION=$1
 ARCHIVE_NAME="deepvision"
