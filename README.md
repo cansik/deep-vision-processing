@@ -74,6 +74,7 @@ Here you find a list of implemented networks:
 	- YOLOv3 OpenImages Dataset
 	- YOLOv3-spp ([spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326))
 	- YOLOv3
+	- YOLOv4
 	- SSDMobileNetV2
 	- Handtracking based on SSDMobileNetV2
 	- TextBoxes
@@ -105,7 +106,6 @@ The following list shows the networks that are on the list to be implemented (�
 * TextBoxes++ ⚡️
 * [CRNN](https://github.com/bgshih/crnn) ⚡️
 * [PixelLink](https://github.com/ZJULearning/pixel_link)
-* YOLOv4 (mish not implemented even it is has been [merged](https://github.com/opencv/opencv/pull/15808))
 
 
 ### Object Detection
@@ -144,10 +144,12 @@ YOLOv3 the third version of the very fast and accurate single shot network. The 
 
 - YOLOv3-tiny (very fast, but trading performance for accuracy)
 - YOLOv3-spp (original model using [spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326))
-- YOLOv3 (608) (most accurate network)
+- YOLOv3 (608)
+- YOLOv4 (608) (most accurate network)
 
 ```java
 // setup the network
+YOLONetwork net = vision.createYOLOv4();
 YOLONetwork net = vision.createYOLOv3();
 YOLONetwork net = vision.createYOLOv3SPP();
 YOLONetwork net = vision.createYOLOv3Tiny();

@@ -4,6 +4,7 @@ package ch.bildspur.vision.test;
 import ch.bildspur.vision.DeepVisionPreview;
 import ch.bildspur.vision.YOLONetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.test.tools.StopWatch;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -26,13 +27,15 @@ public class YOLODetectionTest extends PApplet {
     YOLONetwork yolo;
     List<ObjectDetectionResult> detections;
 
+    StopWatch watch = new StopWatch();
+
     public void setup() {
         colorMode(HSB, 360, 100, 100);
 
         testImage = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
-        yolo = vision.createYOLOv3OpenImages();
+        yolo = vision.createYOLOv4();
 
         println("loading model...");
         yolo.setup();
@@ -40,7 +43,9 @@ public class YOLODetectionTest extends PApplet {
         yolo.setConfidenceThreshold(0.2f);
 
         println("inferencing...");
+        watch.start();
         detections = yolo.run(testImage);
+        watch.stop();
         println("done!");
 
         float confidenceSum = 0;
