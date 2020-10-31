@@ -15,7 +15,7 @@ public class FERPlusEmotionTest extends PApplet {
     }
 
     public void settings() {
-        size(256, 256, FX2D);
+        size(256, 256);
     }
 
     PImage testImage;

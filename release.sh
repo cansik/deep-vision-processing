@@ -12,6 +12,8 @@ export JAVA_HOME=$(/usr/libexec/java_home -v1.8)
 # parameter
 VERSION=$1
 ARCHIVE_NAME="deepvision"
+TERMINAL="$(expr substr $(uname -s) 1 6)"
+echo "Terminal: $TERMINAL"
 
 echo $PWD
 
@@ -19,8 +21,8 @@ echo clean up...
 rm -r -f build
 
 echo compiling...
-
-if [ "$(expr substr $(uname -s) 1 6)" == "CYGWIN" ];then
+#|| [ $TERMINAL == "MINGW6" ]
+if [ $TERMINAL == "CYGWIN" ] ;then
     echo running gradle commands on windows
     gradlew.bat build
     gradlew.bat fatjar

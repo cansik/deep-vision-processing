@@ -113,6 +113,7 @@ public class Repository {
 
     // facial landmark
     public static final Dependency FaceMarkLBFModel = new Dependency("lbfmodel.yaml");
+    public static final Dependency Face3DDFAV2Model = new Dependency("mb1_120x120.onnx");
 
     // classification
     public static final Dependency MNISTModel = new Dependency("mnist.onnx");
@@ -147,4 +148,6 @@ public class Repository {
     // depth estimation
     public static final Dependency DORNDepthEstimationDeployPrototext = new Dependency("DORN_deploy.prototxt");
     public static final Dependency DORNDepthEstimationModel = new Dependency("DORN_cvpr_nyuv2.caffemodel");
+
+    public static final Dependency MidasNetModel = new Dependency("midasnet.onnx");
 }

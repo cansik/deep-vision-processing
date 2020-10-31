@@ -2,16 +2,17 @@ package ch.bildspur.vision.test;
 
 
 import ch.bildspur.vision.DeepVisionPreview;
+import ch.bildspur.vision.MidasNetwork;
 import ch.bildspur.vision.StyleTransferNetwork;
-import ch.bildspur.vision.dependency.Repository;
 import ch.bildspur.vision.result.ImageResult;
+import ch.bildspur.vision.test.tools.StopWatch;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class StyleTransferTest extends PApplet {
+public class MidasNetworkTest extends PApplet {
 
     public static void main(String... args) {
-        StyleTransferTest sketch = new StyleTransferTest();
+        MidasNetworkTest sketch = new MidasNetworkTest();
         sketch.runSketch();
     }
 
@@ -22,8 +23,10 @@ public class StyleTransferTest extends PApplet {
     PImage groundTruth;
 
     DeepVisionPreview vision = new DeepVisionPreview(this);
-    StyleTransferNetwork network;
+    MidasNetwork network;
     ImageResult result;
+
+    StopWatch watch = new StopWatch();
 
     public void setup() {
         colorMode(HSB, 360, 100, 100);
@@ -31,13 +34,15 @@ public class StyleTransferTest extends PApplet {
         groundTruth = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
-        network = vision.createStyleTransfer();
+        network = vision.createMidasNetwork();
 
         println("loading model...");
         network.setup();
 
         println("inferencing...");
+        watch.start();
         result = network.run(groundTruth);
+        watch.stop();
         println("done!");
 
         noLoop();
@@ -47,6 +52,6 @@ public class StyleTransferTest extends PApplet {
         background(55);
         image(groundTruth, 0, 0);
         image(result.getImage(), 640, 0);
-        surface.setTitle("Style Transfer - FPS: " + Math.round(frameRate));
+        surface.setTitle("Midas Network Test - FPS: " + Math.round(frameRate));
     }
 }

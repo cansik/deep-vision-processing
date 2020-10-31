@@ -1,9 +1,7 @@
 package ch.bildspur.vision.test;
 
 
-import ch.bildspur.vision.DeepVision;
-import ch.bildspur.vision.FacemarkLBFNetwork;
-import ch.bildspur.vision.ULFGFaceDetectionNetwork;
+import ch.bildspur.vision.*;
 import ch.bildspur.vision.result.FacialLandmarkResult;
 import ch.bildspur.vision.result.KeyPointResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
@@ -11,10 +9,10 @@ import ch.bildspur.vision.result.ResultList;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class FacemarkTest extends PApplet {
+public class Face3DDFAV2Test extends PApplet {
 
     public static void main(String... args) {
-        FacemarkTest sketch = new FacemarkTest();
+        Face3DDFAV2Test sketch = new Face3DDFAV2Test();
         sketch.runSketch();
     }
 
@@ -24,9 +22,9 @@ public class FacemarkTest extends PApplet {
 
     PImage testImage;
 
-    DeepVision vision = new DeepVision(this);
+    DeepVisionPreview vision = new DeepVisionPreview(this);
     ULFGFaceDetectionNetwork faceNetwork;
-    FacemarkLBFNetwork facemark;
+    Face3DDFAV2Network net;
 
     ResultList<ObjectDetectionResult> detections;
     ResultList<FacialLandmarkResult> markedFaces;
@@ -38,11 +36,11 @@ public class FacemarkTest extends PApplet {
 
         println("creating network...");
         faceNetwork = vision.createULFGFaceDetectorRFB640();
-        facemark = vision.createFacemarkLBF();
+        net = vision.create3DDFAV2();
 
         println("loading model...");
         faceNetwork.setup();
-        facemark.setup();
+        net.setup();
 
         print("detect faces...");
         detections = faceNetwork.run(testImage);
@@ -53,8 +51,8 @@ public class FacemarkTest extends PApplet {
             face.scale(1.0f, 1.0f);
         }
 
-        print("detect landmarks...");
-        markedFaces = facemark.runByDetections(testImage, detections);
+        print("detecting landmarks...");
+        markedFaces = net.runByDetections(testImage, detections);
         println("done!");
 
         for (int i = 0; i < detections.size(); i++) {
@@ -87,6 +85,6 @@ public class FacemarkTest extends PApplet {
             }
         }
 
-        surface.setTitle("Facemark Test FPS: " + Math.round(frameRate));
+        surface.setTitle("3DDFAV2 Test FPS: " + Math.round(frameRate));
     }
 }

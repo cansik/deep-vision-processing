@@ -22,7 +22,7 @@ void setup()
   net.setup();
 
   net.setConfidenceThreshold(0.1f);
-  net.setSkipNonMaximumSuppression(false);
+  net.setSkipNMS(false);
 
   println("starting camera...");
   if (camera.getDeviceCount() < 1) {

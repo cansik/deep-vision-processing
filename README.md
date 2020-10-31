@@ -38,7 +38,7 @@ void setup() {
   network.setup();
   
   // set network settings (optional)
-  network.setConfidenceThreshold(0.2);
+  network.setConfidenceThreshold(0.2f);
   
   ...
 }
@@ -92,6 +92,8 @@ Here you find a list of implemented networks:
     - FER+ Emotion
     - Age Net
     - Gender Net
+- Depth Estimation 🕶
+  - MidasNet
 - Image Processing
     - Style Transfer
     - Multiple Networks for x2 x3 x4 Superresolution
@@ -218,6 +220,16 @@ tbd
 
 ### Classification
 tbd
+
+### Depth Estimation
+
+#### MidasNet
+
+Towards Robust Monocular Depth Estimation: Mixing Datasets for Zero-shot Cross-dataset Transfer
+
+![](readme/midasnet.jpg)
+
+*MidasNet* 
 
 ### Image Processing
 tbd
