@@ -2,6 +2,7 @@ package ch.bildspur.vision.test;
 
 
 import ch.bildspur.vision.DeepVision;
+import ch.bildspur.vision.DeepVisionPreview;
 import ch.bildspur.vision.TextBoxesNetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import processing.core.PApplet;
@@ -22,7 +23,7 @@ public class TextDetectionTest extends PApplet {
 
     PImage testImage;
 
-    DeepVision vision = new DeepVision(this);
+    DeepVisionPreview vision = new DeepVisionPreview(this);
     TextBoxesNetwork network;
     List<ObjectDetectionResult> detections;
 
