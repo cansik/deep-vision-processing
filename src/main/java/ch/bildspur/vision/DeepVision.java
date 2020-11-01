@@ -150,6 +150,14 @@ public class DeepVision {
         return createYOLONetwork(Repository.YOLOv4Model, Repository.YOLOv4Weight, Repository.COCONames, inputSize);
     }
 
+    public YOLONetwork createYOLOv4Tiny() {
+        return createYOLOv4Tiny(416);
+    }
+
+    public YOLONetwork createYOLOv4Tiny(int inputSize) {
+        return createYOLONetwork(Repository.YOLOv4TinyModel, Repository.YOLOv4TinyWeight, Repository.COCONames, inputSize);
+    }
+
     public YOLONetwork createYOLOv3HandDetector() {
         return createYOLOv3HandDetector(416);
     }

@@ -21,6 +21,9 @@ public class Repository {
     public static final Dependency YOLOv4Model = new Dependency("yolov4.cfg");
     public static final Dependency YOLOv4Weight = new Dependency("yolov4.weights");
 
+    public static final Dependency YOLOv4TinyModel = new Dependency("yolov4-tiny.cfg");
+    public static final Dependency YOLOv4TinyWeight = new Dependency("yolov4-tiny.weights");
+
     public static final Dependency YOLOv3Model = new Dependency("yolov3.cfg");
     public static final Dependency YOLOv3Weight = new Dependency("yolov3.weights");
 

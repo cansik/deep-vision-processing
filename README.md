@@ -75,6 +75,7 @@ Here you find a list of implemented networks:
 	- YOLOv3-spp ([spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326))
 	- YOLOv3
 	- YOLOv4
+	- YOLOv4-tiny
 	- SSDMobileNetV2
 	- Handtracking based on SSDMobileNetV2
 	- TextBoxes
@@ -146,10 +147,12 @@ YOLOv3 the third version of the very fast and accurate single shot network. The 
 - YOLOv3-spp (original model using [spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326))
 - YOLOv3 (608)
 - YOLOv4 (608) (most accurate network)
+- YOLOv4-tiny (416)
 
 ```java
 // setup the network
 YOLONetwork net = vision.createYOLOv4();
+YOLONetwork net = vision.createYOLOv4Tiny();
 YOLONetwork net = vision.createYOLOv3();
 YOLONetwork net = vision.createYOLOv3SPP();
 YOLONetwork net = vision.createYOLOv3Tiny();
