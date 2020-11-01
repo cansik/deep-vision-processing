@@ -26,7 +26,7 @@ void setup() {
 
   println("setup camera...");
   String[] cams = Capture.list();
-  cam = new Capture(this, cams[1]);
+  cam = new Capture(this, cams[0]);
   cam.start();
 }
 

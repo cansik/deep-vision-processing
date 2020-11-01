@@ -34,7 +34,7 @@ public void draw() {
   strokeWeight(2f);
 
   for (ObjectDetectionResult detection : detections) {
-    stroke((int)(360.0 / yolo.getClassNames().size() * detection.getClassId()), 80, 100);
+    stroke((int)(360.0 / yolo.getLabels().size() * detection.getClassId()), 80, 100);
     rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
   }
 

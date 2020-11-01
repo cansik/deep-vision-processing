@@ -31,6 +31,7 @@ public class Dependency {
         }
 
         // try to download
+        // todo: download it as temp file to not brake it on hard processing exit!
         System.out.print("downloading " + name + ": ");
         AtomicReference<Integer> lastProgress = new AtomicReference<>(0);
         NetworkUtility.downloadFile(url, path, (source, p) -> {

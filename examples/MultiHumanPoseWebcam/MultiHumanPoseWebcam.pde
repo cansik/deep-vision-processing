@@ -11,8 +11,8 @@ SSDMobileNetwork network;
 SingleHumanPoseNetwork pose;
 
 ResultList<ObjectDetectionResult> detections;
-ResultList<ObjectDetectionResult> humans = new ArrayList<ObjectDetectionResult>();
-ResultList<HumanPoseResult> humanPoseResults = new ArrayList<HumanPoseResult>();
+ResultList<ObjectDetectionResult> humans = new ResultList<ObjectDetectionResult>();
+ResultList<HumanPoseResult> humanPoseResults = new ResultList<HumanPoseResult>();
 
 float minProbability = 0.3;
 

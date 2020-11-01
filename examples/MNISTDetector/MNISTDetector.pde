@@ -2,7 +2,7 @@ import ch.bildspur.vision.*;
 import ch.bildspur.vision.result.*;
 
 DeepVision vision;
-MNISTClassificationNetwork network;
+MNISTNetwork network;
 
 ClassificationResult result;
 long inferenceTime = 0;
