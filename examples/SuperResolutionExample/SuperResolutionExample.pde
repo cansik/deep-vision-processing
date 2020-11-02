@@ -21,8 +21,7 @@ void setup() {
   println("inferencing...");
   result = network.run(testImage);
   println("done!");
-
-  // test
+  
   testImage.resize(640, 0);
 
   noLoop();
