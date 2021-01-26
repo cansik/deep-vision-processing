@@ -382,9 +382,14 @@ public class DeepVision {
     }
 
     // depth estimation
-
     public MidasNetwork createMidasNetwork() {
         prepareDependencies(Repository.MidasNetModel);
         return new MidasNetwork(Repository.MidasNetModel.getPath());
+    }
+
+    // face similarity
+    public OpenFaceNetwork createOpenFaceNetwork() {
+        prepareDependencies(Repository.OpenFaceNN4Small2v1);
+        return new OpenFaceNetwork(Repository.OpenFaceNN4Small2v1.getPath());
     }
 }
