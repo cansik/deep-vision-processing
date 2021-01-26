@@ -17,7 +17,7 @@ public class AgeNetwork extends ClassificationNetwork {
                 false, 1,
                 new Scalar(78.4263377603, 87.7689143744, 114.895847746, 0.0),
                 false, false, 1.0f,
-                "0–2", "4–6", "8–12", "15–20", "25–32", "38–43", "48–53", "60–100");
+                "0-2", "4-6", "8-12", "15-20", "25-32", "38-43", "48-53", "60-100");
 
         this.protoTextPath = protoTextPath;
         this.modelPath = modelPath;
