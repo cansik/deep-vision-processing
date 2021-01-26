@@ -44,5 +44,5 @@ public void draw() {
     rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
   }
 
-  surface.setTitle("Face Recognition Test - FPS: " + Math.round(frameRate));
+  surface.setTitle("Face Detector Test - FPS: " + Math.round(frameRate));
 }

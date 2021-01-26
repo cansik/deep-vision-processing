@@ -15,7 +15,7 @@ public void setup() {
   image = loadImage("hk.jpg");
 
   println("creating model...");
-  yolo = deepVision.createYOLOv3();
+  yolo = deepVision.createYOLOv4();
 
   println("loading yolo model...");
   yolo.setup();

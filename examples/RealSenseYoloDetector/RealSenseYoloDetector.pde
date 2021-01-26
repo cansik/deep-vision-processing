@@ -1,6 +1,6 @@
 import ch.bildspur.vision.DeepVision;
 import ch.bildspur.vision.YOLONetwork;
-import ch.bildspur.vision.result.ObjectDetectionResult;
+import ch.bildspur.vision.result.*;
 
 import ch.bildspur.realsense.*;
 
@@ -16,7 +16,7 @@ void setup()
   colorMode(HSB, 360, 100, 100);
 
   println("creating network...");
-  net = vision.createYOLOv3Tiny();
+  net = vision.createYOLOv4Tiny();
 
   println("loading model...");
   net.setup();
@@ -51,7 +51,7 @@ void draw()
   strokeWeight(2f);
 
   for (ObjectDetectionResult detection : result) {
-    stroke(round(360.0f * (float) detection.getClassId() / net.getClassNames().size()), 75, 100);
+    stroke(round(360.0f * (float) detection.getClassId() / net.getLabels().size()), 75, 100);
     rect(detection.getX(), detection.getY(), detection.getWidth(), detection.getHeight());
 
     textSize(15);

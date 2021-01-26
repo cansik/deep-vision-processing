@@ -1,7 +1,6 @@
 import ch.bildspur.vision.DeepVision;
 import ch.bildspur.vision.SingleHumanPoseNetwork;
-import ch.bildspur.vision.result.HumanPoseResult;
-import ch.bildspur.vision.result.KeyPointResult;
+import ch.bildspur.vision.result.*;
 
 import ch.bildspur.realsense.*;
 
