@@ -380,4 +380,11 @@ public class DeepVision {
     public StyleTransferNetwork createStyleTransfer() {
         return createStyleTransfer(Repository.ECCV16CompositionVII);
     }
+
+    // depth estimation
+
+    public MidasNetwork createMidasNetwork() {
+        prepareDependencies(Repository.MidasNetModel);
+        return new MidasNetwork(Repository.MidasNetModel.getPath());
+    }
 }

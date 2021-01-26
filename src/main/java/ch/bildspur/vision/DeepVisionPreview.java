@@ -42,9 +42,4 @@ public class DeepVisionPreview extends DeepVision {
         prepareDependencies(Repository.Face3DDFAV2Model);
         return new Face3DDFAV2Network(Repository.Face3DDFAV2Model.getPath());
     }
-
-    public MidasNetwork createMidasNetwork() {
-        prepareDependencies(Repository.MidasNetModel);
-        return new MidasNetwork(Repository.MidasNetModel.getPath());
-    }
 }
