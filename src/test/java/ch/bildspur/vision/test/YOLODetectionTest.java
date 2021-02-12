@@ -35,7 +35,7 @@ public class YOLODetectionTest extends PApplet {
         testImage = loadImage(sketchPath("data/office.jpg"));
 
         println("creating network...");
-        yolo = vision.createYOLOv4Tiny();
+        yolo = vision.createYOLOv4();
 
         println("loading model...");
         yolo.setup();
@@ -59,7 +59,6 @@ public class YOLODetectionTest extends PApplet {
 
     public void draw() {
         background(55);
-
         image(testImage, 0, 0);
 
         noFill();

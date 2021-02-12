@@ -6,6 +6,7 @@ import ch.bildspur.vision.result.ResultList;
 import org.bytedeco.javacpp.DoublePointer;
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacpp.IntPointer;
+import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.Net;
 import org.bytedeco.opencv.opencv_text.FloatVector;
@@ -41,6 +42,10 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         net = readNetFromDarknet(
                 configPath.toAbsolutePath().toString(),
                 weightsPath.toAbsolutePath().toString());
+
+        // todo: make set cuda an option
+        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
 
         if (net.empty()) {
             System.out.println("Can't load network!");

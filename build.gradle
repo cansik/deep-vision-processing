@@ -1,11 +1,13 @@
+plugins {
+    id 'java-library'
+    id 'org.bytedeco.gradle-javacpp-platform' version "1.5.4"
+}
+
 group 'ch.bildspur'
 version '0.5.0'
 
-apply plugin: 'java'
-
 sourceCompatibility = 1.8
 
-def javaCvVersion = '1.5.4'
 def outputName = 'deepvision'
 
 repositories {
@@ -31,14 +33,19 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
     // opencv (make sure you have updated the local maven repo: mvn -U compile)
-    compile (group: 'org.bytedeco', name: 'javacv', version: "$javaCvVersion"){
+    compile (group: 'org.bytedeco', name: 'javacv', version: "1.5.4"){
         exclude group: 'org.bytedeco', module: 'librealsense2'
         exclude group: 'org.bytedeco', module: 'librealsense2-platform'
     }
 
-    compile group: 'org.bytedeco', name: 'opencv-platform', version: "4.4.0-$javaCvVersion"
-    compile group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.10-$javaCvVersion"
-    compile group: 'org.bytedeco', name: 'tesseract-platform', version: "4.1.1-$javaCvVersion"
+    compile group: 'org.bytedeco', name: 'opencv-platform', version: "4.4.0-1.5.4"
+    compile group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.10-1.5.4"
+    compile group: 'org.bytedeco', name: 'tesseract-platform', version: "4.1.1-1.5.4"
+
+    // cuda additions
+    compile group: 'org.bytedeco', name: 'opencv-platform-gpu', version: "4.4.0-1.5.4"
+    compile group: 'org.bytedeco', name: 'cuda-platform-redist', version: "11.0-8.0-1.5.4"
+    compile group: 'org.bytedeco', name: 'mkl-platform-redist', version: "2020.3-1.5.4"
 
     // processing
     processing group: 'org.processing', name: 'core', version: '3.3.7'
