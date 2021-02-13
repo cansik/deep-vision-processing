@@ -4,6 +4,7 @@ import ch.bildspur.vision.network.ObjectSegmentationNetwork;
 import ch.bildspur.vision.result.ObjectSegmentationResult;
 import ch.bildspur.vision.result.ResultList;
 import org.bytedeco.javacpp.FloatPointer;
+import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.Net;
 
@@ -37,6 +38,9 @@ public class MaskRCNN extends ObjectSegmentationNetwork {
                 modelPath.toAbsolutePath().toString(),
                 configPath.toAbsolutePath().toString()
         );
+
+        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
 
         this.loadLabels(labelsPath);
 

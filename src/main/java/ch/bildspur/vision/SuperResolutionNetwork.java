@@ -4,6 +4,7 @@ import ch.bildspur.vision.network.BaseNeuralNetwork;
 import ch.bildspur.vision.result.ImageResult;
 import ch.bildspur.vision.util.CvProcessingUtils;
 import org.bytedeco.javacpp.Loader;
+import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.global.opencv_quality;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_dnn_superres.DnnSuperResImpl;
@@ -31,6 +32,10 @@ public class SuperResolutionNetwork extends BaseNeuralNetwork<ImageResult> {
         net = new DnnSuperResImpl();
         net.readModel(model.toAbsolutePath().toString());
         net.setModel(name, scale);
+
+        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+
         return true;
     }
 

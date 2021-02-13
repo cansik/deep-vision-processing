@@ -6,6 +6,7 @@ import ch.bildspur.vision.util.CvProcessingUtils;
 import org.bytedeco.javacpp.DoublePointer;
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacpp.IntPointer;
+import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.Net;
 import processing.core.PImage;
@@ -30,6 +31,11 @@ public class MidasNetwork extends BaseNeuralNetwork<ImageResult> {
     @Override
     public boolean setup() {
         net = readNetFromONNX(model.toAbsolutePath().toString());
+
+        // enabling cuda by default
+        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+
         return true;
     }
 

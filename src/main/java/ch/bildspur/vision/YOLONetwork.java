@@ -43,6 +43,7 @@ public class YOLONetwork extends ObjectDetectionNetwork {
                 configPath.toAbsolutePath().toString(),
                 weightsPath.toAbsolutePath().toString());
 
+        // // enabling cuda by default
         // todo: make set cuda an option
         net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
         net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);

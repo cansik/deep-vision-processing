@@ -4,6 +4,7 @@ import ch.bildspur.vision.result.ClassificationResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.ResultList;
 import org.bytedeco.javacpp.DoublePointer;
+import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Point;
 import org.bytedeco.opencv.opencv_core.Scalar;
@@ -50,6 +51,9 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
     @Override
     public boolean setup() {
         net = createNetwork();
+
+        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
 
         if (net.empty()) {
             System.out.println("Can't load network!");

@@ -6,6 +6,7 @@ import ch.bildspur.vision.result.FacialLandmarkResult;
 import ch.bildspur.vision.result.KeyPointResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.ResultList;
+import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.Net;
 import org.bytedeco.opencv.opencv_face.FacemarkLBF;
@@ -34,6 +35,8 @@ public class MediaPipeFaceLandmark extends BaseNeuralNetwork<FacialLandmarkResul
     @Override
     public boolean setup() {
         net = readNetFromTensorflow(model.toAbsolutePath().toString(), config.toAbsolutePath().toString());
+        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
         return true;
     }
 

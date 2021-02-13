@@ -6,6 +6,7 @@ import ch.bildspur.vision.result.ResultList;
 import ch.bildspur.vision.util.MathUtils;
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacpp.IntPointer;
+import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.Net;
 import org.bytedeco.opencv.opencv_text.FloatVector;
@@ -51,6 +52,10 @@ public class ULFGFaceDetectionNetwork extends ObjectDetectionNetwork {
     @Override
     public boolean setup() {
         net = readNetFromONNX(modelPath.toAbsolutePath().toString());
+
+        // enabling cuda by default
+        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
 
         if (net.empty()) {
             System.out.println("Can't load network!");

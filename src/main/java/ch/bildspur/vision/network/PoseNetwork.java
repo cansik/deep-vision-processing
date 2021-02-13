@@ -1,6 +1,7 @@
 package ch.bildspur.vision.network;
 
 import ch.bildspur.vision.result.NetworkResult;
+import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Scalar;
 import org.bytedeco.opencv.opencv_core.Size;
@@ -40,6 +41,9 @@ public abstract class PoseNetwork<R extends NetworkResult> extends BaseNeuralNet
     @Override
     public boolean setup() {
         net = createNetwork();
+
+        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
 
         if (net.empty()) {
             System.out.println("Can't load network!");

@@ -59,6 +59,11 @@ public class YOLODetectionTest extends PApplet {
 
     public void draw() {
         background(55);
+
+        watch.start();
+        detections = yolo.run(testImage);
+        watch.stop();
+
         image(testImage, 0, 0);
 
         noFill();

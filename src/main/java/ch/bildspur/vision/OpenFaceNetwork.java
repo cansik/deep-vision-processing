@@ -7,6 +7,7 @@ import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.ResultList;
 import ch.bildspur.vision.result.VectorResult;
 import org.bytedeco.javacpp.FloatPointer;
+import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Scalar;
 import org.bytedeco.opencv.opencv_core.Size;
@@ -31,6 +32,8 @@ public class OpenFaceNetwork extends BaseNeuralNetwork<VectorResult> implements 
     @Override
     public boolean setup() {
         net = readNetFromTorch(modelPath.toAbsolutePath().toString());
+        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
         return !net.empty();
     }
 
