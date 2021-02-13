@@ -22,6 +22,8 @@ public class YOLODetectionTest extends PApplet {
     }
 
     PImage testImage;
+    PImage officeImage;
+    PImage sportImage;
 
     DeepVisionPreview vision = new DeepVisionPreview(this);
     YOLONetwork yolo;
@@ -32,10 +34,12 @@ public class YOLODetectionTest extends PApplet {
     public void setup() {
         colorMode(HSB, 360, 100, 100);
 
-        testImage = loadImage(sketchPath("data/office.jpg"));
+        officeImage = loadImage(sketchPath("data/office.jpg"));
+        sportImage = loadImage(sketchPath("data/sport.jpg"));
+        testImage = officeImage;
 
         println("creating network...");
-        yolo = vision.createYOLOv4();
+        yolo = vision.createYOLOv4Tiny();
 
         println("loading model...");
         yolo.setup();
@@ -59,6 +63,8 @@ public class YOLODetectionTest extends PApplet {
 
     public void draw() {
         background(55);
+
+        testImage = (frameCount % 2 == 0) ? officeImage : sportImage;
 
         watch.start();
         detections = yolo.run(testImage);
