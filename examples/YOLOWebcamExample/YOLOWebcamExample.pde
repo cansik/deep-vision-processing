@@ -25,8 +25,7 @@ public void setup() {
   println("loading yolo model...");
   yolo.setup();
 
-  String[] cams = Capture.list();
-  cam = new Capture(this, cams[0]);
+  cam = new Capture(this, "pipeline:autovideosrc");
   cam.start();
 }
 
@@ -35,11 +34,13 @@ public void draw() {
 
   if (cam.available()) {
     cam.read();
-  } else {
-    return;
   }
 
   image(cam, 0, 0);
+
+  if (cam.width == 0) {
+    return;
+  }
 
   yolo.setConfidenceThreshold(0.2f);
   detections = yolo.run(cam);

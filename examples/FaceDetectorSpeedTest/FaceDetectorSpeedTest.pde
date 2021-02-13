@@ -12,12 +12,9 @@ ResultList<ObjectDetectionResult> detections;
 public void setup() {
   size(640, 480, FX2D);
   colorMode(HSB, 360, 100, 100);
+  frameRate(200);
 
   vision = new DeepVision(this);
-
-  movie = new Movie(this, "shibuya.mp4");
-  movie.loop();
-  movie.speed(2.0);
 
   println("creating network...");
   network = vision.createULFGFaceDetectorRFB320();
@@ -26,6 +23,10 @@ public void setup() {
   network.setup();
 
   //network.setConfidenceThreshold(0.2f);
+
+  movie = new Movie(this, "shibuya.mp4");
+  movie.loop();
+  movie.speed(2.0);
 }
 
 void movieEvent(Movie m) {

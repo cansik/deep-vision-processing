@@ -25,8 +25,7 @@ void setup() {
   pose.setup();
 
   println("setup camera...");
-  String[] cams = Capture.list();
-  cam = new Capture(this, cams[0]);
+  cam = new Capture(this, "pipeline:autovideosrc");
   cam.start();
 }
 
@@ -35,13 +34,15 @@ void draw() {
 
   if (cam.available()) {
     cam.read();
-  } else {
-    return;
+  }
+  
+  image(cam, 0, 0);
+  
+  if(cam.width == 0) {
+     return; 
   }
 
   result = pose.run(cam);
-  
-  image(cam, 0, 0);
 
   // draw result
   stroke(180, 80, 100);

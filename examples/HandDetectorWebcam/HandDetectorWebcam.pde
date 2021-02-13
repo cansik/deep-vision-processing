@@ -21,8 +21,7 @@ public void setup() {
   network.setConfidenceThreshold(0.5);
 
   println("setup camera...");
-  String[] cams = Capture.list();
-  cam = new Capture(this, cams[0]);
+  cam = new Capture(this, "pipeline:autovideosrc");
   cam.start();
 }
 
@@ -34,6 +33,11 @@ public void draw() {
   }
 
   image(cam, 0, 0);
+  
+  if(cam.width == 0) {
+    return;
+  }
+  
   detections = network.run(cam);
 
   noFill();

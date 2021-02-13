@@ -25,27 +25,29 @@ public void setup() {
   println("loading yolo model...");
   yolo.setup();
 
-  String[] cams = Capture.list();
-  cam = new Capture(this, 640, 480, cams[0]);
+  cam = new Capture(this, "pipeline:autovideosrc");
   cam.start();
-  
+
   inputImage = new PImage(320, 240, RGB);
 }
 
 public void draw() {
   if (cam.available()) {
     cam.read();
-  } else {
-    return;
   }
-  
+
   background(55);
 
   image(cam, 0, 0);
+
+  if (cam.width == 0) {
+    return;
+  }
+
   inputImage.copy(cam, 0, 0, cam.width, cam.height, 0, 0, inputImage.width, inputImage.height);
 
   detections = yolo.run(inputImage);
-  
+
   scale(2);
   for (ObjectDetectionResult detection : detections) {
     noFill();
