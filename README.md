@@ -10,7 +10,7 @@ _Caution_: The API is still in development and can change at any time.
 *Lightweight OpenPose Example*
 
 ## Install
-Download the [latest](https://github.com/cansik/deep-vision-processing/releases/download/v0.5.0-alpha/deepvision.zip) prebuilt version from the [release](https://github.com/cansik/deep-vision-processing/releases) sections and install it into your Processing library folder.
+Download the [latest](https://github.com/cansik/deep-vision-processing/releases/tag/v0.6.0-alpha) prebuilt version from the [release](https://github.com/cansik/deep-vision-processing/releases) sections and install it into your Processing library folder.
 
 Because the library is still under development, it is not yet published in the Processing contribution manager.
 
@@ -64,7 +64,7 @@ ResultList<ObjectDetectionResult> detections = network.run(myImg);
 Please have a look at the specific networks for further information or at the [examples](examples).
 
 ### CUDA Support
-With version 0.6.0 it is possible to download the CUDA bundled libraries. This enables to run most of the DNN's on CUDA enabled graphics cards. For most networks this is necessary to run them in real-time. If you have the cuda-bundled version installed and run deep-vision on a Linux or Windows with an NVIDIA graphics card, you are able to enable the CUDA backend:
+With version `0.6.0` it is possible to download the CUDA bundled libraries. This enables to run most of the DNN's on CUDA enabled graphics cards. For most networks this is necessary to run them in real-time. If you have the cuda-bundled version installed and run deep-vision on a Linux or Windows with an NVIDIA graphics card, you are able to enable the CUDA backend:
 
 ```java
 // Second parameter (enableCUDABackend) enables CUDA
@@ -156,8 +156,8 @@ Every object detection result contains the following fields:
 * `getWidth()` - width of the bounding box
 * `getHeight()` - height of the bounding box
 
-#### YOLOv3 [[Paper](https://pjreddie.com/darknet/yolo/)]
-YOLOv3 the third version of the very fast and accurate single shot network. The pre-trained model is trained on the 80 classes COCO dataset. There are three different weights & models available in the repository:
+#### YOLO [[Paper](https://pjreddie.com/darknet/yolo/)]
+YOLO a very fast and accurate single shot network. The pre-trained model is trained on the 80 classes COCO dataset. There are three different weights & models available in the repository:
 
 - YOLOv3-tiny (very fast, but trading performance for accuracy)
 - YOLOv3-spp (original model using [spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326))
@@ -278,6 +278,8 @@ To build with CUDA support enable the property `cuda`:
 ```bash
 gradlew.bat releaseProcessingLib -Pcuda
 ```
+
+*This will take several minutes and result in a `3.5 GB` JAR file.*
 
 ### Platform Specific
 To build only on a specific platform use the property `javacppPlatform`:
