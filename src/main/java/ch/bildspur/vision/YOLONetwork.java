@@ -49,7 +49,7 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         outNames = net.getUnconnectedOutLayersNames();
         outs = new MatVector(outNames.size());
 
-        // // enabling cuda by default
+        // enabling cuda by default
         net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
         net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
 
