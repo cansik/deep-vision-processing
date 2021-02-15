@@ -29,6 +29,8 @@ public class YOLONetwork extends ObjectDetectionNetwork {
     private boolean skipNMS = false;
 
     private Net net;
+    private StringVector outNames;
+    private MatVector outs;
 
     public YOLONetwork(Path configPath, Path weightsPath, int width, int height) {
         this.configPath = configPath;
@@ -42,6 +44,10 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         net = readNetFromDarknet(
                 configPath.toAbsolutePath().toString(),
                 weightsPath.toAbsolutePath().toString());
+
+        // setup output layers
+        outNames = net.getUnconnectedOutLayersNames();
+        outs = new MatVector(outNames.size());
 
         // // enabling cuda by default
         net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
@@ -66,15 +72,16 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         // set input
         net.setInput(inputBlob);
 
-        // create output layers
-        StringVector outNames = net.getUnconnectedOutLayersNames();
-        MatVector outs = new MatVector(outNames.size());
-
         // run detection
         net.forward(outs, outNames);
 
         // evaluate result
-        return postprocess(frame, outs);
+        ResultList<ObjectDetectionResult> result = postprocess(frame, outs);
+
+        // cleanup
+        inputBlob.release();
+
+        return result;
     }
 
     /**
@@ -117,7 +124,14 @@ public class YOLONetwork extends ObjectDetectionNetwork {
                     confidences.push_back((float) confidence.get());
                     boxes.push_back(new Rect(left, top, width, height));
                 }
+
+                confidence.releaseReference();
+                classIdPoint.releaseReference();
+                data.releaseReference();
+                scores.release();
             }
+
+            result.release();
         }
 
         // skip nms
@@ -150,6 +164,13 @@ public class YOLONetwork extends ObjectDetectionNetwork {
             detections.add(new ObjectDetectionResult(classId, getLabelOrId(classId), confidences.get(idx),
                     box.x(), box.y(), box.width(), box.height()));
         }
+
+        // cleanup
+        indices.releaseReference();
+        confidencesPointer.releaseReference();
+        classIds.releaseReference();
+        confidences.releaseReference();
+        boxes.releaseReference();
 
         return detections;
     }
