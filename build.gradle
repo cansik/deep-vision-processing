@@ -31,6 +31,7 @@ javadoc {
 dependencies {
     // compile
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile 'com.github.cansik:webcam-capture-processing:8f1ea8d38d'
 
     // opencv (make sure you have updated the local maven repo: mvn -U compile)
     compile (group: 'org.bytedeco', name: 'javacv', version: "1.5.4"){
