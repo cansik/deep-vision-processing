@@ -63,3 +63,6 @@ task fatJar(type: Jar) {
     }
     with jar
 }
+
+// add processing library support
+apply from: "processing-library.gradle"

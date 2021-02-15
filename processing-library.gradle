@@ -1,0 +1,97 @@
+// This script adds library build support to gradle.
+def releaseVersion = "pre"
+def releaseRoot = "$rootDir/release"
+def releaseName = "$outputName-$releaseVersion"
+def releaseDirectory = "$releaseRoot/$outputName"
+
+task releaseProcessingLib {
+    dependsOn {
+        clean
+        build
+        javadoc
+        fatJar
+    }
+
+    finalizedBy 'packageRelease', 'renameRelease'
+
+    doFirst {
+        println "releasing library $outputName..."
+
+        if (project.hasProperty("cuda")) {
+            println "CUDA support enabled!"
+        }
+
+        println("cleaning release...")
+        project.delete(files(
+                "$releaseDirectory",
+                "$releaseRoot/$releaseName",
+                "$releaseRoot/${outputName}.zip",
+                "$releaseRoot/${outputName}.txt"
+        ))
+    }
+
+    doLast {
+        println "creating package..."
+
+        println "copy library..."
+        project.copy {
+            from "$buildDir/libs/$outputName-complete.jar"
+            into "$releaseDirectory/library"
+            rename "$outputName-complete.jar", "${outputName}.jar"
+        }
+
+        println "copy assets (only if necessary)..."
+        project.copy {
+            from("$rootDir") {
+                include "shaders/**",
+                        "native/**"
+            }
+            into "$releaseDirectory/library"
+            exclude "*.DS_Store"
+        }
+
+        println "copy javadoc..."
+        project.copy {
+            from "$buildDir/docs/javadoc"
+            into "$releaseDirectory/reference"
+        }
+
+        println "copy additional files..."
+        project.copy {
+            from("$rootDir") {
+                include "README.md",
+                        "library.properties",
+                        "readme/**",
+                        "examples/**",
+                        "src/**"
+            }
+            into "$releaseDirectory"
+            exclude "*.DS_Store", "**/networks/**"
+        }
+
+        println "copy repository library.txt..."
+        project.copy {
+            from "$rootDir/library.properties"
+            into "$releaseRoot"
+            rename "library.properties", "${outputName}.txt"
+        }
+    }
+}
+
+task packageRelease(type: Zip) {
+    mustRunAfter releaseProcessingLib
+
+    archiveFileName = "${outputName}.zip"
+    from "$releaseDirectory"
+    into "$outputName"
+    destinationDirectory = file("$releaseRoot")
+    exclude "**/*.DS_Store"
+}
+
+task renameRelease {
+    mustRunAfter packageRelease
+
+    doLast {
+        file("$releaseRoot/${outputName}").renameTo(file("$releaseRoot/${releaseName}"))
+    }
+}
