@@ -240,22 +240,16 @@ Towards Robust Monocular Depth Estimation: Mixing Datasets for Zero-shot Cross-d
 tbd
 
 ## Build
-- Install JDK 8 (because of Processing)
+- Install JDK 8 (because of Processing) (JDK 11 for Processing 4)
 
-Run gradle to build a fat jar:
+Run gradle to build a new release package under `/release/deepvision.zip`:
 
 ```bash
 # windows
-gradlew.bat fatjar
+gradlew.bat releaseProcessingLib -PreleaseVersion=0.6.0
 
 # mac / unix
-./gradlew fatjar
-```
-
-Create a new release:
-
-```bash
-./release.sh version
+./gradlew gradlew.bat releaseProcessingLib -PreleaseVersion=0.6.0
 ```
 
 ## FAQ
