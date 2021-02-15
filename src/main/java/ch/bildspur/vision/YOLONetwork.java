@@ -3,6 +3,7 @@ package ch.bildspur.vision;
 import ch.bildspur.vision.network.ObjectDetectionNetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.ResultList;
+import org.bytedeco.javacpp.BytePointer;
 import org.bytedeco.javacpp.DoublePointer;
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacpp.IntPointer;
@@ -29,7 +30,7 @@ public class YOLONetwork extends ObjectDetectionNetwork {
 
     private Net net;
     private StringVector outNames;
-    private MatVector outs;
+    //private MatVector outs;
 
     public YOLONetwork(Path configPath, Path weightsPath, int width, int height) {
         this.configPath = configPath;
@@ -46,7 +47,7 @@ public class YOLONetwork extends ObjectDetectionNetwork {
 
         // setup output layers
         outNames = net.getUnconnectedOutLayersNames();
-        outs = new MatVector(outNames.size());
+        //outs = new MatVector(outNames.size());
 
         if (DeepVision.ENABLE_CUDA_BACKEND) {
             net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
@@ -73,10 +74,13 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         net.setInput(inputBlob);
 
         // run detection
+        MatVector outs = new MatVector(outNames.size());
         net.forward(outs, outNames);
 
         // evaluate result
         ResultList<ObjectDetectionResult> result = postprocess(frame, outs);
+
+        outs.releaseReference();
 
         // cleanup
         inputBlob.release();
@@ -96,6 +100,10 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         FloatVector confidences = new FloatVector();
         RectVector boxes = new RectVector();
 
+        // refactored out of loop to save memory (reduce allocation)
+        Point classIdPoint = new Point(1);
+        DoublePointer confidence = new DoublePointer(1);
+
         for (int i = 0; i < outs.size(); ++i) {
             // Scan through all the bounding boxes output from the network and keep only the
             // ones with high confidence scores. Assign the box's class label as the class
@@ -103,16 +111,15 @@ public class YOLONetwork extends ObjectDetectionNetwork {
             Mat result = outs.get(i);
 
             for (int j = 0; j < result.rows(); j++) {
-                FloatPointer data = new FloatPointer(result.row(j).data());
-                Mat scores = result.row(j).colRange(5, result.cols());
+                Mat row = result.row(j);
+                BytePointer dataPointer = row.data();
+                FloatPointer data = new FloatPointer(dataPointer);
 
-                Point classIdPoint = new Point(1);
-                DoublePointer confidence = new DoublePointer(1);
+                Mat scores = row.colRange(5, result.cols());
 
                 // Get the value and location of the maximum score
-                minMaxLoc(scores, null, confidence, null, classIdPoint, null);
+                // minMaxLoc(scores, null, confidence, null, classIdPoint, null);
                 if (confidence.get() > getConfidenceThreshold()) {
-                    // todo: maybe round instead of floor
                     int centerX = (int) (data.get(0) * frame.cols());
                     int centerY = (int) (data.get(1) * frame.rows());
                     int width = (int) (data.get(2) * frame.cols());
@@ -125,14 +132,17 @@ public class YOLONetwork extends ObjectDetectionNetwork {
                     boxes.push_back(new Rect(left, top, width, height));
                 }
 
-                confidence.releaseReference();
-                classIdPoint.releaseReference();
                 data.releaseReference();
+                dataPointer.releaseReference();
                 scores.release();
+                row.release();
             }
 
             result.release();
         }
+
+        confidence.releaseReference();
+        classIdPoint.releaseReference();
 
         // skip nms
         if (skipNMS) {
