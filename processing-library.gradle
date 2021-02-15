@@ -1,7 +1,7 @@
-// This script adds library build support to gradle.
-def releaseVersion = "pre"
+// This script adds processing library build support to gradle.
 def releaseRoot = "$rootDir/release"
-def releaseName = "$outputName-$releaseVersion"
+
+def releaseName = "$outputName-$version"
 def releaseDirectory = "$releaseRoot/$outputName"
 
 task releaseProcessingLib {

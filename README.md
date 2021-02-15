@@ -246,10 +246,25 @@ Run gradle to build a new release package under `/release/deepvision.zip`:
 
 ```bash
 # windows
-gradlew.bat releaseProcessingLib -PreleaseVersion=0.6.0
+gradlew.bat releaseProcessingLib
 
 # mac / unix
-./gradlew gradlew.bat releaseProcessingLib -PreleaseVersion=0.6.0
+./gradlew gradlew.bat releaseProcessingLib
+```
+
+### Cuda Support
+To build with CUDA support enable the property `cuda`:
+
+```bash
+gradlew.bat releaseProcessingLib -Pcuda
+```
+
+### Platform Specific
+To build only on a specific platform use the property `javacppPlatform`:
+
+```bash
+# builds with support for all platforms
+gradlew.bat releaseProcessingLib -PjavacppPlatform=linux-x86_64,macosx-x86_64,windows-x86_64,linux-armhf,linux-arm64
 ```
 
 ## FAQ
