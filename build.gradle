@@ -8,8 +8,6 @@ version '0.6.0'
 
 sourceCompatibility = 1.8
 
-def outputName = 'deepvision'
-
 repositories {
     mavenCentral()
     mavenLocal()
@@ -44,9 +42,10 @@ dependencies {
     compile group: 'org.bytedeco', name: 'tesseract-platform', version: "4.1.1-1.5.4"
 
     // cuda additions
-    compile group: 'org.bytedeco', name: 'opencv-platform-gpu', version: "4.4.0-1.5.4"
-    compile group: 'org.bytedeco', name: 'cuda-platform-redist', version: "11.0-8.0-1.5.4"
-    compile group: 'org.bytedeco', name: 'mkl-platform-redist', version: "2020.3-1.5.4"
+    if (project.hasProperty("cuda")) {
+        compile group: 'org.bytedeco', name: 'opencv-platform-gpu', version: "4.4.0-1.5.4"
+        compile group: 'org.bytedeco', name: 'cuda-platform-redist', version: "11.0-8.0-1.5.4"
+    }
 
     // processing
     processing group: 'org.processing', name: 'core', version: '3.3.7'

@@ -1,7 +1,7 @@
 # Deep Vision Processing [![Build Status](https://travis-ci.org/cansik/deep-vision-processing.svg?branch=master)](https://travis-ci.org/cansik/deep-vision-processing) [![Build status](https://ci.appveyor.com/api/projects/status/6026c9qq3my86jgh?svg=true)](https://ci.appveyor.com/project/cansik/deep-vision-processing)
 Deep computer-vision algorithms for [Processing](https://processing.org/).
 
-The idea behind this library is to provide a simple way to use (inference) machine learning algorithms for computer vision tasks inside Processing. Mainly portability and easy-to-use are the primary goals of this library. Because of that (and [javacv](https://github.com/bytedeco/javacpp-presets/pull/832)), **no GPU support** at the moment.
+The idea behind this library is to provide a simple way to use (inference) machine learning algorithms for computer vision tasks inside Processing. Mainly portability and easy-to-use are the primary goals of this library. Starting with version `0.6.0` CUDA inferencing support is built into the library (Windows & Linux).
 
 _Caution_: The API is still in development and can change at any time.
 
