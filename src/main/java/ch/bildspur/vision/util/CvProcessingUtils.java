@@ -7,8 +7,6 @@ import org.bytedeco.opencv.opencv_core.Size;
 import processing.core.PConstants;
 import processing.core.PImage;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
@@ -100,8 +98,8 @@ public final class CvProcessingUtils implements PConstants {
      * @param m   The Mat to receive the image data.
      */
     public static void toCv(PImage img, Mat m) {
-        BufferedImage image = (BufferedImage) img.getNative();
-        int[] matPixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+        // may fixes problem with AWT image in P5 4.0
+        int[] matPixels = img.pixels;
 
         ByteBuffer bb = ByteBuffer.allocate(matPixels.length * 4);
         IntBuffer ib = bb.asIntBuffer();
