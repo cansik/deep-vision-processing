@@ -255,6 +255,10 @@ Towards Robust Monocular Depth Estimation: Mixing Datasets for Zero-shot Cross-d
 ### Image Processing
 tbd
 
+## Pipeline
+It is possible to create network pipelines to use for example a face-detection network and different classifier for each face. This is not yet documented so you have to check out the test code:
+[HumanAttributesPipelineTest.java#L36-L41](https://github.com/cansik/deep-vision-processing/blob/master/src/test/java/ch/bildspur/vision/test/HumanAttributesPipelineTest.java#L36-L41)
+
 ## Build
 - Install JDK 8 (because of Processing) (JDK 11 for Processing 4)
 
