@@ -6,6 +6,7 @@ import ch.bildspur.vision.result.FacialLandmarkResult;
 import ch.bildspur.vision.result.KeyPointResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.ResultList;
+import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.Net;
 import org.bytedeco.opencv.opencv_face.FacemarkLBF;
@@ -32,6 +33,12 @@ public class Face3DDFAV2Network extends BaseNeuralNetwork<FacialLandmarkResult> 
     @Override
     public boolean setup() {
         net = readNetFromONNX(model.toAbsolutePath().toString());
+
+        if (DeepVision.ENABLE_CUDA_BACKEND) {
+            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        }
+
         return true;
     }
 

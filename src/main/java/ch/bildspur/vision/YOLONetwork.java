@@ -14,8 +14,7 @@ import org.bytedeco.opencv.opencv_text.IntVector;
 
 import java.nio.file.Path;
 
-import static org.bytedeco.opencv.global.opencv_core.CV_32F;
-import static org.bytedeco.opencv.global.opencv_core.minMaxLoc;
+import static org.bytedeco.opencv.global.opencv_core.*;
 import static org.bytedeco.opencv.global.opencv_dnn.*;
 
 public class YOLONetwork extends ObjectDetectionNetwork {
@@ -49,9 +48,10 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         outNames = net.getUnconnectedOutLayersNames();
         outs = new MatVector(outNames.size());
 
-        // enabling cuda by default
-        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
-        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        if (DeepVision.ENABLE_CUDA_BACKEND) {
+            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        }
 
         if (net.empty()) {
             System.out.println("Can't load network!");

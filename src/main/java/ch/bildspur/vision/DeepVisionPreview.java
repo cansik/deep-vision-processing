@@ -8,6 +8,10 @@ public class DeepVisionPreview extends DeepVision {
         super(sketch);
     }
 
+    public DeepVisionPreview(PApplet sketch, boolean enableCUDABackend) {
+        super(sketch, enableCUDABackend);
+    }
+
     public MultiHumanPoseNetwork createMultiHumanPoseEstimation() {
         prepareDependencies(Repository.MultiHumanPoseEstimationModel);
         return new MultiHumanPoseNetwork(Repository.MultiHumanPoseEstimationModel.getPath());

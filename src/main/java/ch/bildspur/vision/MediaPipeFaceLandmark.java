@@ -35,8 +35,12 @@ public class MediaPipeFaceLandmark extends BaseNeuralNetwork<FacialLandmarkResul
     @Override
     public boolean setup() {
         net = readNetFromTensorflow(model.toAbsolutePath().toString(), config.toAbsolutePath().toString());
-        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
-        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+
+        if (DeepVision.ENABLE_CUDA_BACKEND) {
+            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        }
+
         return true;
     }
 

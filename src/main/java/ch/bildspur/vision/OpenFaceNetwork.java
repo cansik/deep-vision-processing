@@ -32,8 +32,12 @@ public class OpenFaceNetwork extends BaseNeuralNetwork<VectorResult> implements 
     @Override
     public boolean setup() {
         net = readNetFromTorch(modelPath.toAbsolutePath().toString());
-        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
-        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+
+        if (DeepVision.ENABLE_CUDA_BACKEND) {
+            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        }
+
         return !net.empty();
     }
 

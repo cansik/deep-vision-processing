@@ -33,8 +33,10 @@ public class SuperResolutionNetwork extends BaseNeuralNetwork<ImageResult> {
         net.readModel(model.toAbsolutePath().toString());
         net.setModel(name, scale);
 
-        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
-        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        if (DeepVision.ENABLE_CUDA_BACKEND) {
+            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        }
 
         return true;
     }

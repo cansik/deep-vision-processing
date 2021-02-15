@@ -53,9 +53,10 @@ public class ULFGFaceDetectionNetwork extends ObjectDetectionNetwork {
     public boolean setup() {
         net = readNetFromONNX(modelPath.toAbsolutePath().toString());
 
-        // enabling cuda by default
-        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
-        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        if (DeepVision.ENABLE_CUDA_BACKEND) {
+            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        }
 
         if (net.empty()) {
             System.out.println("Can't load network!");

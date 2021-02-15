@@ -63,6 +63,22 @@ ResultList<ObjectDetectionResult> detections = network.run(myImg);
 
 Please have a look at the specific networks for further information or at the [examples](examples).
 
+### CUDA Support
+With version 0.6.0 it is possible to download the CUDA bundled libraries. This enables to run most of the DNN's on CUDA enabled graphics cards. For most networks this is necessary to run them in real-time. If you have the cuda-bundled version installed and run deep-vision on a Linux or Windows with an NVIDIA graphics card, you are able to enable the CUDA backend:
+
+```java
+// Second parameter (enableCUDABackend) enables CUDA
+DeepVision vision = new DeepVision(this, true);
+```
+
+If the second parameter is unset, the library will check if a CUDA enabled device is available and enables the backend likewise. It is possible to check if CUDA backend has been enabled by the following method:
+
+```java
+println("Is CUDA Enabled: " + vision.isCUDABackendEnabled());
+```
+
+If CUDA is enabled but the hardware does not support it, Processing will show you a warning and run the networks on the CPU.
+
 ## Networks
 
 Here you find a list of implemented networks:

@@ -41,8 +41,10 @@ public class SSDMobileNetwork extends ObjectDetectionNetwork {
                 modelPath.toAbsolutePath().toString(),
                 configPath.toAbsolutePath().toString());
 
-        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
-        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        if (DeepVision.ENABLE_CUDA_BACKEND) {
+            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        }
 
         if (net.empty()) {
             System.out.println("Can't load network!");

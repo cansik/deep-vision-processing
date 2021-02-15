@@ -32,9 +32,10 @@ public class MidasNetwork extends BaseNeuralNetwork<ImageResult> {
     public boolean setup() {
         net = readNetFromONNX(model.toAbsolutePath().toString());
 
-        // enabling cuda by default
-        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
-        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        if (DeepVision.ENABLE_CUDA_BACKEND) {
+            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        }
 
         return true;
     }

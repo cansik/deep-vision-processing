@@ -1,5 +1,6 @@
 package ch.bildspur.vision.network;
 
+import ch.bildspur.vision.DeepVision;
 import ch.bildspur.vision.result.ClassificationResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.ResultList;
@@ -52,8 +53,10 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
     public boolean setup() {
         net = createNetwork();
 
-        net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
-        net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        if (DeepVision.ENABLE_CUDA_BACKEND) {
+            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        }
 
         if (net.empty()) {
             System.out.println("Can't load network!");

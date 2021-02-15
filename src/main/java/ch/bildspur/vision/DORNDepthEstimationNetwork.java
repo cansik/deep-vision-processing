@@ -3,6 +3,7 @@ package ch.bildspur.vision;
 import ch.bildspur.vision.network.BaseNeuralNetwork;
 import ch.bildspur.vision.result.ImageResult;
 import ch.bildspur.vision.util.CvProcessingUtils;
+import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.Net;
 import processing.core.PImage;
@@ -26,6 +27,12 @@ public class DORNDepthEstimationNetwork extends BaseNeuralNetwork<ImageResult> {
     @Override
     public boolean setup() {
         net = readNetFromCaffe(protoTextPath.toAbsolutePath().toString(), modelPath.toAbsolutePath().toString());
+
+        if (DeepVision.ENABLE_CUDA_BACKEND) {
+            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        }
+
         return true;
     }
 

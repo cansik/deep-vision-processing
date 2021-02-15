@@ -9,12 +9,25 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import static org.bytedeco.opencv.global.opencv_core.getCudaEnabledDeviceCount;
+
 public class DeepVision {
+    public static boolean ENABLE_CUDA_BACKEND = false;
+
     private PApplet sketch;
     private boolean storeNetworksInSketch = false;
 
     public DeepVision(PApplet sketch) {
+        this(sketch, getCudaEnabledDeviceCount() > 0);
+    }
+
+    public DeepVision(PApplet sketch, boolean enableCUDABackend) {
         this.sketch = sketch;
+        ENABLE_CUDA_BACKEND = enableCUDABackend;
+    }
+
+    public boolean isCUDABackendEnabled() {
+        return ENABLE_CUDA_BACKEND;
     }
 
     public void storeNetworksGlobal() {
