@@ -1,7 +1,7 @@
 // This script adds processing library build support to gradle.
 def releaseRoot = "$rootDir/release"
 
-def releaseName = "$outputName-$version"
+def releaseName = "$outputName$outputNamePostfix-$version"
 def releaseDirectory = "$releaseRoot/$outputName"
 
 task releaseProcessingLib {
@@ -81,7 +81,7 @@ task releaseProcessingLib {
 task packageRelease(type: Zip) {
     mustRunAfter releaseProcessingLib
 
-    archiveFileName = "${outputName}.zip"
+    archiveFileName = "${outputName}${outputNamePostfix}.zip"
     from "$releaseDirectory"
     into "$outputName"
     destinationDirectory = file("$releaseRoot")
