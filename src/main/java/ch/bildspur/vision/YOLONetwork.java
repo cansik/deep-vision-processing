@@ -13,6 +13,9 @@ import org.bytedeco.opencv.opencv_dnn.Net;
 import org.bytedeco.opencv.opencv_text.FloatVector;
 import org.bytedeco.opencv.opencv_text.IntVector;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
 import java.nio.file.Path;
 
 import static org.bytedeco.opencv.global.opencv_core.*;
@@ -100,10 +103,6 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         FloatVector confidences = new FloatVector();
         RectVector boxes = new RectVector();
 
-        // refactored out of loop to save memory (reduce allocation)
-        Point classIdPoint = new Point(1);
-        DoublePointer confidence = new DoublePointer(1);
-
         for (int i = 0; i < outs.size(); ++i) {
             // Scan through all the bounding boxes output from the network and keep only the
             // ones with high confidence scores. Assign the box's class label as the class
@@ -112,14 +111,26 @@ public class YOLONetwork extends ObjectDetectionNetwork {
 
             for (int j = 0; j < result.rows(); j++) {
                 Mat row = result.row(j);
+
+                byte[] buffer = new byte[row.cols() * 4];
                 BytePointer dataPointer = row.data();
-                FloatPointer data = new FloatPointer(dataPointer);
+                dataPointer.get(buffer);
+                FloatBuffer data = ByteBuffer.wrap(buffer)
+                        .order(ByteOrder.nativeOrder())
+                        .asFloatBuffer();
 
-                Mat scores = row.colRange(5, result.cols());
+                // minMaxLoc implemented in java
+                int maxIndex = -1;
+                float maxScore = Float.MIN_VALUE;
+                for(int k = 5; k < data.limit(); k++) {
+                    float score = data.get(k);
+                    if(score > maxScore) {
+                        maxScore = score;
+                        maxIndex = k - 5;
+                    }
+                }
 
-                // Get the value and location of the maximum score
-                // minMaxLoc(scores, null, confidence, null, classIdPoint, null);
-                if (confidence.get() > getConfidenceThreshold()) {
+                if (maxScore > getConfidenceThreshold()) {
                     int centerX = (int) (data.get(0) * frame.cols());
                     int centerY = (int) (data.get(1) * frame.rows());
                     int width = (int) (data.get(2) * frame.cols());
@@ -127,22 +138,17 @@ public class YOLONetwork extends ObjectDetectionNetwork {
                     int left = centerX - width / 2;
                     int top = centerY - height / 2;
 
-                    classIds.push_back(classIdPoint.x());
-                    confidences.push_back((float) confidence.get());
+                    classIds.push_back(maxIndex);
+                    confidences.push_back(maxScore);
                     boxes.push_back(new Rect(left, top, width, height));
                 }
 
-                data.releaseReference();
                 dataPointer.releaseReference();
-                scores.release();
                 row.release();
             }
 
             result.release();
         }
-
-        confidence.releaseReference();
-        classIdPoint.releaseReference();
 
         // skip nms
         if (skipNMS) {
