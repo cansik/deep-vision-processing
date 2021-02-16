@@ -109,26 +109,23 @@ public class YOLONetwork extends ObjectDetectionNetwork {
             // with the highest score for the box.
             Mat result = outs.get(i);
 
-            for (int j = 0; j < result.rows(); j++) {
-                Mat row = result.row(j);
+                for (int j = 0; j < result.rows(); j++) {
+                    Mat row = result.row(j);
 
-                byte[] buffer = new byte[row.cols() * 4];
-                BytePointer dataPointer = row.data();
-                dataPointer.get(buffer);
-                FloatBuffer data = ByteBuffer.wrap(buffer)
-                        .order(ByteOrder.nativeOrder())
-                        .asFloatBuffer();
+                    BytePointer dataPointer = row.data();
+                    dataPointer.capacity(row.cols() * 4);
+                    FloatBuffer data = dataPointer.asByteBuffer().asFloatBuffer();
 
-                // minMaxLoc implemented in java
-                int maxIndex = -1;
-                float maxScore = Float.MIN_VALUE;
-                for(int k = 5; k < data.limit(); k++) {
-                    float score = data.get(k);
-                    if(score > maxScore) {
-                        maxScore = score;
-                        maxIndex = k - 5;
+                    // minMaxLoc implemented in java
+                    int maxIndex = -1;
+                    float maxScore = Float.MIN_VALUE;
+                    for(int k = 5; k < data.limit(); k++) {
+                        float score = data.get(k);
+                        if(score > maxScore) {
+                            maxScore = score;
+                            maxIndex = k - 5;
+                        }
                     }
-                }
 
                 if (maxScore > getConfidenceThreshold()) {
                     int centerX = (int) (data.get(0) * frame.cols());
