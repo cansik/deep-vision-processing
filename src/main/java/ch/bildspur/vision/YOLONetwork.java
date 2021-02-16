@@ -137,6 +137,7 @@ public class YOLONetwork extends ObjectDetectionNetwork {
 
                     classIds.push_back(maxIndex);
                     confidences.push_back(maxScore);
+                    // todo: creating rects is inefficient
                     boxes.push_back(new Rect(left, top, width, height));
                 }
             }
