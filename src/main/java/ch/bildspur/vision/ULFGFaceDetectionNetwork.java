@@ -105,6 +105,8 @@ public class ULFGFaceDetectionNetwork extends ObjectDetectionNetwork {
         FloatVector relevantConfidences = new FloatVector();
         RectVector relevantBoxes = new RectVector();
 
+        // todo: replace float pointer generation by single buffer convertion as in YOLO
+
         // extract only relevant prob
         for (int i = 0; i < boxes.rows(); i++) {
             FloatPointer confidencesPtr = new FloatPointer(confidences.row(i).data());
