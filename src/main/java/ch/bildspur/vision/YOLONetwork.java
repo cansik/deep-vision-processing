@@ -138,6 +138,7 @@ public class YOLONetwork extends ObjectDetectionNetwork {
                 }
             }
 
+            data.release();
             result.release();
         }
 

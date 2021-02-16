@@ -6,6 +6,7 @@ import ch.bildspur.vision.result.ResultList;
 import ch.bildspur.vision.util.MathUtils;
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacpp.IntPointer;
+import org.bytedeco.javacpp.indexer.FloatIndexer;
 import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.Net;
@@ -105,12 +106,13 @@ public class ULFGFaceDetectionNetwork extends ObjectDetectionNetwork {
         FloatVector relevantConfidences = new FloatVector();
         RectVector relevantBoxes = new RectVector();
 
-        // todo: replace float pointer generation by single buffer convertion as in YOLO
+        // create indexer
+        FloatIndexer confidenceIndex = confidences.createIndexer();
+        FloatIndexer boxIndex = boxes.createIndexer();
 
         // extract only relevant prob
         for (int i = 0; i < boxes.rows(); i++) {
-            FloatPointer confidencesPtr = new FloatPointer(confidences.row(i).data());
-            float probability = confidencesPtr.get(1); // read second column (face)
+            float probability = confidenceIndex.get(i, 1); // read second column (face)
 
             if (probability < getConfidenceThreshold()) continue;
 
@@ -119,17 +121,19 @@ public class ULFGFaceDetectionNetwork extends ObjectDetectionNetwork {
 
             // add box data and convert locations to positions
             float[] prior = priors.get(i);
-            FloatPointer boxesPtr = new FloatPointer(boxes.row(i).data());
-            float centerX = ((boxesPtr.get(0) * centerVariance * prior[2] + prior[0]) * frameWidth);
-            float centerY = ((boxesPtr.get(1) * centerVariance * prior[3] + prior[1]) * frameHeight);
-            float width = (float) ((Math.exp(boxesPtr.get(2) * sizeVariance) * prior[2]) * frameHeight);
-            float height = (float) ((Math.exp(boxesPtr.get(3) * sizeVariance) * prior[3]) * frameHeight);
+            float centerX = ((boxIndex.get(i, 0) * centerVariance * prior[2] + prior[0]) * frameWidth);
+            float centerY = ((boxIndex.get(i, 1) * centerVariance * prior[3] + prior[1]) * frameHeight);
+            float width = (float) ((Math.exp(boxIndex.get(i, 2) * sizeVariance) * prior[2]) * frameHeight);
+            float height = (float) ((Math.exp(boxIndex.get(i, 3) * sizeVariance) * prior[3]) * frameHeight);
 
             int left = Math.round(centerX - width / 2.0f);
             int top = Math.round(centerY - height / 2.0f);
 
             relevantBoxes.push_back(new Rect(left, top, Math.round(width), Math.round(height)));
         }
+
+        confidenceIndex.release();
+        boxIndex.release();
 
         // run nms
         IntPointer indices = new IntPointer(confidences.size());
