@@ -4,6 +4,7 @@ import ch.bildspur.vision.network.ObjectSegmentationNetwork;
 import ch.bildspur.vision.result.ObjectSegmentationResult;
 import ch.bildspur.vision.result.ResultList;
 import org.bytedeco.javacpp.FloatPointer;
+import org.bytedeco.javacpp.indexer.FloatIndexer;
 import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.Net;
@@ -22,6 +23,8 @@ public class MaskRCNN extends ObjectSegmentationNetwork {
     private Path labelsPath;
     private Net net;
 
+    private StringVector outNames;
+
     private float maskThreshold = 0.3f;
 
     public MaskRCNN(Path configPath, Path modelPath, Path labelsPath) {
@@ -38,6 +41,10 @@ public class MaskRCNN extends ObjectSegmentationNetwork {
                 modelPath.toAbsolutePath().toString(),
                 configPath.toAbsolutePath().toString()
         );
+
+        outNames = new StringVector();
+        outNames.push_back("detection_out_final");
+        outNames.push_back("detection_masks");
 
         if (DeepVision.ENABLE_CUDA_BACKEND) {
             net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
@@ -67,9 +74,6 @@ public class MaskRCNN extends ObjectSegmentationNetwork {
         net.setInput(inputBlob);
 
         // create output layers
-        StringVector outNames = new StringVector();
-        outNames.push_back("detection_out_final");
-        outNames.push_back("detection_masks");
         MatVector outs = new MatVector(outNames.size());
 
 
@@ -79,7 +83,16 @@ public class MaskRCNN extends ObjectSegmentationNetwork {
         Mat boxes = outs.get(0);
         Mat masks = outs.get(1);
 
-        return postProcess(boxes, masks, frame.size());
+        // post processing
+        ResultList<ObjectSegmentationResult> result = postProcess(boxes, masks, frame.size());
+
+        // cleanup
+        boxes.release();
+        masks.release();
+        inputBlob.release();
+        outs.releaseReference();
+
+        return result;
     }
 
     private ResultList<ObjectSegmentationResult> postProcess(Mat boxes, Mat masks, Size size) {
@@ -90,22 +103,21 @@ public class MaskRCNN extends ObjectSegmentationNetwork {
 
         // reshape 4d output
         boxes = boxes.reshape(1, (int) boxes.total() / 7);
+        FloatIndexer data = boxes.createIndexer();
 
         for (int i = 0; i < numDetections; i++) {
-            FloatPointer data = new FloatPointer(boxes.row(i).data());
-
-            float score = data.get(2);
+            float score = data.get(i, 2);
 
             // skip if not relevant
             if (score < getConfidenceThreshold())
                 continue;
 
             // extract information
-            int classId = (int) data.get(1);
-            int left = Math.round(data.get(3) * size.width());
-            int top = Math.round(data.get(4) * size.height());
-            int right = Math.round(data.get(5) * size.width());
-            int bottom = Math.round(data.get(6) * size.height());
+            int classId = (int) data.get(i, 1);
+            int left = Math.round(data.get(i, 3) * size.width());
+            int top = Math.round(data.get(i, 4) * size.height());
+            int right = Math.round(data.get(i, 5) * size.width());
+            int bottom = Math.round(data.get(i, 6) * size.height());
 
             int width = right - left;
             int height = bottom - top;
