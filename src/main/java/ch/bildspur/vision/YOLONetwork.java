@@ -109,29 +109,29 @@ public class YOLONetwork extends ObjectDetectionNetwork {
             // with the highest score for the box.
             Mat result = outs.get(i);
 
-                for (int j = 0; j < result.rows(); j++) {
-                    Mat row = result.row(j);
+            // read all data of the frame and access through a float-buffer (most efficient)
+            BytePointer dataPointer = result.data();
+            Size size = result.size();
+            dataPointer.capacity(4 * size.width() * size.height());
+            FloatBuffer data = dataPointer.asByteBuffer().asFloatBuffer();
 
-                    BytePointer dataPointer = row.data();
-                    dataPointer.capacity(row.cols() * 4);
-                    FloatBuffer data = dataPointer.asByteBuffer().asFloatBuffer();
-
-                    // minMaxLoc implemented in java
-                    int maxIndex = -1;
-                    float maxScore = Float.MIN_VALUE;
-                    for(int k = 5; k < data.limit(); k++) {
-                        float score = data.get(k);
-                        if(score > maxScore) {
-                            maxScore = score;
-                            maxIndex = k - 5;
-                        }
+            for (int j = 0; j < result.rows(); j++) {
+                // minMaxLoc implemented in java
+                int maxIndex = -1;
+                float maxScore = Float.MIN_VALUE;
+                for (int k = 5; k < result.cols(); k++) {
+                    float score = data.get(j * result.cols() + k);
+                    if (score > maxScore) {
+                        maxScore = score;
+                        maxIndex = k - 5;
                     }
+                }
 
                 if (maxScore > getConfidenceThreshold()) {
-                    int centerX = (int) (data.get(0) * frame.cols());
-                    int centerY = (int) (data.get(1) * frame.rows());
-                    int width = (int) (data.get(2) * frame.cols());
-                    int height = (int) (data.get(3) * frame.rows());
+                    int centerX = (int) (data.get(j * result.cols() + 0) * frame.cols());
+                    int centerY = (int) (data.get(j * result.cols() + 1) * frame.rows());
+                    int width = (int) (data.get(j * result.cols() + 2) * frame.cols());
+                    int height = (int) (data.get(j * result.cols() + 3) * frame.rows());
                     int left = centerX - width / 2;
                     int top = centerY - height / 2;
 
@@ -139,11 +139,10 @@ public class YOLONetwork extends ObjectDetectionNetwork {
                     confidences.push_back(maxScore);
                     boxes.push_back(new Rect(left, top, width, height));
                 }
-
-                dataPointer.releaseReference();
-                row.release();
             }
 
+            dataPointer.releaseReference();
+            size.releaseReference();
             result.release();
         }
 
