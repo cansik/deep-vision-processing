@@ -1,5 +1,6 @@
 package ch.bildspur.vision.util;
 
+import org.bytedeco.javacpp.IntPointer;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.MatVector;
 import org.bytedeco.opencv.opencv_core.Rect;
@@ -12,8 +13,9 @@ import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 
 import static ch.bildspur.vision.util.MathUtils.clamp;
-import static org.bytedeco.opencv.global.opencv_core.merge;
-import static org.bytedeco.opencv.global.opencv_core.split;
+import static org.bytedeco.opencv.global.opencv_core.*;
+import static org.bytedeco.opencv.global.opencv_highgui.imshow;
+import static org.bytedeco.opencv.global.opencv_highgui.waitKey;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
 
 /**
@@ -22,6 +24,12 @@ import static org.bytedeco.opencv.global.opencv_imgproc.*;
 public final class CvProcessingUtils implements PConstants {
 
     private CvProcessingUtils() {
+    }
+
+    private static final int[] ARGB2BGRA_MAPPING = new int[] { 0,3, 1,2, 2,1, 3,0 };
+
+    public static void ARGBtoBGRAFast(Mat rgba, Mat bgra) {
+        mixChannels(rgba, 1, bgra, 1, ARGB2BGRA_MAPPING, 4);
     }
 
     public static void ARGBtoBGRA(Mat rgba, Mat bgra) {
@@ -38,6 +46,9 @@ public final class CvProcessingUtils implements PConstants {
         reordered.push_back(channels.get(0));
 
         merge(reordered, bgra);
+
+        channels.releaseReference();
+        reordered.releaseReference();
     }
 
     /**
@@ -104,11 +115,15 @@ public final class CvProcessingUtils implements PConstants {
         ByteBuffer bb = ByteBuffer.allocate(matPixels.length * 4);
         IntBuffer ib = bb.asIntBuffer();
         ib.put(matPixels);
-
         byte[] bvals = bb.array();
 
-        m.data().put(bvals);
-        ARGBtoBGRA(m, m);
+        Mat conversionMat = new Mat(m.size(), m.type());
+        conversionMat.data().put(bvals);
+
+        // use fast ARGB to BGRA
+        ARGBtoBGRAFast(conversionMat, m);
+
+        conversionMat.release();
     }
 
     public static Rect createValidROI(Size imageSize, int x, int y, int width, int height) {
