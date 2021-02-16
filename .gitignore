@@ -15,3 +15,6 @@ target
 data/family.jpg
 data/runner.jpg
 data/runner2.jpg
+*.dmp
+*.txt
+*.trc
