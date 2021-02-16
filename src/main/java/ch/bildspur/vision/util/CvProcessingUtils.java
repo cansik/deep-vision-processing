@@ -117,12 +117,14 @@ public final class CvProcessingUtils implements PConstants {
         ib.put(matPixels);
         byte[] bvals = bb.array();
 
-        Mat conversionMat = new Mat(m.size(), m.type());
+        Size size = m.size();
+        Mat conversionMat = new Mat(size, m.type());
         conversionMat.data().put(bvals);
 
         // use fast ARGB to BGRA
         ARGBtoBGRAFast(conversionMat, m);
 
+        size.releaseReference();
         conversionMat.release();
     }
 
