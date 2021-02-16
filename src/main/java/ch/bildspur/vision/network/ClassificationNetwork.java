@@ -90,7 +90,15 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
         int index = maxIndexPtr.x();
         float probability = (float) (probabilityPtr.get() / confidenceScale);
 
-        return new ClassificationResult(index, getLabelOrId(index), probability);
+        ClassificationResult result = new ClassificationResult(index, getLabelOrId(index), probability);
+
+        // cleanup
+        probabilityPtr.releaseReference();
+        maxIndexPtr.releaseReference();
+        inputBlob.release();
+        out.release();
+
+        return result;
     }
 
     @Override

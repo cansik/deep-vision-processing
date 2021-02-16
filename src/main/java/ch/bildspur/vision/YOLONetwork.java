@@ -84,9 +84,8 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         // evaluate result
         ResultList<ObjectDetectionResult> result = postprocess(frame, outs);
 
-        outs.releaseReference();
-
         // cleanup
+        outs.releaseReference();
         inputBlob.release();
 
         return result;
