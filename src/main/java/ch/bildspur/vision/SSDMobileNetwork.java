@@ -3,7 +3,7 @@ package ch.bildspur.vision;
 import ch.bildspur.vision.network.ObjectDetectionNetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.ResultList;
-import org.bytedeco.javacpp.FloatPointer;
+import org.bytedeco.javacpp.indexer.FloatIndexer;
 import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.opencv_core.*;
 import org.bytedeco.opencv.opencv_dnn.Net;
@@ -18,7 +18,9 @@ public class SSDMobileNetwork extends ObjectDetectionNetwork {
 
     private Path modelPath;
     private Path configPath;
+
     protected Net net;
+    private StringVector outNames;
 
     private int width;
     private int height;
@@ -40,6 +42,8 @@ public class SSDMobileNetwork extends ObjectDetectionNetwork {
         net = readNetFromTensorflow(
                 modelPath.toAbsolutePath().toString(),
                 configPath.toAbsolutePath().toString());
+
+        outNames = net.getUnconnectedOutLayersNames();
 
         if (DeepVision.ENABLE_CUDA_BACKEND) {
             net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
@@ -67,7 +71,6 @@ public class SSDMobileNetwork extends ObjectDetectionNetwork {
         net.setInput(inputBlob);
 
         // create output layers
-        StringVector outNames = net.getUnconnectedOutLayersNames();
         MatVector outs = new MatVector(outNames.size());
 
         // run detection
@@ -75,20 +78,19 @@ public class SSDMobileNetwork extends ObjectDetectionNetwork {
         Mat detection = outs.get(0);
 
         Mat detectionMat = new Mat(detection.size(2), detection.size(3), CV_32F, detection.ptr());
+        FloatIndexer data = detectionMat.createIndexer();
 
         // extract detections
         ResultList<ObjectDetectionResult> detections = new ResultList<>();
         for (int i = 0; i < detectionMat.rows(); i++) {
-            FloatPointer dataPtr = new FloatPointer(detectionMat.row(i).data());
-
-            float confidence = dataPtr.get(2);
+            float confidence = data.get(i, 2);
             if (confidence < confidenceThreshold) continue;
 
-            int label = Math.round(dataPtr.get(1)) - 1;
-            float xLeftBottom = dataPtr.get(3) * frame.cols();
-            float yLeftBottom = dataPtr.get(4) * frame.rows();
-            float xRightTop = dataPtr.get(5) * frame.cols();
-            float yRightTop = dataPtr.get(6) * frame.rows();
+            int label = Math.round(data.get(i,1)) - 1;
+            float xLeftBottom = data.get(i,3) * frame.cols();
+            float yLeftBottom = data.get(i,4) * frame.rows();
+            float xRightTop = data.get(i,5) * frame.cols();
+            float yRightTop = data.get(i,6) * frame.rows();
 
             int x = Math.round(xLeftBottom);
             int y = Math.round(yLeftBottom);
@@ -100,6 +102,11 @@ public class SSDMobileNetwork extends ObjectDetectionNetwork {
         }
 
         // todo: implement global nms for object detection algorithms
+
+        inputBlob.release();
+        detection.release();
+        detectionMat.release();
+        outs.releaseReference();
 
         return detections;
     }
