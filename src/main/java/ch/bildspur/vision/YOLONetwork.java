@@ -3,8 +3,6 @@ package ch.bildspur.vision;
 import ch.bildspur.vision.network.ObjectDetectionNetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.ResultList;
-import org.bytedeco.javacpp.BytePointer;
-import org.bytedeco.javacpp.DoublePointer;
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacpp.IntPointer;
 import org.bytedeco.javacpp.indexer.FloatIndexer;
@@ -14,12 +12,9 @@ import org.bytedeco.opencv.opencv_dnn.Net;
 import org.bytedeco.opencv.opencv_text.FloatVector;
 import org.bytedeco.opencv.opencv_text.IntVector;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
 import java.nio.file.Path;
 
-import static org.bytedeco.opencv.global.opencv_core.*;
+import static org.bytedeco.opencv.global.opencv_core.CV_32F;
 import static org.bytedeco.opencv.global.opencv_dnn.*;
 
 public class YOLONetwork extends ObjectDetectionNetwork {
@@ -34,7 +29,6 @@ public class YOLONetwork extends ObjectDetectionNetwork {
 
     private Net net;
     private StringVector outNames;
-    //private MatVector outs;
 
     public YOLONetwork(Path configPath, Path weightsPath, int width, int height) {
         this.configPath = configPath;
@@ -51,7 +45,6 @@ public class YOLONetwork extends ObjectDetectionNetwork {
 
         // setup output layers
         outNames = net.getUnconnectedOutLayersNames();
-        //outs = new MatVector(outNames.size());
 
         if (DeepVision.ENABLE_CUDA_BACKEND) {
             net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
@@ -150,6 +143,8 @@ public class YOLONetwork extends ObjectDetectionNetwork {
                 int classId = classIds.get(i);
                 detections.add(new ObjectDetectionResult(classId, getLabelOrId(classId), confidences.get(i),
                         box.x(), box.y(), box.width(), box.height()));
+
+                box.releaseReference();
             }
             return detections;
         }
@@ -170,6 +165,8 @@ public class YOLONetwork extends ObjectDetectionNetwork {
             int classId = classIds.get(idx);
             detections.add(new ObjectDetectionResult(classId, getLabelOrId(classId), confidences.get(idx),
                     box.x(), box.y(), box.width(), box.height()));
+
+            box.releaseReference();
         }
 
         // cleanup
