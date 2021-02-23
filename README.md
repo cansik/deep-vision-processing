@@ -92,6 +92,7 @@ Here you find a list of implemented networks:
 	- YOLOv3
 	- YOLOv4
 	- YOLOv4-tiny
+	- [YOLO Fastest & XL](https://github.com/dog-qiuqiu/Yolo-Fastest)
 	- SSDMobileNetV2
 	- Handtracking based on SSDMobileNetV2
 	- TextBoxes

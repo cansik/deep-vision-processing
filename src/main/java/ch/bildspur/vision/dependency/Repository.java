@@ -36,6 +36,12 @@ public class Repository {
     public static final Dependency YOLOv3SPPModel = new Dependency("yolov3-spp.cfg");
     public static final Dependency YOLOv3SPPWeight = new Dependency("yolov3-spp.weights");
 
+    public static final Dependency YOLOFastestModel = new Dependency("yolo-fastest.cfg");
+    public static final Dependency YOLOFastestWeight = new Dependency("yolo-fastest.weights");
+
+    public static final Dependency YOLOFastestXLModel = new Dependency("yolo-fastest-xl.cfg");
+    public static final Dependency YOLOFastestXLWeight = new Dependency("yolo-fastest-xl.weights");
+
     public static final Dependency YOLO9kModel = new Dependency("yolo9000.cfg");
     public static final Dependency YOLO9kWeight = new Dependency("yolo9000.weights");
 
@@ -153,4 +159,6 @@ public class Repository {
     public static final Dependency DORNDepthEstimationModel = new Dependency("DORN_cvpr_nyuv2.caffemodel");
 
     public static final Dependency MidasNetModel = new Dependency("midasnet.onnx");
+    public static final Dependency MidasNet21Model = new Dependency("midasnet2.1.onnx");
+    public static final Dependency MidasNet21SmallModel = new Dependency("midasnet2.1-small.onnx");
 }

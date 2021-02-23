@@ -8,6 +8,7 @@ import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.test.tools.StopWatch;
 import processing.core.PApplet;
 
+import java.nio.file.Paths;
 import java.util.List;
 
 public class YOLOWebcamTest extends PApplet {
@@ -35,7 +36,7 @@ public class YOLOWebcamTest extends PApplet {
         println("Is CUDA Enabled: " + vision.isCUDABackendEnabled());
 
         println("creating network...");
-        yolo = vision.createYOLOv4Tiny();
+        yolo = vision.createYOLOFastestXL();
 
         println("loading model...");
         yolo.setup();

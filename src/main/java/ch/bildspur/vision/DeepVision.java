@@ -171,6 +171,14 @@ public class DeepVision {
         return createYOLONetwork(Repository.YOLOv4TinyModel, Repository.YOLOv4TinyWeight, Repository.COCONames, inputSize);
     }
 
+    public YOLONetwork createYOLOFastest() {
+        return createYOLONetwork(Repository.YOLOFastestModel, Repository.YOLOFastestWeight, Repository.COCONames, 320);
+    }
+
+    public YOLONetwork createYOLOFastestXL() {
+        return createYOLONetwork(Repository.YOLOFastestXLModel, Repository.YOLOFastestXLWeight, Repository.COCONames, 320);
+    }
+
     public YOLONetwork createYOLOv3HandDetector() {
         return createYOLOv3HandDetector(416);
     }
@@ -396,8 +404,8 @@ public class DeepVision {
 
     // depth estimation
     public MidasNetwork createMidasNetwork() {
-        prepareDependencies(Repository.MidasNetModel);
-        return new MidasNetwork(Repository.MidasNetModel.getPath());
+        prepareDependencies(Repository.MidasNet21Model);
+        return new MidasNetwork(Repository.MidasNet21Model.getPath());
     }
 
     // face similarity
