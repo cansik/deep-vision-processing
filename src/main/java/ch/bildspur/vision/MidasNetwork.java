@@ -15,8 +15,7 @@ import java.nio.file.Path;
 
 import static org.bytedeco.opencv.global.opencv_core.*;
 import static org.bytedeco.opencv.global.opencv_dnn.*;
-import static org.bytedeco.opencv.global.opencv_imgproc.CV_INTER_AREA;
-import static org.bytedeco.opencv.global.opencv_imgproc.cvResize;
+import static org.bytedeco.opencv.global.opencv_imgproc.*;
 
 public class MidasNetwork extends BaseNeuralNetwork<ImageResult> {
     private Path model;
@@ -68,10 +67,12 @@ public class MidasNetwork extends BaseNeuralNetwork<ImageResult> {
 
         output = output.reshape(1, height);
 
+        // resize output instead of PImage to avoid Processing4 problems
+        resize(output, output, inputSize);
+
         // todo: result a depth frame instead of a color image!
-        PImage result = new PImage(output.size().width(), output.size().height());
+        PImage result = new PImage(inputSize.width(), inputSize.height());
         mapDepthToImage(output, result);
-        result.resize(inputSize.width(), inputSize.height());
         return new ImageResult(result);
     }
 
