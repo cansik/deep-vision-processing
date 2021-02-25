@@ -3,38 +3,42 @@ package ch.bildspur.vision.test;
 
 import ch.bildspur.video.Capture;
 import ch.bildspur.vision.DeepVisionPreview;
-import ch.bildspur.vision.MidasNetwork;
-import ch.bildspur.vision.result.ImageResult;
+import ch.bildspur.vision.TensorflowClassifierNetwork;
+import ch.bildspur.vision.network.ClassificationNetwork;
+import ch.bildspur.vision.result.ClassificationResult;
+import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.test.tools.StopWatch;
 import processing.core.PApplet;
-import processing.core.PImage;
 
 import java.nio.file.Paths;
+import java.util.List;
 
-public class MidasWebcamTest extends PApplet {
+public class ClassifierWebcamTest extends PApplet {
 
     public static void main(String... args) {
-        MidasWebcamTest sketch = new MidasWebcamTest();
+        ClassifierWebcamTest sketch = new ClassifierWebcamTest();
         sketch.runSketch();
     }
 
     public void settings() {
-        size(1280, 480);
+        size(640, 480);
     }
 
     Capture cam;
 
     DeepVisionPreview vision = new DeepVisionPreview(this);
-    MidasNetwork network;
-    ImageResult result;
+    ClassificationNetwork network;
+    ClassificationResult result;
 
     StopWatch watch = new StopWatch();
 
     public void setup() {
         colorMode(HSB, 360, 100, 100);
 
+        println("Is CUDA Enabled: " + vision.isCUDABackendEnabled());
+
         println("creating network...");
-        network = vision.createMidasNetworkSmall(); //new MidasNetwork(Paths.get("networks/MidasNet_small.onnx"));
+        network = new TensorflowClassifierNetwork(Paths.get("networks/tool.pb"), 224, 224, "tool", "pen", "none");
 
         println("loading model...");
         network.setup();
@@ -51,14 +55,18 @@ public class MidasWebcamTest extends PApplet {
             cam.read();
         }
 
-        println("inferencing...");
         watch.start();
         result = network.run(cam);
         watch.stop();
-        println("done!");
 
         image(cam, 0, 0);
-        image(result.getImage(), 640, 0);
-        surface.setTitle("Midas Network Test - FPS: " + Math.round(frameRate));
+
+        noFill();
+        strokeWeight(2f);
+
+        textSize(15);
+        text("Detected: " + result.getClassName() + " (" + result.getClassId() + ")", 30, 30);
+
+        surface.setTitle("YOLO Test - FPS: " + Math.round(frameRate));
     }
 }
