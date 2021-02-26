@@ -34,7 +34,9 @@ public class DeepVisionPreview extends DeepVision {
 
     public DORNDepthEstimationNetwork createDORNDepthEstimation() {
         prepareDependencies(Repository.DORNDepthEstimationDeployPrototext, Repository.DORNDepthEstimationModel);
-        return new DORNDepthEstimationNetwork(Repository.DORNDepthEstimationDeployPrototext.getPath(), Repository.DORNDepthEstimationModel.getPath());
+        return new DORNDepthEstimationNetwork(
+                Repository.DORNDepthEstimationDeployPrototext.getPath(),
+                Repository.DORNDepthEstimationModel.getPath());
     }
 
     public Face3DDFAV2Network create3DDFAV2() {
@@ -45,5 +47,16 @@ public class DeepVisionPreview extends DeepVision {
     public MidasNetwork createMidasNetworkSmall() {
         prepareDependencies(Repository.MidasNet21SmallModel);
         return new MidasNetwork(Repository.MidasNet21SmallModel.getPath());
+    }
+
+    public ColorizationNetwork createColorizationNetwork() {
+        prepareDependencies(Repository.ColorizationDeployProtoText,
+                Repository.ColorizationModel,
+                Repository.ColorizationParams);
+
+        return new ColorizationNetwork(
+                Repository.ColorizationDeployProtoText.getPath(),
+                Repository.ColorizationModel.getPath(),
+                Repository.ColorizationParams.getPath());
     }
 }

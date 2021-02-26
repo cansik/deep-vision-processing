@@ -161,4 +161,9 @@ public class Repository {
     public static final Dependency MidasNetModel = new Dependency("midasnet.onnx");
     public static final Dependency MidasNet21Model = new Dependency("midasnet2.1.onnx");
     public static final Dependency MidasNet21SmallModel = new Dependency("midasnet2.1-small.onnx");
+
+    // colorization
+    public static final Dependency ColorizationDeployProtoText = new Dependency("colorization_deploy_v2.prototxt");
+    public static final Dependency ColorizationModel = new Dependency("colorization_release_v2.caffemodel");
+    public static final Dependency ColorizationParams = new Dependency("colorization_parameter.xml");
 }

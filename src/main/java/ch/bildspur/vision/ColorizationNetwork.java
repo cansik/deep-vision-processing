@@ -14,8 +14,7 @@ import java.nio.file.Path;
 
 import static org.bytedeco.opencv.global.opencv_core.*;
 import static org.bytedeco.opencv.global.opencv_dnn.*;
-import static org.bytedeco.opencv.global.opencv_imgproc.COLOR_RGB2GRAY;
-import static org.bytedeco.opencv.global.opencv_imgproc.cvtColor;
+import static org.bytedeco.opencv.global.opencv_imgproc.*;
 
 public class ColorizationNetwork extends BaseNeuralNetwork<ImageResult> {
     private Path protoTextPath;
@@ -24,8 +23,6 @@ public class ColorizationNetwork extends BaseNeuralNetwork<ImageResult> {
 
     private Net net;
     private Scalar mean = new Scalar(-50.0, -50.0, -50.0, 0.0);
-
-    private StringVector outNames;
 
     public ColorizationNetwork(Path protoTextPath, Path modelPath, Path clusterCentersPath) {
         this.modelPath = modelPath;
@@ -36,7 +33,6 @@ public class ColorizationNetwork extends BaseNeuralNetwork<ImageResult> {
     @Override
     public boolean setup() {
         net = readNetFromCaffe(protoTextPath.toAbsolutePath().toString(), modelPath.toAbsolutePath().toString());
-        outNames = net.getUnconnectedOutLayersNames();
 
         // setup network
 
@@ -81,20 +77,13 @@ public class ColorizationNetwork extends BaseNeuralNetwork<ImageResult> {
         // set input
         net.setInput(inputBlob);
 
-        // create output layers
-        // MatVector outs = new MatVector(outNames.size());
-
         // run detection
-        //net.forward(outs, outNames);
-        Mat out = net.forward();
+        Mat output = net.forward();
 
-        // extract single result
-        MatVector images = new MatVector();
-        //imagesFromBlob(outs.get(0), images);
-        Mat output = images.get(0);
-
-        output = add(mean, output).asMat();
+        // post processing
         output.convertTo(output, CV_8U);
+        cvtColor(output, output, COLOR_GRAY2BGR);
+        resize(output, output, frame.size());
 
         // convert to processing
         // todo: make that later (keep free of processing)

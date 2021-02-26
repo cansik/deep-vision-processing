@@ -33,11 +33,7 @@ public class ColorizationTest extends PApplet {
         groundTruth = loadImage(sketchPath("data/office_bw.jpg"));
 
         println("creating network...");
-        network = new ColorizationNetwork(
-                Paths.get("networks/colorization_deploy_v2.prototxt"),
-                Paths.get("networks/colorization_release_v2.caffemodel"),
-                Paths.get("networks/colorization_parameter.xml")
-        );
+        network = vision.createColorizationNetwork();
 
         println("loading model...");
         network.setup();
