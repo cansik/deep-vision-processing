@@ -14,6 +14,8 @@ import java.nio.file.Path;
 
 import static org.bytedeco.opencv.global.opencv_core.*;
 import static org.bytedeco.opencv.global.opencv_dnn.*;
+import static org.bytedeco.opencv.global.opencv_highgui.imshow;
+import static org.bytedeco.opencv.global.opencv_highgui.waitKey;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
 
 public class ColorizationNetwork extends BaseNeuralNetwork<ImageResult> {
@@ -65,25 +67,67 @@ public class ColorizationNetwork extends BaseNeuralNetwork<ImageResult> {
 
     @Override
     public ImageResult run(Mat frame) {
-        // create grayscale version
-        cvtColor(frame, frame, COLOR_RGB2GRAY);
+        // prepare input frame
+        Mat labFrame = new Mat();
+        frame.convertTo(labFrame, CV_32FC3);
+        divide(labFrame, 255.0);
+        cvtColor(labFrame, labFrame, COLOR_RGB2Lab);
+
+        // resize
+        resize(labFrame, labFrame, new Size(224, 224));
+
+        // extract luminance channel
+        MatVector inputChannels = new MatVector(3);
+        split(labFrame, inputChannels);
+        Mat luminance = inputChannels.get(0);
+
+        // subtract mean
+        add(luminance, new Scalar(-50.0));
 
         // convert image into batch of images
-        Mat inputBlob = blobFromImage(frame,
-                1.0 / 255.0,
-                new Size(224, 224),
-                mean, false, false, CV_32F);
+        Mat inputBlob = blobFromImage(luminance);
 
         // set input
         net.setInput(inputBlob);
 
         // run detection
-        Mat output = net.forward();
+        Mat out = net.forward();
+
+        // convert 4 dim output [1, 2, 56, 56] int 2 dim [56, 56, 2]
+        Mat a = new Mat(56, 56, CV_32F, out.ptr(0, 0));
+        Mat b = new Mat(56, 56, CV_32F, out.ptr(0, 1));
+
+        // resize ab and l
+        resize(a, a, frame.size());
+        resize(b, b, frame.size());
+        resize(luminance, luminance, frame.size());
+
+        // merge channels
+        Mat output = new Mat(frame.size(), CV_32FC3);
+        MatVector outputChannels = new MatVector(0);
+
+        // add predicted a and b
+        outputChannels.push_back(luminance);
+        outputChannels.push_back(a);
+        outputChannels.push_back(b);
+
+        // create new output image
+        merge(outputChannels, output);
+
+        imshow("Luminance", luminance);
+        imshow("A", a);
+        imshow("B", b);
+
+        waitKey();
 
         // post processing
+        cvtColor(output, output, COLOR_Lab2BGR);
+        // todo: maybe clip values
+        multiply(output, 255.0);
         output.convertTo(output, CV_8U);
-        cvtColor(output, output, COLOR_GRAY2BGR);
-        resize(output, output, frame.size());
+
+        // todo: release all mat and matvectors!
+        labFrame.release();
 
         // convert to processing
         // todo: make that later (keep free of processing)
