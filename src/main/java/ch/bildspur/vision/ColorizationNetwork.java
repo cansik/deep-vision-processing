@@ -119,7 +119,7 @@ public class ColorizationNetwork extends BaseNeuralNetwork<ImageResult> {
         // post processing
         cvtColor(output, output, COLOR_Lab2BGR);
         // todo: maybe clip values
-        output.convertTo(output, CV_8UC3, 255.0, 50.0 / 255.0);
+        output.convertTo(output, CV_8UC3, 255.0, 0);
 
         // todo: release all mat and matvectors!
         labFrame.release();
