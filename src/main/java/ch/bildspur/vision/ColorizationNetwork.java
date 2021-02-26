@@ -19,12 +19,11 @@ import static org.bytedeco.opencv.global.opencv_highgui.waitKey;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
 
 public class ColorizationNetwork extends BaseNeuralNetwork<ImageResult> {
-    private Path protoTextPath;
-    private Path modelPath;
-    private Path clusterCentersPath;
+    private final Path protoTextPath;
+    private final Path modelPath;
+    private final Path clusterCentersPath;
 
     private Net net;
-    private Scalar mean = new Scalar(-50.0, -50.0, -50.0, 0.0);
 
     public ColorizationNetwork(Path protoTextPath, Path modelPath, Path clusterCentersPath) {
         this.modelPath = modelPath;
@@ -73,13 +72,14 @@ public class ColorizationNetwork extends BaseNeuralNetwork<ImageResult> {
         frame.convertTo(labFrame, CV_32FC3, 1 / 255.0, -50.0 / 255.0);
         cvtColor(labFrame, labFrame, COLOR_RGB2Lab);
 
-        // resize
-        resize(labFrame, labFrame, new Size(224, 224));
-
         // extract luminance channel
         MatVector inputChannels = new MatVector();
         split(labFrame, inputChannels);
         Mat luminance = inputChannels.get(0);
+
+        // resize
+        Mat resizedLuminance = new Mat();
+        resize(luminance, resizedLuminance, new Size(224, 224));
 
         /*
         luminance.convertTo(nlm, CV_8UC1, 255.0, 50.0 / 255.0);
@@ -88,7 +88,7 @@ public class ColorizationNetwork extends BaseNeuralNetwork<ImageResult> {
          */
 
         // convert image into batch of images
-        Mat inputBlob = blobFromImage(luminance);
+        Mat inputBlob = blobFromImage(resizedLuminance);
 
         // set input
         net.setInput(inputBlob);
@@ -103,7 +103,6 @@ public class ColorizationNetwork extends BaseNeuralNetwork<ImageResult> {
         // resize ab and l
         resize(a, a, frame.size());
         resize(b, b, frame.size());
-        resize(luminance, luminance, frame.size());
 
         // merge channels
         Mat output = new Mat(frame.size(), CV_32FC3);
