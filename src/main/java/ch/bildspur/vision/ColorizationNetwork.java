@@ -68,21 +68,24 @@ public class ColorizationNetwork extends BaseNeuralNetwork<ImageResult> {
     @Override
     public ImageResult run(Mat frame) {
         // prepare input frame
+        //Mat nlm = new Mat();
         Mat labFrame = new Mat();
-        frame.convertTo(labFrame, CV_32FC3);
-        divide(labFrame, 255.0);
+        frame.convertTo(labFrame, CV_32FC3, 1 / 255.0, -50.0 / 255.0);
         cvtColor(labFrame, labFrame, COLOR_RGB2Lab);
 
         // resize
         resize(labFrame, labFrame, new Size(224, 224));
 
         // extract luminance channel
-        MatVector inputChannels = new MatVector(3);
+        MatVector inputChannels = new MatVector();
         split(labFrame, inputChannels);
         Mat luminance = inputChannels.get(0);
 
-        // subtract mean
-        add(luminance, new Scalar(-50.0));
+        /*
+        luminance.convertTo(nlm, CV_8UC1, 255.0, 50.0 / 255.0);
+        imshow("NLM", nlm);
+        waitKey();
+         */
 
         // convert image into batch of images
         Mat inputBlob = blobFromImage(luminance);
@@ -114,17 +117,10 @@ public class ColorizationNetwork extends BaseNeuralNetwork<ImageResult> {
         // create new output image
         merge(outputChannels, output);
 
-        imshow("Luminance", luminance);
-        imshow("A", a);
-        imshow("B", b);
-
-        waitKey();
-
         // post processing
         cvtColor(output, output, COLOR_Lab2BGR);
         // todo: maybe clip values
-        multiply(output, 255.0);
-        output.convertTo(output, CV_8U);
+        output.convertTo(output, CV_8UC3, 255.0, 50.0 / 255.0);
 
         // todo: release all mat and matvectors!
         labFrame.release();
