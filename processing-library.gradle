@@ -28,9 +28,8 @@ task releaseProcessingLib {
         println("cleaning release...")
         project.delete(files(
                 "$releaseDirectory",
-                "$releaseRoot/$releaseName",
-                "$releaseRoot/${outputName}.zip",
-                "$releaseRoot/${outputName}.txt"
+                "$releaseRoot/${releaseName}.zip",
+                "$releaseRoot/${releaseName}.txt"
         ))
     }
 
