@@ -2,7 +2,7 @@
 def releaseRoot = "$rootDir/release"
 
 def releaseName = "$outputName$outputNamePostfix-$version"
-def releaseDirectory = "$releaseRoot/$outputName"
+def releaseDirectory = "$releaseRoot/$releaseName"
 
 task releaseProcessingLib {
     dependsOn {
@@ -16,6 +16,10 @@ task releaseProcessingLib {
 
     doFirst {
         println "releasing library $outputName..."
+
+        // printing current jvm
+        def currentJvm = org.gradle.internal.jvm.Jvm.current()
+        println currentJvm
 
         if (project.hasProperty("cuda")) {
             println "CUDA support enabled!"
@@ -90,8 +94,4 @@ task packageRelease(type: Zip) {
 
 task renameRelease {
     mustRunAfter packageRelease
-
-    doLast {
-        file("$releaseRoot/${outputName}").renameTo(file("$releaseRoot/${releaseName}"))
-    }
 }
