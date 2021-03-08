@@ -10,7 +10,7 @@ _Caution_: The API is still in development and can change at any time.
 *Lightweight OpenPose Example*
 
 ## Install
-Download the [latest](https://github.com/cansik/deep-vision-processing/releases/tag/v0.6.1-alpha) prebuilt version from the [release](https://github.com/cansik/deep-vision-processing/releases) sections and install it into your Processing library folder.
+Download the [latest](https://github.com/cansik/deep-vision-processing/releases/tag/v0.6.2-alpha) prebuilt version from the [release](https://github.com/cansik/deep-vision-processing/releases) sections and install it into your Processing library folder.
 
 Because the library is still under development, it is not yet published in the Processing contribution manager.
 
