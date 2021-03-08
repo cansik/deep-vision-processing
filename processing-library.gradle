@@ -9,7 +9,11 @@ task releaseProcessingLib {
         clean
         build
         javadoc
-        fatJar
+        if (project.hasProperty("disable-fatjar")) {
+            jar
+        } else {
+            fatJar
+        }
     }
 
     finalizedBy 'packageRelease', 'renameRelease'
@@ -36,12 +40,27 @@ task releaseProcessingLib {
     doLast {
         println "creating package..."
 
-        println "copy library..."
-        project.copy {
-            from "$buildDir/libs/$outputName-complete.jar"
-            into "$releaseDirectory/library"
-            rename "$outputName-complete.jar", "${outputName}.jar"
+        if (project.hasProperty("disable-fatjar")) {
+            println "copy library..."
+            project.copy {
+                from "$buildDir/libs/${outputName}.jar"
+                into "$releaseDirectory/library"
+            }
+
+            println "copy dependencies..."
+            project.copy {
+                from configurations.runtime
+                into "$releaseDirectory/library"
+            }
+        } else {
+            println "copy fatjar library..."
+            project.copy {
+                from "$buildDir/libs/$outputName-complete.jar"
+                into "$releaseDirectory/library"
+                rename "$outputName-complete.jar", "${outputName}.jar"
+            }
         }
+
 
         println "copy assets (only if necessary)..."
         project.copy {
