@@ -277,10 +277,11 @@ gradlew.bat releaseProcessingLib
 To build with CUDA support enable the property `cuda`:
 
 ```bash
-gradlew.bat releaseProcessingLib -Pcuda
+gradlew.bat releaseProcessingLib -Pcuda -Pdisable-fatjar
 ```
 
-*This will take several minutes and result in a `3.5 GB` JAR file.*
+*This will take several minutes and result in a `5.3 GB` folder.*
+*`disable-fatjar` prevents form creating a fatjar, which would be too big to be zipped.*
 
 ### Platform Specific
 To build only on a specific platform use the property `javacppPlatform`:
