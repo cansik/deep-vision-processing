@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ObjectDetectionPipeline<R extends NetworkResult> extends NetworkPipeline<ResultList<DetectionPipelineResult<R>>> {
-    private ObjectDetectionNetwork detectionNetwork;
-    private MultiProcessingNetwork<R>[] postProcessors;
+    private final ObjectDetectionNetwork detectionNetwork;
+    private final MultiProcessingNetwork<R>[] postProcessors;
 
     public ObjectDetectionPipeline(ObjectDetectionNetwork detectionNetwork, MultiProcessingNetwork<R>... postProcessors) {
         this.detectionNetwork = detectionNetwork;

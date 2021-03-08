@@ -6,6 +6,7 @@ import ch.bildspur.vision.DeepVisionPreview;
 import ch.bildspur.vision.StyleTransferNetwork;
 import ch.bildspur.vision.result.ImageResult;
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PImage;
 
 import java.nio.file.Paths;
@@ -22,6 +23,7 @@ public class ColorizationTest extends PApplet {
     }
 
     PImage groundTruth;
+    PImage blackWhite;
 
     DeepVisionPreview vision = new DeepVisionPreview(this);
     ColorizationNetwork network;
@@ -30,7 +32,9 @@ public class ColorizationTest extends PApplet {
     public void setup() {
         colorMode(HSB, 360, 100, 100);
 
-        groundTruth = loadImage(sketchPath("data/office_bw.jpg"));
+        groundTruth = loadImage(sketchPath("data/kalen-emsley-Bkci_8qcdvQ-unsplash.jpg"));
+        blackWhite = loadImage(sketchPath("data/kalen-emsley-Bkci_8qcdvQ-unsplash.jpg"));
+        blackWhite.filter(PConstants.GRAY);
 
         println("creating network...");
         network = vision.createColorizationNetwork();
@@ -39,7 +43,7 @@ public class ColorizationTest extends PApplet {
         network.setup();
 
         println("inferencing...");
-        result = network.run(groundTruth);
+        result = network.run(blackWhite);
         println("done!");
 
         noLoop();
