@@ -301,7 +301,8 @@ Please open an issue if you have a cool network that could be implemented or jus
 
 The idea was to give artist and makers a simple tool to run networks inside of Processing. To train a network needs a lot of specific knowledge about Neural Networks (CNN in specific).
 
-Of course it is possible to train your own YOLO or SSDMobileNet and use the weights with this library.
+Of course it is possible to train your own YOLO or SSDMobileNet and use the weights with this library. Check out the following example for detection facemasks: 
+[cansik/yolo-mask-detection](https://github.com/cansik/yolo-mask-detection)
 
 > Is it compatible with Greg Borensteins [OpenCV for Processing](https://github.com/atduskgreg/opencv-processing)?
 
