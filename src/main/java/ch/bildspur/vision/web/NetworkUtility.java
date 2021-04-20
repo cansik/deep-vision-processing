@@ -1,6 +1,7 @@
 package ch.bildspur.vision.web;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -9,7 +10,7 @@ import java.nio.file.Path;
 
 public class NetworkUtility {
     public static void downloadFile(String remoteURL, Path localPath, ProgressCallBack callback) {
-        FileOutputStream fos;
+        FileOutputStream fos = null;
         ReadableByteChannel rbc;
         URL url;
         try {
@@ -20,6 +21,14 @@ public class NetworkUtility {
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
