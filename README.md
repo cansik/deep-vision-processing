@@ -10,9 +10,12 @@ _Caution_: The API is still in development and can change at any time.
 *Lightweight OpenPose Example*
 
 ## Install
-Download the [latest](https://github.com/cansik/deep-vision-processing/releases/tag/v0.6.2-alpha) prebuilt version from the [release](https://github.com/cansik/deep-vision-processing/releases) sections and install it into your Processing library folder.
+It is recommended to use the contribution manager in the Processing app to install the library.
 
-Because the library is still under development, it is not yet published in the Processing contribution manager.
+![image](https://user-images.githubusercontent.com/5220162/118391536-05b1ea80-b635-11eb-9704-2c5b780008df.png)
+
+### Manual
+Download the [latest](https://github.com/cansik/deep-vision-processing/releases/tag/v0.6.2-alpha) prebuilt version from the [release](https://github.com/cansik/deep-vision-processing/releases) sections and install it into your Processing library folder.
 
 ## Usage
 The base of the library is the `DeepVision` class. It is used to download the pretrained models and create new networks.
