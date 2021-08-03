@@ -15,7 +15,7 @@ It is recommended to use the contribution manager in the Processing app to insta
 ![image](https://user-images.githubusercontent.com/5220162/118391536-05b1ea80-b635-11eb-9704-2c5b780008df.png)
 
 ### Manual
-Download the [latest](https://github.com/cansik/deep-vision-processing/releases/tag/v0.6.2-alpha) prebuilt version from the [release](https://github.com/cansik/deep-vision-processing/releases) sections and install it into your Processing library folder.
+Download the [latest](https://github.com/cansik/deep-vision-processing/releases/tag/v0.7.0-alpha) prebuilt version from the [release](https://github.com/cansik/deep-vision-processing/releases) sections and install it into your Processing library folder.
 
 ## Usage
 The base of the library is the `DeepVision` class. It is used to download the pretrained models and create new networks.
@@ -273,7 +273,7 @@ Run gradle to build a new release package under `/release/deepvision.zip`:
 gradlew.bat releaseProcessingLib
 
 # mac / unix
-./gradlew gradlew.bat releaseProcessingLib
+./gradlew releaseProcessingLib
 ```
 
 ### Cuda Support
