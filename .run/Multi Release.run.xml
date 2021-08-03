@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Multi Release" type="CompoundRunConfigurationType">
+    <toRun name="Release CUDA windows-x86_64" type="GradleRunConfiguration" />
+    <toRun name="Release CUDA linux-arm64" type="GradleRunConfiguration" />
+    <toRun name="Release All" type="GradleRunConfiguration" />
+    <toRun name="Release All CUDA" type="GradleRunConfiguration" />
+    <toRun name="Release CUDA linux-x86_64" type="GradleRunConfiguration" />
+    <method v="2" />
+  </configuration>
+</component>
