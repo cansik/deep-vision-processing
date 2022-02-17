@@ -291,7 +291,7 @@ To build only on a specific platform use the property `javacppPlatform`:
 
 ```bash
 # builds with support for all platforms
-gradlew.bat releaseProcessingLib -PjavacppPlatform=linux-x86_64,macosx-x86_64,windows-x86_64,linux-armhf,linux-arm64
+gradlew.bat releaseProcessingLib -PjavacppPlatform=linux-x86_64,macosx-x86_64,macosx-arm64,windows-x86_64,linux-armhf,linux-arm64
 ```
 
 ## FAQ
