@@ -1,4 +1,4 @@
-# Deep Vision Processing [![Build Status](https://travis-ci.org/cansik/deep-vision-processing.svg?branch=master)](https://travis-ci.org/cansik/deep-vision-processing) [![Build status](https://ci.appveyor.com/api/projects/status/6026c9qq3my86jgh?svg=true)](https://ci.appveyor.com/project/cansik/deep-vision-processing)
+# Deep Vision Processing [![Build](https://github.com/cansik/deep-vision-processing/actions/workflows/build.yml/badge.svg)](https://github.com/cansik/deep-vision-processing/actions/workflows/build.yml)
 Deep computer-vision algorithms for [Processing](https://processing.org/).
 
 The idea behind this library is to provide a simple way to use (inference) machine learning algorithms for computer vision tasks inside Processing. Mainly portability and easy-to-use are the primary goals of this library. Starting with version `0.6.0` CUDA inferencing support is built into the library (Windows & Linux).
@@ -15,7 +15,7 @@ It is recommended to use the contribution manager in the Processing app to insta
 ![image](https://user-images.githubusercontent.com/5220162/118391536-05b1ea80-b635-11eb-9704-2c5b780008df.png)
 
 ### Manual
-Download the [latest](https://github.com/cansik/deep-vision-processing/releases/tag/v0.7.0-alpha) prebuilt version from the [release](https://github.com/cansik/deep-vision-processing/releases) sections and install it into your Processing library folder.
+Download the [latest](https://github.com/cansik/deep-vision-processing/releases/tag/v0.8.0-alpha) prebuilt version from the [release](https://github.com/cansik/deep-vision-processing/releases) sections and install it into your Processing library folder.
 
 ## Usage
 The base of the library is the `DeepVision` class. It is used to download the pretrained models and create new networks.
@@ -67,7 +67,7 @@ ResultList<ObjectDetectionResult> detections = network.run(myImg);
 Please have a look at the specific networks for further information or at the [examples](examples).
 
 ### CUDA Support
-With version `0.6.0` it is possible to [download the CUDA bundled libraries](https://github.com/cansik/deep-vision-processing/releases/tag/v0.6.2-alpha). This enables to run most of the DNN's on CUDA enabled graphics cards. For most networks this is necessary to run them in real-time. If you have the cuda-bundled version installed and run deep-vision on a Linux or Windows with an NVIDIA graphics card, you are able to enable the CUDA backend:
+With version `0.6.0` it is possible to [download the CUDA bundled libraries](https://github.com/cansik/deep-vision-processing/releases/tag/v0.8.0-alpha). This enables to run most of the DNN's on CUDA enabled graphics cards. For most networks this is necessary to run them in real-time. If you have the cuda-bundled version installed and run deep-vision on a Linux or Windows with an NVIDIA graphics card, you are able to enable the CUDA backend:
 
 ```java
 // Second parameter (enableCUDABackend) enables CUDA
