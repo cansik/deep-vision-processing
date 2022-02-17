@@ -56,10 +56,7 @@ public class ColorizationNetwork extends BaseNeuralNetwork<ImageResult> {
         outputBlobs.push_back(emptyOutput);
         net.getLayer(new DictValue("conv8_313_rh")).blobs(outputBlobs);
 
-        if (DeepVision.ENABLE_CUDA_BACKEND) {
-            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
-            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
-        }
+        DeepVision.enableDesiredBackend(net);
 
         return true;
     }

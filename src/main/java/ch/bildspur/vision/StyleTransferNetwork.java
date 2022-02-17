@@ -29,10 +29,7 @@ public class StyleTransferNetwork extends BaseNeuralNetwork<ImageResult> {
     public boolean setup() {
         net = readNetFromTorch(model.toAbsolutePath().toString());
 
-        if (DeepVision.ENABLE_CUDA_BACKEND) {
-            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
-            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
-        }
+        DeepVision.enableDesiredBackend(net);
 
         return true;
     }

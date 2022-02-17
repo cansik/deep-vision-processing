@@ -46,10 +46,7 @@ public class MaskRCNN extends ObjectSegmentationNetwork {
         outNames.push_back("detection_out_final");
         outNames.push_back("detection_masks");
 
-        if (DeepVision.ENABLE_CUDA_BACKEND) {
-            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
-            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
-        }
+        DeepVision.enableDesiredBackend(net);
 
         this.loadLabels(labelsPath);
 

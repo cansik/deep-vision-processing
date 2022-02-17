@@ -28,10 +28,7 @@ public class DORNDepthEstimationNetwork extends BaseNeuralNetwork<ImageResult> {
     public boolean setup() {
         net = readNetFromCaffe(protoTextPath.toAbsolutePath().toString(), modelPath.toAbsolutePath().toString());
 
-        if (DeepVision.ENABLE_CUDA_BACKEND) {
-            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
-            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
-        }
+        DeepVision.enableDesiredBackend(net);
 
         return true;
     }

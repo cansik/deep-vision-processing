@@ -46,10 +46,7 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         // setup output layers
         outNames = net.getUnconnectedOutLayersNames();
 
-        if (DeepVision.ENABLE_CUDA_BACKEND) {
-            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
-            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
-        }
+        DeepVision.enableDesiredBackend(net);
 
         if (net.empty()) {
             System.out.println("Can't load network!");

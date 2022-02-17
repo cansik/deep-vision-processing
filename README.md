@@ -15,7 +15,7 @@ It is recommended to use the contribution manager in the Processing app to insta
 ![image](https://user-images.githubusercontent.com/5220162/118391536-05b1ea80-b635-11eb-9704-2c5b780008df.png)
 
 ### Manual
-Download the [latest](https://github.com/cansik/deep-vision-processing/releases/tag/v0.8.0-alpha) prebuilt version from the [release](https://github.com/cansik/deep-vision-processing/releases) sections and install it into your Processing library folder.
+Download the [latest](https://github.com/cansik/deep-vision-processing/releases/tag/v0.8.1-alpha) prebuilt version from the [release](https://github.com/cansik/deep-vision-processing/releases) sections and install it into your Processing library folder.
 
 ## Usage
 The base of the library is the `DeepVision` class. It is used to download the pretrained models and create new networks.
@@ -66,8 +66,16 @@ ResultList<ObjectDetectionResult> detections = network.run(myImg);
 
 Please have a look at the specific networks for further information or at the [examples](examples).
 
-### CUDA Support
-With version `0.6.0` it is possible to [download the CUDA bundled libraries](https://github.com/cansik/deep-vision-processing/releases/tag/v0.8.0-alpha). This enables to run most of the DNN's on CUDA enabled graphics cards. For most networks this is necessary to run them in real-time. If you have the cuda-bundled version installed and run deep-vision on a Linux or Windows with an NVIDIA graphics card, you are able to enable the CUDA backend:
+### OpenCL Backend Support
+With version `0.8.1` by default if OpenCL is enabled, it will be used as backend. If CUDA is enabled too, CUDA will be preferred. It is possible to force the CPU backend by setting the following option:
+
+```java
+DeepVision vision = new DeepVision(this);
+vision.setUseDefaultBackend(true);
+```
+
+### CUDA Backend Support
+With version `0.6.0` it is possible to [download the CUDA bundled libraries](https://github.com/cansik/deep-vision-processing/releases/tag/v0.8.1-alpha). This enables to run most of the DNN's on CUDA enabled graphics cards. For most networks this is necessary to run them in real-time. If you have the cuda-bundled version installed and run deep-vision on a Linux or Windows with an NVIDIA graphics card, you are able to enable the CUDA backend:
 
 ```java
 // Second parameter (enableCUDABackend) enables CUDA

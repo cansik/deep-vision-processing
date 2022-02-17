@@ -3,6 +3,8 @@ package ch.bildspur.vision;
 import ch.bildspur.vision.dependency.Dependency;
 import ch.bildspur.vision.dependency.Repository;
 import ch.bildspur.vision.util.ProcessingUtils;
+import org.bytedeco.opencv.global.opencv_dnn;
+import org.bytedeco.opencv.opencv_dnn.Net;
 import processing.core.PApplet;
 
 import java.io.IOException;
@@ -10,9 +12,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.bytedeco.opencv.global.opencv_core.getCudaEnabledDeviceCount;
+import static org.bytedeco.opencv.global.opencv_core.haveOpenCL;
 
 public class DeepVision {
     public static boolean ENABLE_CUDA_BACKEND = false;
+    public static boolean USE_DEFAULT_BACKEND = false;
 
     private PApplet sketch;
     private boolean storeNetworksInSketch = false;
@@ -24,6 +28,26 @@ public class DeepVision {
     public DeepVision(PApplet sketch, boolean enableCUDABackend) {
         this.sketch = sketch;
         ENABLE_CUDA_BACKEND = enableCUDABackend;
+    }
+
+    public static void enableDesiredBackend(Net net) {
+        if (USE_DEFAULT_BACKEND) return;
+
+        if(haveOpenCL()) {
+            System.out.println("DNN OpenCL backend enabled");
+            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_OPENCV);
+            net.setPreferableTarget(opencv_dnn.DNN_TARGET_OPENCL);
+        }
+
+        if (DeepVision.ENABLE_CUDA_BACKEND) {
+            System.out.println("DNN CUDA backend enabled");
+            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
+            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
+        }
+    }
+
+    public void setUseDefaultBackend(boolean value) {
+        USE_DEFAULT_BACKEND = value;
     }
 
     public boolean isCUDABackendEnabled() {

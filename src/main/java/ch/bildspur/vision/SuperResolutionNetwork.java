@@ -7,6 +7,7 @@ import org.bytedeco.javacpp.Loader;
 import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.global.opencv_quality;
 import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_dnn.Net;
 import org.bytedeco.opencv.opencv_dnn_superres.DnnSuperResImpl;
 import processing.core.PImage;
 
@@ -33,10 +34,7 @@ public class SuperResolutionNetwork extends BaseNeuralNetwork<ImageResult> {
         net.readModel(model.toAbsolutePath().toString());
         net.setModel(name, scale);
 
-        if (DeepVision.ENABLE_CUDA_BACKEND) {
-            net.setPreferableBackend(opencv_dnn.DNN_BACKEND_CUDA);
-            net.setPreferableTarget(opencv_dnn.DNN_TARGET_CUDA);
-        }
+        DeepVision.enableDesiredBackend(new Net(net));
 
         return true;
     }

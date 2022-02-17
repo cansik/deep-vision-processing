@@ -4,7 +4,6 @@ package ch.bildspur.vision.test;
 import ch.bildspur.video.Capture;
 import ch.bildspur.vision.DeepVisionPreview;
 import ch.bildspur.vision.MaskRCNN;
-import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.ObjectSegmentationResult;
 import ch.bildspur.vision.test.tools.StopWatch;
 import ch.bildspur.vision.util.CvProcessingUtils;
