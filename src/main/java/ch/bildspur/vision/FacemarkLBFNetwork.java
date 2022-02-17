@@ -69,4 +69,8 @@ public class FacemarkLBFNetwork extends BaseNeuralNetwork<FacialLandmarkResult> 
 
         return results;
     }
+
+    public FacemarkLBF getNet() {
+        return net;
+    }
 }

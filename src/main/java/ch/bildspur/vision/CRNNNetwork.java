@@ -67,4 +67,8 @@ public class CRNNNetwork extends BaseNeuralNetwork<TextResult> {
 
         return new TextResult("hello", 0.0f);
     }
+
+    public Net getNet() {
+        return net;
+    }
 }

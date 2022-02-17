@@ -51,4 +51,7 @@ public class SuperResolutionNetwork extends BaseNeuralNetwork<ImageResult> {
         return new ImageResult(result);
     }
 
+    public DnnSuperResImpl getNet() {
+        return net;
+    }
 }

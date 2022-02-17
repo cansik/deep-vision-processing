@@ -118,4 +118,8 @@ public class SSDMobileNetwork extends ObjectDetectionNetwork {
     public void setConfidenceThreshold(float confidenceThreshold) {
         this.confidenceThreshold = confidenceThreshold;
     }
+
+    public Net getNet() {
+        return net;
+    }
 }

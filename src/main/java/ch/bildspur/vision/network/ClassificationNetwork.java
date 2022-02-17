@@ -110,4 +110,8 @@ public abstract class ClassificationNetwork extends LabeledNetwork<Classificatio
     public ResultList<ClassificationResult> runByDetections(Mat frame, ResultList<ObjectDetectionResult> detections) {
         return multiProcessor.runByDetections(frame, detections);
     }
+
+    public Net getNet() {
+        return net;
+    }
 }

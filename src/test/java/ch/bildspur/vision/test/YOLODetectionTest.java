@@ -5,6 +5,7 @@ import ch.bildspur.vision.DeepVisionPreview;
 import ch.bildspur.vision.YOLONetwork;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.test.tools.StopWatch;
+import org.opencv.dnn.Dnn;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -43,6 +44,9 @@ public class YOLODetectionTest extends PApplet {
 
         println("loading model...");
         yolo.setup();
+
+        yolo.getNet().setPreferableBackend(Dnn.DNN_BACKEND_OPENCV);
+        yolo.getNet().setPreferableTarget(Dnn.DNN_TARGET_OPENCL);
 
         yolo.setConfidenceThreshold(0.2f);
 

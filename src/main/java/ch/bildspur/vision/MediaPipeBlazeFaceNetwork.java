@@ -87,4 +87,8 @@ public class MediaPipeBlazeFaceNetwork extends ObjectDetectionNetwork {
 
         return new ResultList<>();
     }
+
+    public Net getNet() {
+        return net;
+    }
 }

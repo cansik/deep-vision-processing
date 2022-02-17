@@ -84,4 +84,8 @@ public class Face3DDFAV2Network extends BaseNeuralNetwork<FacialLandmarkResult> 
 
         return results;
     }
+
+    public Net getNet() {
+        return net;
+    }
 }

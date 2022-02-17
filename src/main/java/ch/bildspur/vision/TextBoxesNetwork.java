@@ -73,4 +73,8 @@ public class TextBoxesNetwork extends ObjectDetectionNetwork {
     public void setNmsThreshold(float nmsThreshold) {
         this.nmsThreshold = nmsThreshold;
     }
+
+    public TextDetectorCNN getNet() {
+        return net;
+    }
 }

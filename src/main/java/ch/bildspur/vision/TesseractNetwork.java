@@ -69,4 +69,8 @@ public class TesseractNetwork extends BaseNeuralNetwork<TextResult> implements M
     public ResultList<TextResult> runByDetections(Mat frame, ResultList<ObjectDetectionResult> detections) {
         return polyExecutor.runByDetections(frame, detections);
     }
+
+    public TessBaseAPI getApi() {
+        return api;
+    }
 }

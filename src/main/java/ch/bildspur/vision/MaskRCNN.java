@@ -140,4 +140,8 @@ public class MaskRCNN extends ObjectSegmentationNetwork {
     public void setMaskThreshold(float maskThreshold) {
         this.maskThreshold = maskThreshold;
     }
+
+    public Net getNet() {
+        return net;
+    }
 }

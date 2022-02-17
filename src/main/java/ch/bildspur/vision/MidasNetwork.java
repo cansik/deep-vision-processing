@@ -95,4 +95,8 @@ public class MidasNetwork extends BaseNeuralNetwork<ImageResult> {
         depthFrame.convertTo(depthFrame, CV_8U, alpha, beta);
         CvProcessingUtils.toPImage(depthFrame, img);
     }
+
+    public Net getNet() {
+        return net;
+    }
 }

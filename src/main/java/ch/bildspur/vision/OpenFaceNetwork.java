@@ -73,4 +73,8 @@ public class OpenFaceNetwork extends BaseNeuralNetwork<VectorResult> implements 
     public ResultList<VectorResult> runByDetections(Mat frame, ResultList<ObjectDetectionResult> detections) {
         return multiProcessor.runByDetections(frame, detections);
     }
+
+    public Net getNet() {
+        return net;
+    }
 }

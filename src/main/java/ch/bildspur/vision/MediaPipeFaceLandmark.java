@@ -83,4 +83,8 @@ public class MediaPipeFaceLandmark extends BaseNeuralNetwork<FacialLandmarkResul
 
         return results;
     }
+
+    public Net getNet() {
+        return net;
+    }
 }

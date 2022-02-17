@@ -77,4 +77,8 @@ public class CascadeClassifierNetwork extends ObjectDetectionNetwork {
     public void setFlags(int flags) {
         this.flags = flags;
     }
+
+    public CascadeClassifier getNet() {
+        return net;
+    }
 }

@@ -207,4 +207,8 @@ public class ULFGFaceDetectionNetwork extends ObjectDetectionNetwork {
     public void setIouThreshold(float iouThreshold) {
         this.iouThreshold = iouThreshold;
     }
+
+    public Net getNet() {
+        return net;
+    }
 }

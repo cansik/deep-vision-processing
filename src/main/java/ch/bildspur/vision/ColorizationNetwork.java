@@ -130,4 +130,8 @@ public class ColorizationNetwork extends BaseNeuralNetwork<ImageResult> {
         CvProcessingUtils.toPImage(output, result);
         return new ImageResult(result);
     }
+
+    public Net getNet() {
+        return net;
+    }
 }
