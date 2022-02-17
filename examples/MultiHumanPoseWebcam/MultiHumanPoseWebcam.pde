@@ -32,8 +32,7 @@ public void setup() {
   network.setConfidenceThreshold(0.5);
 
   println("setup camera...");
-  String[] cams = Capture.list();
-  cam = new Capture(this, cams[0]);
+  cam = new Capture(this, "pipeline:autovideosrc");
   cam.start();
 }
 
@@ -81,18 +80,18 @@ public void draw() {
 
 private void drawHuman(HumanPoseResult human) {
   // draw human
-  connect(human.getLeftAnkle(), 
-    human.getLeftKnee(), 
-    human.getLeftHip(), 
-    human.getLeftShoulder(), 
-    human.getLeftElbow(), 
+  connect(human.getLeftAnkle(),
+    human.getLeftKnee(),
+    human.getLeftHip(),
+    human.getLeftShoulder(),
+    human.getLeftElbow(),
     human.getLeftWrist());
 
-  connect(human.getRightAnkle(), 
-    human.getRightKnee(), 
-    human.getRightHip(), 
-    human.getRightShoulder(), 
-    human.getRightElbow(), 
+  connect(human.getRightAnkle(),
+    human.getRightKnee(),
+    human.getRightHip(),
+    human.getRightShoulder(),
+    human.getRightElbow(),
     human.getRightWrist());
 
   connect(human.getLeftHip(), human.getRightHip());
