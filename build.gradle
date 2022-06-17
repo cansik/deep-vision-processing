@@ -15,7 +15,7 @@ repositories {
 }
 
 configurations {
-    jar.archiveName = outputName + '.jar'
+    jar.archiveFileName = outputName + '.jar'
 
     processing
     compile.extendsFrom processing
@@ -23,28 +23,28 @@ configurations {
 
 javadoc {
     source = sourceSets.main.allJava
-    classpath = configurations.runtime
+    classpath = configurations.runtimeOnly
 }
 
 dependencies {
     // compile
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    testCompile 'com.github.cansik:webcam-capture-processing:8f1ea8d38d'
+    testImplementation group: 'junit', name: 'junit', version: '4.11'
+    testImplementation 'com.github.cansik:webcam-capture-processing:8f1ea8d38d'
 
     // opencv (make sure you have updated the local maven repo: mvn -U compile)
-    compile (group: 'org.bytedeco', name: 'javacv', version: "1.5.7"){
+    implementation (group: 'org.bytedeco', name: 'javacv', version: "1.5.7"){
         exclude group: 'org.bytedeco', module: 'librealsense2'
         exclude group: 'org.bytedeco', module: 'librealsense2-platform'
     }
 
-    compile group: 'org.bytedeco', name: 'opencv-platform', version: "4.5.5-1.5.7"
-    compile group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.19-1.5.7"
-    compile group: 'org.bytedeco', name: 'tesseract-platform', version: "5.0.1-1.5.7"
+    implementation group: 'org.bytedeco', name: 'opencv-platform', version: "4.5.5-1.5.7"
+    implementation group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.19-1.5.7"
+    implementation group: 'org.bytedeco', name: 'tesseract-platform', version: "5.0.1-1.5.7"
 
     // cuda additions
     if (project.hasProperty("cuda")) {
-        compile group: 'org.bytedeco', name: 'opencv-platform-gpu', version: "4.5.5-1.5.7"
-        compile group: 'org.bytedeco', name: 'cuda-platform-redist', version: "11.6-8.3-1.5.7"
+        implementation group: 'org.bytedeco', name: 'opencv-platform-gpu', version: "4.5.5-1.5.7"
+        implementation group: 'org.bytedeco', name: 'cuda-platform-redist', version: "11.6-8.3-1.5.7"
     }
 
     // processing
@@ -54,13 +54,14 @@ dependencies {
 }
 
 task fatJar(type: Jar) {
-    archiveName = "$outputName-complete.jar"
-    dependsOn configurations.runtime
-    from {
-        (configurations.runtime - configurations.processing).collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
-    }
+    archiveFileName = "$outputName-complete.jar"
+    // dependsOn configurations.runtimeOnly
+    // from {
+    //     (configurations.runtime - configurations.processing).collect {
+    //         it.isDirectory() ? it : zipTree(it)
+    //     }
+    // }
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
 
