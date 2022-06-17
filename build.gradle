@@ -12,6 +12,7 @@ repositories {
     mavenCentral()
     mavenLocal()
     maven { url 'https://jitpack.io' }
+    // flatDir dirs: "${rootDir}/libs"
 }
 
 configurations {
@@ -48,13 +49,15 @@ dependencies {
     }
 
     // processing
-    processing group: 'org.processing', name: 'core', version: '3.3.7'
-    processing group: 'org.jogamp.jogl', name: 'jogl-all-main', version: '2.3.2'
-    processing group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version: '2.3.2'
+    implementation fileTree(include: ["core.jar", "jogl-all-main.jar", "gluegen-rt-main.jar"], dir: 'libs')
+    // processing group: 'org.processing', name: 'core', version: '3.3.7'
+    // processing group: 'org.jogamp.jogl', name: 'jogl-all-main', version: '2.3.2'
+    // processing group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version: '2.3.2'
 }
 
 task fatJar(type: Jar) {
     archiveFileName = "$outputName-complete.jar"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     // dependsOn configurations.runtimeOnly
     // from {
     //     (configurations.runtime - configurations.processing).collect {
