@@ -18,3 +18,4 @@ data/runner2.jpg
 *.dmp
 *.txt
 *.trc
+.DS_Store
