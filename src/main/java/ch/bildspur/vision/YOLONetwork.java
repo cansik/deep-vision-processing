@@ -27,6 +27,10 @@ public class YOLONetwork extends ObjectDetectionNetwork {
     private float nmsThreshold = 0.4f;
     private boolean skipNMS = false;
 
+    private int topK = 0;
+
+    private boolean isOutputScaled = false;
+
     private Net net;
     private StringVector outNames;
 
@@ -38,10 +42,19 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         this.setConfidenceThreshold(0.5f);
     }
 
+    public YOLONetwork(Path configPath, Path weightsPath, int width, int height, boolean isOutputScaled) {
+        this(configPath, weightsPath, width, height);
+        this.isOutputScaled = isOutputScaled;
+    }
+
     public boolean setup() {
-        net = readNetFromDarknet(
-                configPath.toAbsolutePath().toString(),
-                weightsPath.toAbsolutePath().toString());
+        if (weightsPath.toString().endsWith(".onnx")) {
+            net = readNetFromONNX(weightsPath.toAbsolutePath().toString());
+        } else {
+            net = readNetFromDarknet(
+                    configPath.toAbsolutePath().toString(),
+                    weightsPath.toAbsolutePath().toString());
+        }
 
         // setup output layers
         outNames = net.getUnconnectedOutLayersNames();
@@ -98,6 +111,11 @@ public class YOLONetwork extends ObjectDetectionNetwork {
             // ones with high confidence scores. Assign the box's class label as the class
             // with the highest score for the box.
             Mat result = outs.get(i);
+            if (result.dims() > 2) {
+                // squeeze output mat
+                result = new Mat(result.size(1), result.size(2), CV_32F, result.ptr(0, i));
+            }
+
             FloatIndexer data = result.createIndexer();
 
             for (int j = 0; j < result.rows(); j++) {
@@ -112,11 +130,14 @@ public class YOLONetwork extends ObjectDetectionNetwork {
                     }
                 }
 
+                float iw = isOutputScaled ? width : 1;
+                float ih = isOutputScaled ? height : 1;
+
                 if (maxScore > getConfidenceThreshold()) {
-                    int centerX = (int) (data.get(j, 0) * frame.cols());
-                    int centerY = (int) (data.get(j, 1) * frame.rows());
-                    int width = (int) (data.get(j, 2) * frame.cols());
-                    int height = (int) (data.get(j, 3) * frame.rows());
+                    int centerX = (int) (data.get(j, 0) / iw * frame.cols());
+                    int centerY = (int) (data.get(j, 1) / ih * frame.rows());
+                    int width = (int) (data.get(j, 2) / iw * frame.cols());
+                    int height = (int) (data.get(j, 3) / ih * frame.rows());
                     int left = centerX - width / 2;
                     int top = centerY - height / 2;
 
@@ -152,7 +173,7 @@ public class YOLONetwork extends ObjectDetectionNetwork {
         FloatPointer confidencesPointer = new FloatPointer(confidences.size());
         confidencesPointer.put(confidences.get());
 
-        NMSBoxes(boxes, confidencesPointer, getConfidenceThreshold(), nmsThreshold, indices, 1.f, 0);
+        NMSBoxes(boxes, confidencesPointer, getConfidenceThreshold(), nmsThreshold, indices, 1.f, topK);
 
         ResultList<ObjectDetectionResult> detections = new ResultList<>();
         for (int i = 0; i < indices.limit(); ++i) {
@@ -210,5 +231,13 @@ public class YOLONetwork extends ObjectDetectionNetwork {
 
     public Net getNet() {
         return net;
+    }
+
+    public int getTopK() {
+        return topK;
+    }
+
+    public void setTopK(int topK) {
+        this.topK = topK;
     }
 }

@@ -18,6 +18,12 @@ public class Repository {
     // networks
 
     // object detection
+    public static final Dependency YOLOv5nOnnx = new Dependency("yolov5n.onnx");
+    public static final Dependency YOLOv5sOnnx = new Dependency("yolov5s.onnx");
+    public static final Dependency YOLOv5mOnnx = new Dependency("yolov5m.onnx");
+    public static final Dependency YOLOv5lOnnx = new Dependency("yolov5l.onnx");
+    public static final Dependency YOLOv5xOnnx = new Dependency("yolov5x.onnx");
+
     public static final Dependency YOLOv4Model = new Dependency("yolov4.cfg");
     public static final Dependency YOLOv4Weight = new Dependency("yolov4.weights");
 

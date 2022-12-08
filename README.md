@@ -103,6 +103,7 @@ Here you find a list of implemented networks:
 	- YOLOv3
 	- YOLOv4
 	- YOLOv4-tiny
+    - [YOLOv5](https://github.com/ultralytics/yolov5/) (n, s, m, l, x)
 	- [YOLO Fastest & XL](https://github.com/dog-qiuqiu/Yolo-Fastest)
 	- SSDMobileNetV2
 	- Handtracking based on SSDMobileNetV2
@@ -174,8 +175,13 @@ YOLO a very fast and accurate single shot network. The pre-trained model is trai
 - YOLOv3-tiny (very fast, but trading performance for accuracy)
 - YOLOv3-spp (original model using [spatial pyramid pooling](https://stackoverflow.com/a/55014630/1138326))
 - YOLOv3 (608)
-- YOLOv4 (608) (most accurate network)
+- YOLOv4 (608)
 - YOLOv4-tiny (416)
+- YOLOv5n (640)
+- YOLOv5s (640)
+- YOLOv5m (640)
+- YOLOv5l (640)
+- YOLOv5x (640)
 
 ```java
 // setup the network
@@ -184,6 +190,11 @@ YOLONetwork net = vision.createYOLOv4Tiny();
 YOLONetwork net = vision.createYOLOv3();
 YOLONetwork net = vision.createYOLOv3SPP();
 YOLONetwork net = vision.createYOLOv3Tiny();
+YOLONetwork net = vision.createYOLOv5n();
+YOLONetwork net = vision.createYOLOv5s();
+YOLONetwork net = vision.createYOLOv5m();
+YOLONetwork net = vision.createYOLOv5l();
+YOLONetwork net = vision.createYOLOv5x();
 
 // set confidence threshold
 net.setConfidenceThreshold(0.2f);
@@ -192,6 +203,24 @@ net.setConfidenceThreshold(0.2f);
 * [Basic Example YOLO](examples/YOLODetectObjects)
 * [WebCam Example YOLO](examples/YOLOWebcamExample)
 * [RealSense Example YOLO](examples/RealSenseYoloDetector)
+
+#### YOLOv5
+Since version `0.9.0` YOLOv5 is implemented as well. It uses the pre-trained models converted into the ONNX format. At the moment YOLOv5 does not work well with the implemented NMS. To adjust the settings of the NMS use the following functions.
+
+```
+// set confidence threshold
+net.setConfidenceThreshold(0.2f);
+
+// set confidence threshold
+net.set(0.2f);
+
+// set the IoU threshold (overlapping of the bounding boxes)
+net.setNmsThreshold(0.4f);
+
+// set how many objects should be taken into account for nms
+// 0 means all objects
+net.setTopK(100);
+```
 
 #### SSDMobileNetV2 [[Paper](https://arxiv.org/abs/1512.02325)]
 This network is a single shot detector based on the mobilenetv2 architecture. It is pre-trained on the 90 classes COCO dataset and is really fast.

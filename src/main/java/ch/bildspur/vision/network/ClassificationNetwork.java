@@ -5,7 +5,6 @@ import ch.bildspur.vision.result.ClassificationResult;
 import ch.bildspur.vision.result.ObjectDetectionResult;
 import ch.bildspur.vision.result.ResultList;
 import org.bytedeco.javacpp.DoublePointer;
-import org.bytedeco.opencv.global.opencv_dnn;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Point;
 import org.bytedeco.opencv.opencv_core.Scalar;

@@ -33,7 +33,7 @@ public class DeepVision {
     public static void enableDesiredBackend(Net net) {
         if (USE_DEFAULT_BACKEND) return;
 
-        if(haveOpenCL()) {
+        if (haveOpenCL()) {
             System.out.println("DNN OpenCL backend enabled");
             net.setPreferableBackend(opencv_dnn.DNN_BACKEND_OPENCV);
             net.setPreferableTarget(opencv_dnn.DNN_TARGET_OPENCL);
@@ -193,6 +193,41 @@ public class DeepVision {
 
     public YOLONetwork createYOLOv4Tiny(int inputSize) {
         return createYOLONetwork(Repository.YOLOv4TinyModel, Repository.YOLOv4TinyWeight, Repository.COCONames, inputSize);
+    }
+
+    protected YOLONetwork createYOLOv5(Dependency weights, Dependency names, int inputSize) {
+        prepareDependencies(weights, names);
+
+        YOLONetwork network = new YOLONetwork(
+                null,
+                weights.getPath(),
+                inputSize, inputSize,
+                true
+        );
+
+        network.loadLabels(names.getPath());
+        network.setTopK(100);
+        return network;
+    }
+
+    public YOLONetwork createYOLOv5n() {
+        return createYOLOv5(Repository.YOLOv5nOnnx, Repository.COCONames, 640);
+    }
+
+    public YOLONetwork createYOLOv5s() {
+        return createYOLOv5(Repository.YOLOv5sOnnx, Repository.COCONames, 640);
+    }
+
+    public YOLONetwork createYOLOv5m() {
+        return createYOLOv5(Repository.YOLOv5mOnnx, Repository.COCONames, 640);
+    }
+
+    public YOLONetwork createYOLOv5l() {
+        return createYOLOv5(Repository.YOLOv5lOnnx, Repository.COCONames, 640);
+    }
+
+    public YOLONetwork createYOLOv5x() {
+        return createYOLOv5(Repository.YOLOv5xOnnx, Repository.COCONames, 640);
     }
 
     public YOLONetwork createYOLOFastest() {

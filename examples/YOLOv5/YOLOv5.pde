@@ -1,17 +1,11 @@
 import ch.bildspur.vision.*;
 import ch.bildspur.vision.result.*;
 
-import processing.core.PApplet;
-import processing.core.PConstants;
-import processing.core.PImage;
-import processing.video.Capture;
-
-Capture cam;
-
 DeepVision deepVision = new DeepVision(this);
 YOLONetwork yolo;
 ResultList<ObjectDetectionResult> detections;
 
+PImage image;
 int textSize = 12;
 
 public void setup() {
@@ -19,31 +13,28 @@ public void setup() {
 
   colorMode(HSB, 360, 100, 100);
 
+  image = loadImage("pexels-lina-kivaka-5623971.jpg");
+
   println("creating model...");
-  yolo = deepVision.createYOLOv4Tiny();
+  yolo = deepVision.createYOLOv5l();
 
   println("loading yolo model...");
   yolo.setup();
 
-  cam = new Capture(this, "pipeline:autovideosrc");
-  cam.start();
+  println("inferencing...");
+  yolo.setConfidenceThreshold(0.95f);
+  yolo.setTopK(0);
+
+  detections = yolo.run(image);
 }
 
 public void draw() {
   background(55);
 
-  if (cam.available()) {
-    cam.read();
-  }
+  image(image, 0, 0);
 
-  image(cam, 0, 0);
-
-  if (cam.width == 0) {
-    return;
-  }
-
-  yolo.setConfidenceThreshold(0.2f);
-  detections = yolo.run(cam);
+  noFill();
+  strokeWeight(2f);
 
   strokeWeight(3f);
   textSize(textSize);
@@ -63,5 +54,5 @@ public void draw() {
     text(detection.getClassName(), detection.getX() + 2, detection.getY() - textSize - 3);
   }
 
-  surface.setTitle("Webcam YOLO Test - FPS: " + Math.round(frameRate));
+  surface.setTitle("YOLO Test - FPS: " + Math.round(frameRate));
 }
