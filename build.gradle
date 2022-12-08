@@ -1,10 +1,10 @@
 plugins {
     id 'java-library'
-    id 'org.bytedeco.gradle-javacpp-platform' version "1.5.7"
+    id 'org.bytedeco.gradle-javacpp-platform' version "1.5.8"
 }
 
 group 'ch.bildspur'
-version '0.8.2'
+version '0.9.0'
 
 sourceCompatibility = 1.8
 
@@ -33,19 +33,19 @@ dependencies {
     testImplementation 'com.github.cansik:webcam-capture-processing:8f1ea8d38d'
 
     // opencv (make sure you have updated the local maven repo: mvn -U compile)
-    implementation (group: 'org.bytedeco', name: 'javacv', version: "1.5.7"){
+    implementation (group: 'org.bytedeco', name: 'javacv', version: "1.5.8"){
         exclude group: 'org.bytedeco', module: 'librealsense2'
         exclude group: 'org.bytedeco', module: 'librealsense2-platform'
     }
 
-    implementation group: 'org.bytedeco', name: 'opencv-platform', version: "4.5.5-1.5.7"
-    implementation group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.19-1.5.7"
-    implementation group: 'org.bytedeco', name: 'tesseract-platform', version: "5.0.1-1.5.7"
+    implementation group: 'org.bytedeco', name: 'opencv-platform', version: "4.6.0-1.5.8"
+    implementation group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.21-1.5.8"
+    implementation group: 'org.bytedeco', name: 'tesseract-platform', version: "5.2.0-1.5.8"
 
     // cuda additions
     if (project.hasProperty("cuda")) {
-        implementation group: 'org.bytedeco', name: 'opencv-platform-gpu', version: "4.5.5-1.5.7"
-        implementation group: 'org.bytedeco', name: 'cuda-platform-redist', version: "11.6-8.3-1.5.7"
+        implementation group: 'org.bytedeco', name: 'opencv-platform-gpu', version: "4.6.0-1.5.8"
+        implementation group: 'org.bytedeco', name: 'cuda-platform-redist', version: "11.8-8.6-1.5.8"
     }
 
     // processing

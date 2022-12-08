@@ -3,6 +3,24 @@ def releaseRoot = "$rootDir/release"
 
 def releaseName = "$outputName$outputNamePostfix-$version"
 def releaseDirectory = "$releaseRoot/$releaseName"
+def processingVersion = generateProcessingVersion("$version").toString()
+
+static def generateProcessingVersion(String version) {
+    def tokens = version.split('\\.')
+    def sum = 0
+    def count = 1
+
+    for (String token : tokens.reverse()) {
+        try {
+            def value = token as Double
+            sum += value * count
+            count *= 1000
+        } catch (ignored) {
+        }
+    }
+
+    return sum.toInteger()
+}
 
 task releaseProcessingLib {
     dependsOn {
@@ -87,7 +105,6 @@ task releaseProcessingLib {
         project.copy {
             from("$rootDir") {
                 include "README.md",
-                        "library.properties",
                         "readme/**",
                         "examples/**",
                         "src/**"
@@ -96,9 +113,22 @@ task releaseProcessingLib {
             exclude "*.DS_Store", "**/networks/**"
         }
 
+        println "copy library properties..."
+        project.copy {
+            from("$rootDir") {
+                include "library.properties"
+            }
+            into "$releaseDirectory"
+            exclude "*.DS_Store"
+            filter {
+                it.replace('${version}', "$processingVersion")
+                        .replace('${prettyVersion}', "$project.version")
+            }
+        }
+
         println "copy repository library.txt..."
         project.copy {
-            from "$rootDir/library.properties"
+            from "$releaseDirectory/library.properties"
             into "$releaseRoot"
             rename "library.properties", "${outputName}.txt"
         }
