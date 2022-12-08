@@ -33,18 +33,6 @@ jobs:
         run: |
           ./gradlew releaseProcessingLib --no-daemon
 
-      - name: Build CUDA Windows-x86_64 Package
-        run: |
-          ./gradlew releaseProcessingLib -Pcuda -PjavacppPlatform=windows-x86_64 -PoutputNamePostfix=-cuda-windows-x86_64 --no-daemon
-
-      - name: Build CUDA Linux-x86_64 Package
-        run: |
-          ./gradlew releaseProcessingLib -Pcuda -PjavacppPlatform=linux-x86_64 -PoutputNamePostfix=-cuda-linux-x86_64 --no-daemon
-
-      - name: Build CUDA Linux-arm64 Package
-        run: |
-          ./gradlew releaseProcessingLib -Pcuda -PjavacppPlatform=linux-arm64 -PoutputNamePostfix=-cuda-linux-arm64 --no-daemon
-
       # upload dist
       - name: Upload binaries to release
         if: ${{ github.event.inputs.publishReleases == 'true' }}
