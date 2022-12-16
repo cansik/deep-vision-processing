@@ -21,7 +21,7 @@ public class MultiPoseTopDownTest extends PApplet {
     }
 
     public void settings() {
-        size(1280, 942, FX2D);
+        size(1280, 942);
     }
 
     PImage testImage;

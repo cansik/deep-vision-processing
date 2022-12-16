@@ -12,7 +12,7 @@ boolean mouseDrawing = false;
 float factor = 560 / 28;
 
 public void setup() {
-  size(560, 560, FX2D);
+  size(560, 560);
 
   vision = new DeepVision(this);
 

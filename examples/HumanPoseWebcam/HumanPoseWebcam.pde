@@ -14,7 +14,7 @@ Capture cam;
 float threshold = 0.5;
 
 void setup() {
-  size(640, 480, FX2D);
+  size(640, 480);
 
   colorMode(HSB, 360, 100, 100);
 

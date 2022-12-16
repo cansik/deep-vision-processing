@@ -12,7 +12,7 @@ HumanPoseResult result;
 PImage image;
 
 void setup() {
-  size(480, 640, FX2D);
+  size(480, 640);
 
   colorMode(HSB, 360, 100, 100);
   testImage = loadImage(sketchPath("data/pose.jpg"));

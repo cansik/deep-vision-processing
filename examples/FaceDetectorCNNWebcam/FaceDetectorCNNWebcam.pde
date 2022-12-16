@@ -10,7 +10,7 @@ ULFGFaceDetectionNetwork network;
 ResultList<ObjectDetectionResult> detections;
 
 public void setup() {
-  size(640, 480, FX2D);
+  size(640, 480);
   colorMode(HSB, 360, 100, 100);
 
   println("creating network...");

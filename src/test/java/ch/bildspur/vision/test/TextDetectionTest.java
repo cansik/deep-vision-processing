@@ -18,7 +18,7 @@ public class TextDetectionTest extends PApplet {
     }
 
     public void settings() {
-        size(640, 480, FX2D);
+        size(640, 480);
     }
 
     PImage testImage;

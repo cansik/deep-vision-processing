@@ -15,7 +15,7 @@ public class SuperResolutionTest extends PApplet {
     }
 
     public void settings() {
-        size(1280, 960, FX2D);
+        size(1280, 960);
     }
 
     PImage testImage;

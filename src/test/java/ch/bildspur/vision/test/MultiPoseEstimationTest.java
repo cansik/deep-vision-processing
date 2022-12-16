@@ -18,7 +18,7 @@ public class MultiPoseEstimationTest extends PApplet {
     }
 
     public void settings() {
-        size(640, 427, FX2D);
+        size(640, 427);
     }
 
     PImage testImage;

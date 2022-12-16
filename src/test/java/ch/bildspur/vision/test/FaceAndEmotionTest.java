@@ -18,7 +18,7 @@ public class FaceAndEmotionTest extends PApplet {
     }
 
     public void settings() {
-        size(1280, 720, FX2D);
+        size(1280, 720);
     }
 
     PImage testImage;
