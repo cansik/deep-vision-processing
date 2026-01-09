@@ -1,75 +1,68 @@
 plugins {
     id 'java-library'
-    id 'org.bytedeco.gradle-javacpp-platform' version "1.5.8"
+    id 'org.bytedeco.gradle-javacpp-platform' version "1.5.10"
 }
 
 group 'ch.bildspur'
-version '0.9.0'
+version '0.10.0'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 17
 
 repositories {
     mavenCentral()
     mavenLocal()
     maven { url 'https://jitpack.io' }
-    // flatDir dirs: "${rootDir}/libs"
+    maven { url 'https://jogamp.org/deployment/maven' }
 }
 
 configurations {
-    jar.archiveFileName = outputName + '.jar'
-
     processing
-    compile.extendsFrom processing
+
+    // Use compileOnly so processing libs are not included in the fat jar (runtime)
+    compileOnly.extendsFrom processing
+
+    // Allow tests to see processing libs
+    testImplementation.extendsFrom processing
 }
 
-javadoc {
-    source = sourceSets.main.allJava
-    classpath = configurations.runtimeOnly
+tasks.named('jar') {
+    archiveFileName = "${outputName}.jar"
 }
 
 dependencies {
     // compile
-    testImplementation group: 'junit', name: 'junit', version: '4.11'
+    testImplementation group: 'junit', name: 'junit', version: '4.13.1'
     testImplementation 'com.github.cansik:webcam-capture-processing:8f1ea8d38d'
 
     // opencv (make sure you have updated the local maven repo: mvn -U compile)
-    implementation (group: 'org.bytedeco', name: 'javacv', version: "1.5.8"){
+    implementation(group: 'org.bytedeco', name: 'javacv', version: "1.5.12") {
         exclude group: 'org.bytedeco', module: 'librealsense2'
         exclude group: 'org.bytedeco', module: 'librealsense2-platform'
     }
 
-    implementation group: 'org.bytedeco', name: 'opencv-platform', version: "4.6.0-1.5.8"
-    implementation group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.21-1.5.8"
-    implementation group: 'org.bytedeco', name: 'tesseract-platform', version: "5.2.0-1.5.8"
+    implementation group: 'org.bytedeco', name: 'opencv-platform', version: "4.11.0-1.5.12"
+    implementation group: 'org.bytedeco', name: 'openblas-platform', version: "0.3.30-1.5.12"
+    implementation group: 'org.bytedeco', name: 'tesseract-platform', version: "5.5.1-1.5.12"
 
     // cuda additions
     if (project.hasProperty("cuda")) {
-        implementation group: 'org.bytedeco', name: 'opencv-platform-gpu', version: "4.6.0-1.5.8"
-        implementation group: 'org.bytedeco', name: 'cuda-platform-redist', version: "11.8-8.6-1.5.8"
+        implementation group: 'org.bytedeco', name: 'opencv-platform-gpu', version: "4.11.0-1.5.12"
+        implementation group: 'org.bytedeco', name: 'cuda-platform-redist', version: "12.9-9.10-1.5.12"
     }
 
     // processing
-    implementation fileTree(include: ["core.jar", "jogl-all-main.jar", "gluegen-rt-main.jar"], dir: 'core-libs')
-    // processing group: 'org.processing', name: 'core', version: '3.3.7'
-    // processing group: 'org.jogamp.jogl', name: 'jogl-all-main', version: '2.3.2'
-    // processing group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version: '2.3.2'
+    processing group: 'org.processing', name: 'core', version: '4.5.0'
+    processing group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version: '2.5.0'
+    processing group: 'org.jogamp.jogl', name: 'jogl-all-main', version: '2.5.0'
 }
 
-task fatJar(type: Jar) {
+tasks.register('fatJar', Jar) {
     archiveFileName = "$outputName-complete.jar"
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     dependsOn configurations.runtimeClasspath
-    // from {
-    //     (configurations.runtime - configurations.processing).collect {
-    //         it.isDirectory() ? it : zipTree(it)
-    //     }
-    // }
-
-    from { 
-        (configurations.runtimeClasspath - configurations.processing).filter( {! (it.name =~ /core.jar/ || 
-                                                                                  it.name =~ /jogl-all-main.jar/ || 
-                                                                                  it.name =~ /gluegen-rt-main.jar/)}).collect {
-            it.isDirectory() ? it : zipTree(it) 
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
         }
     }
     with jar

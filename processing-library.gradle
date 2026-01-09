@@ -22,7 +22,7 @@ static def generateProcessingVersion(String version) {
     return sum.toInteger()
 }
 
-task releaseProcessingLib {
+tasks.register('releaseProcessingLib') {
     dependsOn {
         clean
         build
@@ -74,7 +74,7 @@ task releaseProcessingLib {
             // Need to delete the Processing jar explicilty, at least when including them as fileTree dependencies
             delete "$releaseDirectory/library/core.jar"
             delete "$releaseDirectory/library/jogl-all-main.jar"
-            delete "$releaseDirectory/library/gluegen-rt-main.jar"            
+            delete "$releaseDirectory/library/gluegen-rt-main.jar"
         } else {
             println "copy fatjar library..."
             project.copy {
@@ -135,7 +135,7 @@ task releaseProcessingLib {
     }
 }
 
-task packageRelease(type: Zip) {
+tasks.register('packageRelease', Zip) {
     mustRunAfter releaseProcessingLib
 
     archiveFileName = "${outputName}${outputNamePostfix}.zip"
@@ -145,6 +145,6 @@ task packageRelease(type: Zip) {
     exclude "**/*.DS_Store"
 }
 
-task renameRelease {
+tasks.register('renameRelease') {
     mustRunAfter packageRelease
 }

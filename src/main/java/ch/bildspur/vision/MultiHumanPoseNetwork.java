@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.bytedeco.opencv.global.opencv_core.ALGO_HINT_DEFAULT;
 import static org.bytedeco.opencv.global.opencv_core.CV_8U;
 import static org.bytedeco.opencv.global.opencv_dnn.readNetFromONNX;
 import static org.bytedeco.opencv.global.opencv_imgproc.*;
@@ -72,7 +73,7 @@ public class MultiHumanPoseNetwork extends PoseNetwork<ResultList<HumanPoseResul
 
         // smooth prob map and threshold
         Mat smoothProbMap = new Mat();
-        GaussianBlur(probMap, smoothProbMap, new Size(3, 3), 0.0, 0.0, 0);
+        GaussianBlur(probMap, smoothProbMap, new Size(3, 3), 0.0, 0.0, 0, ALGO_HINT_DEFAULT);
 
         threshold(smoothProbMap, smoothProbMap, threshold, 255.0, THRESH_BINARY);
 
